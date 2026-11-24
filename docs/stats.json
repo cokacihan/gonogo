@@ -1,0 +1,331 @@
+{
+ "fprime_commit": "6fff089e8e2035307105cad4b28631eea1552ff6",
+ "dataset": {
+  "components": 124,
+  "requirements": 561,
+  "test_cases": 2309,
+  "port_types": 72,
+  "instances": 49,
+  "connections": 93,
+  "relationships": 6165,
+  "requirements_cited": 154
+ },
+ "ci_run": {
+  "id": "45468869538",
+  "url": "https://github.com/cokacihan/tracegraph/actions/runs/45468869538",
+  "executables": 136,
+  "cases": 2665,
+  "passed": 2649,
+  "skipped": 16,
+  "failed": 0,
+  "mapped": 2066,
+  "unmapped": 599,
+  "citing_cases": 402,
+  "citing_cases_ran": 402
+ },
+ "poll_ref": {
+  "requirements": 227,
+  "GO": 57,
+  "NO-GO": 0,
+  "INCOMPLETE": 170
+ },
+ "poll_all": {
+  "requirements": 561,
+  "GO": 140,
+  "NO-GO": 0,
+  "INCOMPLETE": 421
+ },
+ "ref_components": 34,
+ "fully_go_ref": [
+  "Svc/BufferManager",
+  "Svc/CmdSequencer",
+  "Svc/DpManager"
+ ],
+ "reasons_all": {
+  "NO_CITING_TEST": 400,
+  "EVIDENCE_OUTSIDE_REPO": 155,
+  "NO_METHOD": 23,
+  "AMBIGUOUS_ID": 12,
+  "CITED_UNDER_DIFFERENT_ID": 7,
+  "CITED_BY_OTHER_COMPONENT": 4
+ },
+ "findings": {
+  "fp_unknown_citations": [
+   {
+    "file": "Svc/DpWriter/test/ut/DpWriterTestMain.cpp",
+    "component": "Svc/DpWriter",
+    "unknown_ids": [
+     "SVC-DPMANAGER-005",
+     "SVC-DPMANAGER-006",
+     "SVC-DPMANAGER-007"
+    ]
+   },
+   {
+    "file": "Svc/Health/test/ut/HealthTester.cpp",
+    "component": "Svc/Health",
+    "unknown_ids": [
+     "ISF-HTH-001",
+     "ISF-HTH-002",
+     "ISF-HTH-003",
+     "ISF-HTH-004",
+     "ISF-HTH-005",
+     "ISF-HTH-006",
+     "ISF-HTH-007"
+    ]
+   }
+  ],
+  "fp_duplicate_requirement_ids": [
+   {
+    "id": "FH-002",
+    "component": "Svc/FatalHandler",
+    "source": "Svc/FatalHandler/docs/sdd.md#L14"
+   },
+   {
+    "id": "FH-002",
+    "component": "Svc/FatalHandler",
+    "source": "Svc/FatalHandler/docs/sdd.md#L15"
+   },
+   {
+    "id": "SVC-CCSDS-SPD-009",
+    "component": "Svc/Ccsds/SpacePacketDeframer",
+    "source": "Svc/Ccsds/SpacePacketDeframer/docs/sdd.md#L47"
+   },
+   {
+    "id": "SVC-CCSDS-SPD-009",
+    "component": "Svc/Ccsds/SpacePacketDeframer",
+    "source": "Svc/Ccsds/SpacePacketDeframer/docs/sdd.md#L53"
+   },
+   {
+    "id": "SVC-COMLOGGER-002",
+    "component": "Svc/ComLogger",
+    "source": "Svc/ComLogger/docs/sdd.md#L12"
+   },
+   {
+    "id": "SVC-COMLOGGER-002",
+    "component": "Svc/ComLoggerDp",
+    "source": "Svc/ComLoggerDp/docs/sdd.md#L12"
+   },
+   {
+    "id": "SVC-COMLOGGER-003",
+    "component": "Svc/ComLogger",
+    "source": "Svc/ComLogger/docs/sdd.md#L13"
+   },
+   {
+    "id": "SVC-COMLOGGER-003",
+    "component": "Svc/ComLoggerDp",
+    "source": "Svc/ComLoggerDp/docs/sdd.md#L13"
+   },
+   {
+    "id": "SVC-COMLOGGER-004",
+    "component": "Svc/ComLogger",
+    "source": "Svc/ComLogger/docs/sdd.md#L14"
+   },
+   {
+    "id": "SVC-COMLOGGER-004",
+    "component": "Svc/ComLoggerDp",
+    "source": "Svc/ComLoggerDp/docs/sdd.md#L14"
+   },
+   {
+    "id": "SVC-COMLOGGER-005",
+    "component": "Svc/ComLogger",
+    "source": "Svc/ComLogger/docs/sdd.md#L15"
+   },
+   {
+    "id": "SVC-COMLOGGER-005",
+    "component": "Svc/ComLoggerDp",
+    "source": "Svc/ComLoggerDp/docs/sdd.md#L15"
+   }
+  ],
+  "fp_cross_component_citations": [
+   {
+    "id": "PDB-001",
+    "owner": "Svc/PolyDb",
+    "cited_by": "Svc/PrmDb",
+    "test_cases": 2
+   },
+   {
+    "id": "PDB-002",
+    "owner": "Svc/PolyDb",
+    "cited_by": "Svc/PrmDb",
+    "test_cases": 8
+   },
+   {
+    "id": "PDB-003",
+    "owner": "Svc/PolyDb",
+    "cited_by": "Svc/PrmDb",
+    "test_cases": 8
+   },
+   {
+    "id": "PDB-004",
+    "owner": "Svc/PolyDb",
+    "cited_by": "Svc/PrmDb",
+    "test_cases": 5
+   },
+   {
+    "id": "SVC-COMLOGGER-002",
+    "owner": "Svc/ComLogger",
+    "cited_by": "Svc/ComLoggerDp",
+    "test_cases": 4
+   },
+   {
+    "id": "SVC-COMLOGGER-003",
+    "owner": "Svc/ComLogger",
+    "cited_by": "Svc/ComLoggerDp",
+    "test_cases": 2
+   },
+   {
+    "id": "SVC-COMLOGGER-004",
+    "owner": "Svc/ComLogger",
+    "cited_by": "Svc/ComLoggerDp",
+    "test_cases": 4
+   },
+   {
+    "id": "SVC-COMLOGGER-005",
+    "owner": "Svc/ComLogger",
+    "cited_by": "Svc/ComLoggerDp",
+    "test_cases": 3
+   },
+   {
+    "id": "SVC-DPMANAGER-001",
+    "owner": "Svc/DpManager",
+    "cited_by": "Svc/DpWriter",
+    "test_cases": 10
+   },
+   {
+    "id": "SVC-DPMANAGER-002",
+    "owner": "Svc/DpManager",
+    "cited_by": "Svc/DpWriter",
+    "test_cases": 3
+   },
+   {
+    "id": "SVC-DPMANAGER-003",
+    "owner": "Svc/DpManager",
+    "cited_by": "Svc/DpWriter",
+    "test_cases": 3
+   },
+   {
+    "id": "SVC-DPMANAGER-004",
+    "owner": "Svc/DpManager",
+    "cited_by": "Svc/DpWriter",
+    "test_cases": 3
+   }
+  ]
+ },
+ "store_dir_bytes": 2372243,
+ "releases": [
+  {
+   "tag": "v3.4.0",
+   "date": "2023-11-29",
+   "commit": "0e66d8dd25e86e1146f47ece1f98958656060679",
+   "components": 70,
+   "requirements": 139,
+   "requirements_cited_by_own_tests": 49,
+   "cited_percent": 35.3,
+   "test_cases": 297,
+   "port_uses": 282,
+   "findings_unknown_citations": 10,
+   "findings_duplicate_ids": 1,
+   "findings_cross_component": 4
+  },
+  {
+   "tag": "v4.0.0",
+   "date": "2025-08-07",
+   "commit": "abb09e4a681cd586ac719a7517430637cdc46199",
+   "components": 88,
+   "requirements": 199,
+   "requirements_cited_by_own_tests": 48,
+   "cited_percent": 24.1,
+   "test_cases": 506,
+   "port_uses": 382,
+   "findings_unknown_citations": 12,
+   "findings_duplicate_ids": 2,
+   "findings_cross_component": 8
+  },
+  {
+   "tag": "v4.4.2",
+   "date": "2026-11-04",
+   "commit": "f22ce8f2f2943e641d454e9daa7f129e6c878d32",
+   "components": 124,
+   "requirements": 538,
+   "requirements_cited_by_own_tests": 149,
+   "cited_percent": 27.7,
+   "test_cases": 2127,
+   "port_uses": 529,
+   "findings_unknown_citations": 10,
+   "findings_duplicate_ids": 6,
+   "findings_cross_component": 12
+  },
+  {
+   "tag": "devel",
+   "date": "2026-11-24",
+   "commit": "6fff089e8e2035307105cad4b28631eea1552ff6",
+   "components": 124,
+   "requirements": 561,
+   "requirements_cited_by_own_tests": 150,
+   "cited_percent": 26.7,
+   "test_cases": 2309,
+   "port_uses": 530,
+   "findings_unknown_citations": 10,
+   "findings_duplicate_ids": 6,
+   "findings_cross_component": 12
+  }
+ ],
+ "mutation": {
+  "summary": {
+   "citation_deleted": {
+    "mutations": 20,
+    "gonogo_detected": 20,
+    "grep_detected": 20,
+    "with_collateral": 0
+   },
+   "citation_id_drift": {
+    "mutations": 20,
+    "gonogo_detected": 20,
+    "grep_detected": 20,
+    "with_collateral": 0
+   },
+   "cross_component_cite": {
+    "mutations": 20,
+    "gonogo_detected": 20,
+    "grep_detected": 0,
+    "with_collateral": 0
+   },
+   "duplicate_id": {
+    "mutations": 20,
+    "gonogo_detected": 20,
+    "grep_detected": 20,
+    "with_collateral": 1
+   },
+   "method_blanked": {
+    "mutations": 20,
+    "gonogo_detected": 20,
+    "grep_detected": 12,
+    "with_collateral": 0
+   },
+   "port_type_use_added": {
+    "mutations": 20,
+    "gonogo_detected": 20,
+    "grep_detected": 20,
+    "with_collateral": 0
+   }
+  },
+  "seconds": 615.4,
+  "seed": 2026,
+  "collateral": [
+   {
+    "class": "duplicate_id",
+    "target": "SVC-COMLOGGER-003",
+    "file": "Svc\\ComLogger\\docs\\sdd.md",
+    "gonogo": true,
+    "grep": true,
+    "collateral": [
+     "SVC-COMLOGGER-002@Svc/ComLoggerDp"
+    ]
+   }
+  ]
+ },
+ "modes": {
+  "directory_bytes": 2372243,
+  "single_file_bytes": 58359808
+ }
+}

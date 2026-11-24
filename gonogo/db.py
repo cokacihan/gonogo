@@ -1,9 +1,9 @@
 """Build and open the persistent Relate store of an F´ repository.
 
-Store mode: **directory** (WAL + Parquet checkpoint). Measured on this graph, the same data took
-21.6 MB as a single `.rl` file versus 0.86 MB as a directory, because Relate's directory mode
-checkpoints to compressed Parquet. A directory store is also what a CI job builds and diffs, so it
-is the committed default; `gonogo export --single-file` writes a portable `.rl` snapshot on demand.
+Store mode: **directory** (WAL + Parquet checkpoint). Relate's directory mode checkpoints to compressed Parquet,
+which keeps this graph (vector properties included) far smaller than the single-file mode; both sizes are measured
+by `python -m gonogo.stats --measure-modes` and recorded in docs/stats.json. A directory store is also what a CI job
+builds and diffs, so it is the committed default; `gonogo export --single-file` writes a portable `.rl` on demand.
 """
 from __future__ import annotations
 
