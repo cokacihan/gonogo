@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "gonogo": {
+      "command": "python",
+      "args": ["-m", "gonogo.mcp_server", "--store", "data/fprime"]
+    },
+    "relate": {
+      "command": "relate",
+      "args": ["serve", "--mcp", "stdio", "--database", "data/fprime", "--read-only"]
+    }
+  }
+}

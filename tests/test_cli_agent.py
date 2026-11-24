@@ -81,3 +81,19 @@ def test_diff_of_identical_graphs_is_empty(store_norun):
     assert all(not v["new"] for v in d["findings"].values())
     _, md, code = check(a, a, ["Svc/Health/Health.cpp"])
     assert code == 0 and "PASS" in md and "Svc/Health" in md
+
+
+def test_mcp_server_tools(store_run):
+    from gonogo.mcp_server import Server
+    srv = Server(store_run)
+    init = srv.handle({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}})
+    assert init["result"]["capabilities"] == {"tools": {}}
+    assert srv.handle({"jsonrpc": "2.0", "method": "notifications/initialized"}) is None
+    names = {t["name"] for t in srv.handle({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})["result"]["tools"]}
+    assert names == {"poll", "why", "tests_to_rerun", "findings", "ask"}
+    r = srv.handle({"jsonrpc": "2.0", "id": 3, "method": "tools/call",
+                    "params": {"name": "tests_to_rerun", "arguments": {"files": ["Svc/Health/Health.cpp"]}}})
+    out = json.loads(r["result"]["content"][0]["text"])
+    assert out["components"] == ["Svc/Health"] and out["test_cases"] > 0
+    bad = srv.handle({"jsonrpc": "2.0", "id": 4, "method": "tools/call", "params": {"name": "nope", "arguments": {}}})
+    assert bad["result"]["isError"] is True

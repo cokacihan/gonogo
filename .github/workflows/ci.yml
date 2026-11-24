@@ -1,0 +1,35 @@
+# GoNoGo's own tests on three operating systems. (F´ itself is built only on Linux, in fprime-unit-tests.yml.)
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: pytest (${{ matrix.os }}, Python ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.12", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install
+        run: python -m pip install relate-db pytest
+      - name: Rebuild the store from the committed dataset and CI test results
+        run: python -m gonogo build
+      - name: Tests
+        run: python -m pytest -q
+      - name: Poll (smoke)
+        run: python -m gonogo poll --json
