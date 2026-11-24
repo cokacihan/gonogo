@@ -1,0 +1,182 @@
+{
+ "note": "First evaluation of paraphrase sets with agent rules frozen at commit 1d593ba (before any tuning on dev). Kept for honesty; later RESULTS.md numbers are after tuning on paraphrase_dev only.",
+ "sets": {
+  "original": {
+   "graph_agent": {
+    "questions": 42,
+    "answerable_macro_f1": 1.0,
+    "answerable_exact_match": 1.0,
+    "answerable_macro_precision": 1.0,
+    "answerable_macro_recall": 1.0,
+    "out_of_scope_abstention": 1.0,
+    "median_ms": 0.46,
+    "by_category_f1": {
+     "coverage": 1.0,
+     "decision": 1.0,
+     "impact": 1.0,
+     "out_of_scope": 1.0,
+     "risk": 1.0,
+     "structure": 1.0,
+     "supplier": 1.0,
+     "trace": 1.0
+    }
+   },
+   "vector_only": {
+    "questions": 42,
+    "answerable_macro_f1": 0.142,
+    "answerable_exact_match": 0.027,
+    "answerable_macro_precision": 0.182,
+    "answerable_macro_recall": 0.179,
+    "out_of_scope_abstention": 0.0,
+    "median_ms": 0.56,
+    "by_category_f1": {
+     "coverage": 0.137,
+     "decision": 0.0,
+     "impact": 0.189,
+     "out_of_scope": 0.0,
+     "risk": 0.111,
+     "structure": 0.0,
+     "supplier": 0.833,
+     "trace": 0.0
+    }
+   },
+   "fulltext_only": {
+    "questions": 42,
+    "answerable_macro_f1": 0.152,
+    "answerable_exact_match": 0.054,
+    "answerable_macro_precision": 0.181,
+    "answerable_macro_recall": 0.195,
+    "out_of_scope_abstention": 0.0,
+    "median_ms": 1.06,
+    "by_category_f1": {
+     "coverage": 0.143,
+     "decision": 0.0,
+     "impact": 0.192,
+     "out_of_scope": 0.0,
+     "risk": 0.0,
+     "structure": 0.083,
+     "supplier": 1.0,
+     "trace": 0.095
+    }
+   }
+  },
+  "paraphrase_dev": {
+   "graph_agent": {
+    "questions": 42,
+    "answerable_macro_f1": 0.838,
+    "answerable_exact_match": 0.838,
+    "answerable_macro_precision": 0.838,
+    "answerable_macro_recall": 0.838,
+    "out_of_scope_abstention": 1.0,
+    "median_ms": 0.42,
+    "by_category_f1": {
+     "coverage": 0.667,
+     "decision": 1.0,
+     "impact": 0.889,
+     "out_of_scope": 1.0,
+     "risk": 0.833,
+     "structure": 0.75,
+     "supplier": 1.0,
+     "trace": 1.0
+    }
+   },
+   "vector_only": {
+    "questions": 42,
+    "answerable_macro_f1": 0.136,
+    "answerable_exact_match": 0.027,
+    "answerable_macro_precision": 0.17,
+    "answerable_macro_recall": 0.181,
+    "out_of_scope_abstention": 0.0,
+    "median_ms": 0.56,
+    "by_category_f1": {
+     "coverage": 0.126,
+     "decision": 0.0,
+     "impact": 0.172,
+     "out_of_scope": 0.0,
+     "risk": 0.139,
+     "structure": 0.0,
+     "supplier": 0.75,
+     "trace": 0.0
+    }
+   },
+   "fulltext_only": {
+    "questions": 42,
+    "answerable_macro_f1": 0.159,
+    "answerable_exact_match": 0.054,
+    "answerable_macro_precision": 0.211,
+    "answerable_macro_recall": 0.187,
+    "out_of_scope_abstention": 0.2,
+    "median_ms": 1.08,
+    "by_category_f1": {
+     "coverage": 0.132,
+     "decision": 0.0,
+     "impact": 0.225,
+     "out_of_scope": 0.2,
+     "risk": 0.0,
+     "structure": 0.0,
+     "supplier": 1.0,
+     "trace": 0.222
+    }
+   }
+  },
+  "paraphrase_heldout": {
+   "graph_agent": {
+    "questions": 42,
+    "answerable_macro_f1": 0.787,
+    "answerable_exact_match": 0.757,
+    "answerable_macro_precision": 0.796,
+    "answerable_macro_recall": 0.797,
+    "out_of_scope_abstention": 1.0,
+    "median_ms": 0.46,
+    "by_category_f1": {
+     "coverage": 0.667,
+     "decision": 1.0,
+     "impact": 0.854,
+     "out_of_scope": 1.0,
+     "risk": 0.741,
+     "structure": 0.5,
+     "supplier": 1.0,
+     "trace": 1.0
+    }
+   },
+   "vector_only": {
+    "questions": 42,
+    "answerable_macro_f1": 0.13,
+    "answerable_exact_match": 0.027,
+    "answerable_macro_precision": 0.167,
+    "answerable_macro_recall": 0.16,
+    "out_of_scope_abstention": 0.0,
+    "median_ms": 0.56,
+    "by_category_f1": {
+     "coverage": 0.136,
+     "decision": 0.0,
+     "impact": 0.191,
+     "out_of_scope": 0.0,
+     "risk": 0.0,
+     "structure": 0.0,
+     "supplier": 0.929,
+     "trace": 0.0
+    }
+   },
+   "fulltext_only": {
+    "questions": 42,
+    "answerable_macro_f1": 0.179,
+    "answerable_exact_match": 0.054,
+    "answerable_macro_precision": 0.277,
+    "answerable_macro_recall": 0.189,
+    "out_of_scope_abstention": 0.0,
+    "median_ms": 1.1,
+    "by_category_f1": {
+     "coverage": 0.163,
+     "decision": 0.167,
+     "impact": 0.22,
+     "out_of_scope": 0.0,
+     "risk": 0.0,
+     "structure": 0.0,
+     "supplier": 1.0,
+     "trace": 0.167
+    }
+   }
+  }
+ }
+}

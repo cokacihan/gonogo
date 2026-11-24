@@ -6,6 +6,11 @@ a fair chance: they do not have to guess the answer type.
 """
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
+PARAPHRASES = Path(__file__).resolve().parent / "paraphrases.json"
+
 LBL_REQ, LBL_PART, LBL_RISK, LBL_DEC, LBL_VER = "Requirement", "Part", "Risk", "Decision", "Verification"
 
 
@@ -76,3 +81,14 @@ def build_questions(gt: dict) -> list[dict]:
     unknown("What is the impact of PART-ADCS-XX-99?")
     unknown("Which requirements did the customer reject in 2019?")
     return qs
+
+
+def question_sets(gt: dict) -> dict[str, list[dict]]:
+    """original + externally generated paraphrase sets (dev / held-out), same expected answers."""
+    base = build_questions(gt)
+    sets = {"original": base}
+    if PARAPHRASES.exists():
+        para = {x["qid"]: x for x in json.loads(PARAPHRASES.read_text(encoding="utf-8"))["items"]}
+        for split in ("dev", "heldout"):
+            sets[f"paraphrase_{split}"] = [dict(q, text=para[q["qid"]][split]) for q in base if q["qid"] in para]
+    return sets

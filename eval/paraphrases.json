@@ -1,0 +1,215 @@
+{
+ "provenance": "Generated on 2026-11-24 by an external LLM (NVIDIA-hosted nemotron-3-ultra via the author's nvask tool) from the original question texts only; it never saw the agent's rules or code. Paraphrases identical to the original were dropped. 'dev' may be used to improve rules; 'heldout' is reported as-is. The author read all paraphrases to check that meaning and identifiers were preserved. Agent rules were frozen at commit 1d593ba when both sets were first evaluated.",
+ "items": [
+  {
+   "qid": "Q01",
+   "dev": "Find requirements lacking any verification.",
+   "heldout": "Show requirements with zero verifications."
+  },
+  {
+   "qid": "Q02",
+   "dev": "Identify requirements not covered by test, analysis, or inspection.",
+   "heldout": "Requirements without test, analysis, or inspection verification."
+  },
+  {
+   "qid": "Q03",
+   "dev": "Show requirements tied to failed verifications.",
+   "heldout": "Requirements associated with verification failures."
+  },
+  {
+   "qid": "Q04",
+   "dev": "List open requirements.",
+   "heldout": "Show requirements that remain open."
+  },
+  {
+   "qid": "Q05",
+   "dev": "Find requirements whose sole verification method is analysis.",
+   "heldout": "Requirements verified exclusively via analysis."
+  },
+  {
+   "qid": "Q06",
+   "dev": "List requirements with no satisfying part.",
+   "heldout": "Requirements lacking any part satisfaction."
+  },
+  {
+   "qid": "Q07",
+   "dev": "Show passed verifications that have recorded anomalies.",
+   "heldout": "Passed verifications with associated anomalies."
+  },
+  {
+   "qid": "Q08",
+   "dev": "Do any orphan parts exist?",
+   "heldout": "Check for orphan parts."
+  },
+  {
+   "qid": "Q09",
+   "dev": "List parts with no requirement links.",
+   "heldout": "Parts lacking requirement traceability."
+  },
+  {
+   "qid": "Q10",
+   "dev": "Identify the part covering the highest number of requirements.",
+   "heldout": "Part with maximum requirement satisfaction count."
+  },
+  {
+   "qid": "Q11",
+   "dev": "Do parts have circular dependencies?",
+   "heldout": "Check for part circular dependencies."
+  },
+  {
+   "qid": "Q12",
+   "dev": "List high risks lacking mitigation.",
+   "heldout": "High risks without any mitigation."
+  },
+  {
+   "qid": "Q13",
+   "dev": "Show critical risks that have no mitigation.",
+   "heldout": "Critical risks missing mitigations."
+  },
+  {
+   "qid": "Q14",
+   "dev": "List all high risks.",
+   "heldout": "Show high risks."
+  },
+  {
+   "qid": "Q15",
+   "dev": "Do any decisions conflict?",
+   "heldout": "Check for conflicting decisions."
+  },
+  {
+   "qid": "Q16",
+   "dev": "Identify accepted decisions that are mutually contradictory.",
+   "heldout": "Accepted decisions in conflict."
+  },
+  {
+   "qid": "Q17",
+   "dev": "Impact of changing PART-ADCS-RW-01.",
+   "heldout": "What breaks when PART-ADCS-RW-01 is modified?"
+  },
+  {
+   "qid": "Q18",
+   "dev": "Determine the blast radius for PART-OBC-CPU-01 change.",
+   "heldout": "Change impact scope for PART-OBC-CPU-01."
+  },
+  {
+   "qid": "Q19",
+   "dev": "Redesign of PART-THERM-RAD-01: affected requirements and verifications.",
+   "heldout": "Impact on requirements and verifications if PART-THERM-RAD-01 is redesigned."
+  },
+  {
+   "qid": "Q20",
+   "dev": "Consequences of replacing PART-PAY-OPT-01.",
+   "heldout": "What fails when PART-PAY-OPT-01 is swapped?"
+  },
+  {
+   "qid": "Q21",
+   "dev": "Impact of reaction wheel triad change.",
+   "heldout": "What is impacted by a change to the reaction wheel triad?"
+  },
+  {
+   "qid": "Q22",
+   "dev": "Re-verification required after X-band transmitter replacement.",
+   "heldout": "What must be re-verified if the X-band transmitter is replaced?"
+  },
+  {
+   "qid": "Q23",
+   "dev": "Change impact of REQ-SYS-01.",
+   "heldout": "What is affected by a change to REQ-SYS-01?"
+  },
+  {
+   "qid": "Q24",
+   "dev": "Impact analysis for REQ-SYS-03 modification.",
+   "heldout": "Effects of modifying REQ-SYS-03."
+  },
+  {
+   "qid": "Q25",
+   "dev": "Downstream impact of REQ-MIS-01 change.",
+   "heldout": "What is affected downstream when REQ-MIS-01 changes?"
+  },
+  {
+   "qid": "Q26",
+   "dev": "Trace REQ-EPS-01 up to mission level to justify its existence.",
+   "heldout": "Mission-level trace for REQ-EPS-01."
+  },
+  {
+   "qid": "Q27",
+   "dev": "List parent requirements for REQ-ADCS-02.",
+   "heldout": "Show REQ-ADCS-02 parent requirements."
+  },
+  {
+   "qid": "Q28",
+   "dev": "Mission requirement trace for REQ-PAY-03.",
+   "heldout": "Follow REQ-PAY-03 up to the mission requirement."
+  },
+  {
+   "qid": "Q29",
+   "dev": "Risks that threaten REQ-ADCS-02.",
+   "heldout": "List risks threatening REQ-ADCS-02."
+  },
+  {
+   "qid": "Q30",
+   "dev": "Risks impacting PART-ADCS-RW-01.",
+   "heldout": "Show risks affecting PART-ADCS-RW-01."
+  },
+  {
+   "qid": "Q31",
+   "dev": "Risks threatening REQ-EPS-02.",
+   "heldout": "List risks that threaten REQ-EPS-02."
+  },
+  {
+   "qid": "Q32",
+   "dev": "Verification method for REQ-COMMS-03.",
+   "heldout": "What verifies REQ-COMMS-03?"
+  },
+  {
+   "qid": "Q33",
+   "dev": "Verifications covering REQ-EPS-02.",
+   "heldout": "List verifications for REQ-EPS-02."
+  },
+  {
+   "qid": "Q34",
+   "dev": "Impact of DEC-03.",
+   "heldout": "Items affected by DEC-03."
+  },
+  {
+   "qid": "Q35",
+   "dev": "DEC-09 affected items.",
+   "heldout": "What is impacted by DEC-09?"
+  },
+  {
+   "qid": "Q36",
+   "dev": "Parts supplied by Gyrodyne Labs.",
+   "heldout": "List Gyrodyne Labs parts."
+  },
+  {
+   "qid": "Q37",
+   "dev": "Parts from Skylink RF.",
+   "heldout": "Show Skylink RF supplied parts."
+  },
+  {
+   "qid": "Q38",
+   "dev": "Launch date?",
+   "heldout": "When is launch?"
+  },
+  {
+   "qid": "Q39",
+   "dev": "Project manager name?",
+   "heldout": "Identify the project manager."
+  },
+  {
+   "qid": "Q40",
+   "dev": "Star tracker cost?",
+   "heldout": "Cost of the star tracker."
+  },
+  {
+   "qid": "Q41",
+   "dev": "Impact analysis for PART-ADCS-XX-99.",
+   "heldout": "What is affected by PART-ADCS-XX-99?"
+  },
+  {
+   "qid": "Q42",
+   "dev": "Customer-rejected requirements in 2019.",
+   "heldout": "Requirements rejected by customer during 2019."
+  }
+ ]
+}
