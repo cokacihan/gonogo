@@ -71,6 +71,8 @@ def build(dataset: dict, path: Path = STORE, results: dict | None = None) -> dic
     db = relate.connect(str(path))
     try:
         db.execute("CREATE INDEX entity_id IF NOT EXISTS FOR (n:Entity) ON (n.id)")
+        for label in LABELS + ["TestRun"]:  # per-label id indexes (Relate's planner hint for MATCH (:Label {id: ...}))
+            db.execute(f"CREATE INDEX {label.lower()}_id IF NOT EXISTS FOR (n:{label}) ON (n.id)")
         for label in LABELS + ["TestRun"]:
             rows = [dict(n, embedding=embed(n["text"])) for n in nodes_by_label.get(label, [])]
             if rows:  # label names come from the fixed whitelist above, never from input

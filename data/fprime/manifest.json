@@ -2,11 +2,11 @@
   "format_version": 5,
   "next_node_id": 3847,
   "next_rel_id": 8231,
-  "checkpoint_lsn": 23,
-  "commit_ts": 23,
+  "checkpoint_lsn": 32,
+  "commit_ts": 32,
   "node_parts": [
     {
-      "path": "nodes/0-262144-bf903278036684e2d47ad354f8c2df02.parquet",
+      "path": "nodes/0-262144-312b4c37beb728ffcfa49d6306a3c4dc.parquet",
       "id_lo": 0,
       "id_hi": 262144,
       "rows": 3847,
@@ -15,7 +15,7 @@
   ],
   "rel_parts": [
     {
-      "path": "relationships/0-262144-cdb46ba5ac45318bfd6fc532c09842df.parquet",
+      "path": "relationships/0-262144-a1ec0105ab46b477974ec01dd46f14d4.parquet",
       "id_lo": 0,
       "id_hi": 262144,
       "rows": 8231,
@@ -26,6 +26,11 @@
   "bytes_per_rel": 18.618272384886406,
   "codec": "parquet",
   "indexes": [
+    {
+      "name": "document_id",
+      "label": "Document",
+      "property": "id"
+    },
     {
       "name": "entity_embedding",
       "label": "Entity",
@@ -40,6 +45,46 @@
       "name": "entity_text",
       "label": "Entity",
       "property": "text,id#FULLTEXT#entity_text"
+    },
+    {
+      "name": "instance_id",
+      "label": "Instance",
+      "property": "id"
+    },
+    {
+      "name": "part_id",
+      "label": "Part",
+      "property": "id"
+    },
+    {
+      "name": "porttype_id",
+      "label": "PortType",
+      "property": "id"
+    },
+    {
+      "name": "requirement_id",
+      "label": "Requirement",
+      "property": "id"
+    },
+    {
+      "name": "testcase_id",
+      "label": "TestCase",
+      "property": "id"
+    },
+    {
+      "name": "testfile_id",
+      "label": "TestFile",
+      "property": "id"
+    },
+    {
+      "name": "testrun_id",
+      "label": "TestRun",
+      "property": "id"
+    },
+    {
+      "name": "verification_id",
+      "label": "Verification",
+      "property": "id"
     }
   ],
   "constraints": [],
@@ -59,6 +104,17 @@
       ]
     },
     "index_details": {
+      "document_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "Document"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
+      },
       "entity_embedding": {
         "kind": "Vector",
         "relationship": false,
@@ -92,9 +148,98 @@
           "id"
         ],
         "with_properties": []
+      },
+      "instance_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "Instance"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
+      },
+      "part_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "Part"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
+      },
+      "porttype_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "PortType"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
+      },
+      "requirement_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "Requirement"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
+      },
+      "testcase_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "TestCase"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
+      },
+      "testfile_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "TestFile"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
+      },
+      "testrun_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "TestRun"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
+      },
+      "verification_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "Verification"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
       }
     },
     "index_options": {
+      "document_id": {},
       "entity_embedding": {
         "indexConfig": {
           "t": "map",
@@ -141,7 +286,15 @@
             }
           }
         }
-      }
+      },
+      "instance_id": {},
+      "part_id": {},
+      "porttype_id": {},
+      "requirement_id": {},
+      "testcase_id": {},
+      "testfile_id": {},
+      "testrun_id": {},
+      "verification_id": {}
     },
     "graph_types": {},
     "current_graph_type": {
