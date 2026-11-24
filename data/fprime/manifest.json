@@ -1,0 +1,157 @@
+{
+  "format_version": 5,
+  "next_node_id": 1465,
+  "next_rel_id": 2187,
+  "checkpoint_lsn": 18,
+  "commit_ts": 18,
+  "node_parts": [
+    {
+      "path": "nodes/0-262144-a8c6750af105320bd76e08c7809a7e02.parquet",
+      "id_lo": 0,
+      "id_hi": 262144,
+      "rows": 1465,
+      "bytes": 822558
+    }
+  ],
+  "rel_parts": [
+    {
+      "path": "relationships/0-262144-fbe3d5fc3878007f9cb597085e4029db.parquet",
+      "id_lo": 0,
+      "id_hi": 262144,
+      "rows": 2187,
+      "bytes": 32453
+    }
+  ],
+  "bytes_per_node": 561.4730375426622,
+  "bytes_per_rel": 14.839048925468678,
+  "codec": "parquet",
+  "indexes": [
+    {
+      "name": "entity_embedding",
+      "label": "Entity",
+      "property": "embedding#VECTOR#entity_embedding"
+    },
+    {
+      "name": "entity_id",
+      "label": "Entity",
+      "property": "id"
+    },
+    {
+      "name": "entity_text",
+      "label": "Entity",
+      "property": "text,id#FULLTEXT#entity_text"
+    }
+  ],
+  "constraints": [],
+  "theater": {
+    "databases": {
+      "neo4j": [
+        25,
+        false
+      ],
+      "system": [
+        25,
+        false
+      ],
+      "system_ontologies": [
+        25,
+        false
+      ]
+    },
+    "index_details": {
+      "entity_embedding": {
+        "kind": "Vector",
+        "relationship": false,
+        "labels": [
+          "Entity"
+        ],
+        "properties": [
+          "embedding"
+        ],
+        "with_properties": []
+      },
+      "entity_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "Entity"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
+      },
+      "entity_text": {
+        "kind": "Fulltext",
+        "relationship": false,
+        "labels": [
+          "Entity"
+        ],
+        "properties": [
+          "text",
+          "id"
+        ],
+        "with_properties": []
+      }
+    },
+    "index_options": {
+      "entity_embedding": {
+        "indexConfig": {
+          "t": "map",
+          "v": {
+            "vector.default_search_expansion_factor": {
+              "t": "float",
+              "v": 3.0
+            },
+            "vector.dimensions": {
+              "t": "int",
+              "v": 256
+            },
+            "vector.hnsw.ef_construction": {
+              "t": "int",
+              "v": 100
+            },
+            "vector.hnsw.m": {
+              "t": "int",
+              "v": 16
+            },
+            "vector.quantization.type": {
+              "t": "string",
+              "v": "BINARY"
+            },
+            "vector.similarity_function": {
+              "t": "string",
+              "v": "COSINE"
+            }
+          }
+        }
+      },
+      "entity_id": {},
+      "entity_text": {
+        "indexConfig": {
+          "t": "map",
+          "v": {
+            "fulltext.analyzer": {
+              "t": "string",
+              "v": "standard-no-stop-words"
+            },
+            "fulltext.eventually_consistent": {
+              "t": "bool",
+              "v": false
+            }
+          }
+        }
+      }
+    },
+    "graph_types": {},
+    "current_graph_type": {
+      "node_types": [],
+      "edge_types": [],
+      "constraints": [],
+      "drop_constraint_names": []
+    },
+    "derived_constraints": {}
+  },
+  "query_engine": "in-memory",
+  "write_engine": "local"
+}

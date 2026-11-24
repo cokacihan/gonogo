@@ -178,6 +178,68 @@ _t("graph_rag", "GraphRAG: vector entry points expanded one hop through the grap
    params=("q", "dim", "k"))
 
 
+# ------------------------------------------------------------------ F´ (real data) templates
+FP_IMPACT_HOPS = 2
+
+_t("fp_unit_test_without_citation", "Requirements declaring 'Unit Test' that no unit test cites with REQUIREMENT()",
+   "MATCH (p:Part)-[:SATISFIES]->(r:Requirement)-[:VERIFIED_BY]->(v:Verification {method: 'Unit Test'}) "
+   "WHERE NOT (v)-[:EVIDENCED_BY]->(:TestFile) "
+   "RETURN r.id AS id, p.id AS component, p.has_unit_tests AS component_has_tests ORDER BY component, id")
+
+_t("fp_cited_requirements", "Requirements cited by unit tests (with the citing files)",
+   "MATCH (t:TestFile)-[c:CITES]->(r:Requirement) "
+   "RETURN r.id AS id, collect(t.id) AS files, reduce(f = [], x IN collect(c.functions) | f + x) AS functions "
+   "ORDER BY id")
+
+_t("fp_unknown_citations", "Test files citing requirement IDs that no SDD defines",
+   "MATCH (t:TestFile) WHERE size(t.unknown_citations) > 0 "
+   "OPTIONAL MATCH (t)-[:TESTS]->(p:Part) "
+   "RETURN t.id AS file, p.id AS component, t.unknown_citations AS unknown_ids ORDER BY file",
+   id_columns=("unknown_ids",))
+
+_t("fp_duplicate_requirement_ids", "Requirement IDs defined more than once",
+   "MATCH (r:Requirement) WHERE r.id CONTAINS '@' "
+   "RETURN split(r.id, '@')[0] AS id, r.component AS component, r.source AS source ORDER BY id, component")
+
+_t("fp_components_without_requirements", "Components in the Ref deployment whose directory has no SDD requirements",
+   "MATCH (i:Instance)-[:INSTANCE_OF]->(p:Part) WHERE NOT (p)-[:SATISFIES]->(:Requirement) "
+   "RETURN p.id AS id, collect(i.name) AS instances, p.has_sdd AS has_sdd ORDER BY id")
+
+_t("fp_component_coverage", "Requirement evidence per component (cited by a unit test)",
+   "MATCH (p:Part)-[:SATISFIES]->(r:Requirement) "
+   "WITH p, r, EXISTS { MATCH (r)<-[:CITES]-(:TestFile) } AS cited "
+   "WITH p, count(r) AS requirements, sum(CASE WHEN cited THEN 1 ELSE 0 END) AS cited "
+   "RETURN p.id AS component, requirements, cited, round(100.0 * cited / requirements, 1) AS percent "
+   "ORDER BY percent, component", id_columns=())
+
+_t("fp_component_impact", "Change impact of a component through the Ref deployment's port connections",
+   "MATCH (p:Part {id: $id}) "
+   "OPTIONAL MATCH (p)<-[:INSTANCE_OF]-(src:Instance) "
+   f"OPTIONAL MATCH (src)-[:CONNECTS_TO*1..{FP_IMPACT_HOPS}]->(dst:Instance) "
+   "WITH p, collect(DISTINCT src) AS srcs, collect(DISTINCT dst) AS dsts "
+   "WITH p, srcs, [d IN dsts WHERE NOT d IN srcs] AS downstream "
+   "UNWIND CASE WHEN size(downstream) = 0 THEN [null] ELSE downstream END AS d "
+   "OPTIONAL MATCH (d)-[:INSTANCE_OF]->(q:Part) "
+   "WITH p, srcs, downstream, collect(DISTINCT q) AS parts "
+   "WITH srcs, downstream, [x IN parts WHERE x <> p] AS parts, [p] + [x IN parts WHERE x <> p] AS scope "
+   "UNWIND scope AS s "
+   "OPTIONAL MATCH (s)-[:SATISFIES]->(r:Requirement) "
+   "OPTIONAL MATCH (r)-[:VERIFIED_BY]->(v:Verification) "
+   "WITH srcs, downstream, parts, collect(DISTINCT r.id) AS requirements, collect(DISTINCT v.id) AS verifications "
+   "RETURN [x IN srcs | x.id] AS instances, [x IN downstream | x.id] AS downstream_instances, "
+   "[x IN parts | x.id] AS parts, requirements, verifications, "
+   "size(downstream) + size(requirements) + size(verifications) AS blast_radius",
+   params=("id",), id_columns=("downstream_instances", "parts", "requirements", "verifications"))
+
+_t("fp_instance_neighbours", "Port connections of one Ref deployment instance",
+   "MATCH (i:Instance {id: $id})-[c:CONNECTS_TO]-(o:Instance) "
+   "RETURN o.id AS id, CASE WHEN startNode(c) = i THEN 'out' ELSE 'in' END AS direction, "
+   "c.src_port AS src_port, c.dst_port AS dst_port, c.graph AS graph ORDER BY direction, id",
+   params=("id",))
+
+_t("fp_part_by_type", "Component directory for an FPP type name",
+   "MATCH (p:Part) WHERE $type IN p.types RETURN p.id AS id", params=("type",))
+
 def run(db, name: str, **params) -> tuple[list[dict], str, dict]:
     """Execute a template. Returns (rows as plain dicts, cypher text, bound params)."""
     t = T[name]
