@@ -18,10 +18,10 @@ FPRIME_DB_PATH = DATA_DIR / "fprime"  # directory mode: WAL + Parquet checkpoint
 FPRIME_DATASET = DATA_DIR / "fprime_dataset.json"
 
 LABELS = ["Subsystem", "Requirement", "Verification", "Part", "Risk", "Decision", "Anomaly", "Document",
-          "TestFile", "Instance"]
+          "TestFile", "Instance", "TestCase", "PortType"]
 REL_TYPES = ["DERIVES_FROM", "ALLOCATED_TO", "VERIFIED_BY", "PART_OF", "DEPENDS_ON", "SATISFIES",
              "THREATENS", "MITIGATED_BY", "AFFECTS", "CONFLICTS_WITH", "OBSERVED_IN", "INVOLVES",
-             "DOCUMENTED_IN", "CITES", "EVIDENCED_BY", "TESTS", "INSTANCE_OF", "CONNECTS_TO"]
+             "DOCUMENTED_IN", "CITES", "EVIDENCED_BY", "TESTS", "INSTANCE_OF", "CONNECTS_TO", "USES_PORT"]
 
 
 def _remove_store(path: Path) -> None:

@@ -26,7 +26,19 @@ SKIP_PARTS = {"googletest", "test", "build-fprime-automatic-native"}
 
 REQ_ID = re.compile(r"^[A-Z][A-Z0-9]*(?:[-_][A-Z0-9]+)*[-_]\d+[A-Za-z]?$")
 REQ_MACRO = re.compile(r'REQUIREMENT\(\s*"([^"]+)"\s*\)')
-FUNC_DEF = re.compile(r"^\s*(?:void|bool|int|[A-Za-z_:<>]+)\s+(?:[A-Za-z_]\w*::)*([A-Za-z_]\w*)\s*\([^;]*$")
+# function definition start, e.g. "void HealthTester ::nominalTlm() {" (return type, optional Class ::, name)
+FUNC_DEF = re.compile(r"^\s*(?:[\w:<>,*&]+\s+)+(?:[A-Za-z_]\w*\s*::\s*)*~?([A-Za-z_]\w*)\s*\([^;]*$")
+NOT_FUNCS = {"if", "for", "while", "switch", "return", "else", "sizeof", "catch"}
+GTEST = re.compile(r"^\s*TEST(?:_F)?\(\s*(\w+)\s*,\s*(\w+)\s*\)")
+METHOD_CALL = re.compile(r"\b\w+\s*(?:\.|->)\s*(\w+)\s*\(")
+PORT_DECL = re.compile(r"^\s*(?:(sync|async|guarded)\s+)?(input|output)\s+port\s+(\w+)\s*:\s*(?:\[[^\]]*\]\s*)?([A-Za-z_][\w.]*)")
+SPECIAL_PORT = re.compile(r"^\s*(command recv|command reg|command resp|event|text event|telemetry|time get|param get|"
+                          r"param set|product get|product request|product recv|product send)\s+port\s+(\w+)")
+PORT_TYPE_DEF = re.compile(r"^\s*port\s+(\w+)\s*(?:\(|$)")
+SPECIAL_TYPES = {"command recv": "Fw.Cmd", "command reg": "Fw.CmdReg", "command resp": "Fw.CmdResponse",
+                 "event": "Fw.Log", "text event": "Fw.LogText", "telemetry": "Fw.Tlm", "time get": "Fw.Time",
+                 "param get": "Fw.PrmGet", "param set": "Fw.PrmSet", "product get": "Fw.DpGet",
+                 "product request": "Fw.DpRequest", "product recv": "Fw.DpResponse", "product send": "Fw.DpSend"}
 COMPONENT = re.compile(r"^\s*(active|passive|queued)\s+component\s+(\w+)\b")
 MODULE = re.compile(r"^\s*module\s+(\w+)\s*\{")
 INSTANCE_DEF = re.compile(r"^\s*instance\s+(\$?\w+)\s*:\s*([\w.]+)")
@@ -155,13 +167,90 @@ def test_citations(comp_dir: Path, repo: Path) -> list[dict]:
         cited: dict[str, set[str]] = defaultdict(set)
         for ln in f.read_text(encoding="utf-8", errors="replace").splitlines():
             m = FUNC_DEF.match(ln)
-            if m:
+            if m and m.group(1) not in NOT_FUNCS:
                 func = m.group(1)
             for rid in REQ_MACRO.findall(ln):
                 cited[rid].add(func or "?")
         if cited:
             out.append({"path": _rel(f, repo), "cites": {k: sorted(v) for k, v in sorted(cited.items())}})
     return out
+
+
+def test_cases(comp_dir: Path, repo: Path) -> list[dict]:
+    """gtest TEST(Suite, Name) cases in the component's test sources and the tester methods they call."""
+    out = []
+    test_dir = comp_dir / "test"
+    if not test_dir.is_dir():
+        return out
+    for f in sorted(test_dir.rglob("*.cpp")):
+        lines = f.read_text(encoding="utf-8", errors="replace").splitlines()
+        i = 0
+        while i < len(lines):
+            m = GTEST.match(lines[i])
+            if not m:
+                i += 1
+                continue
+            depth, body, j = 0, [], i
+            while j < len(lines):
+                depth += lines[j].count("{") - lines[j].count("}")
+                body.append(lines[j])
+                j += 1
+                if depth <= 0 and any("{" in b for b in body):
+                    break
+            calls = sorted({c for b in body[1:] for c in METHOD_CALL.findall(b)})
+            out.append({"suite": m.group(1), "name": m.group(2), "file": _rel(f, repo), "calls": calls})
+            i = j
+    return out
+
+
+# ---------------------------------------------------------------- ports
+def _walk_fpp(repo: Path):
+    """Yield (file, module path list, inside-component name or None, stripped line) for FPP sources."""
+    for root in ROOTS:
+        for f in sorted((repo / root).rglob("*.fpp")):
+            if _skip(f.relative_to(repo)):
+                continue
+            stack: list[tuple[str, int, str]] = []  # (name, depth before, kind)
+            depth = 0
+            for ln in _strip_fpp(f.read_text(encoding="utf-8", errors="replace")):
+                if (m := MODULE.match(ln)):
+                    stack.append((m.group(1), depth, "module"))
+                elif (c := COMPONENT.match(ln)):
+                    stack.append((c.group(2), depth, "component"))
+                mods = [s for s, _, k in stack if k == "module"]
+                comp = next((s for s, _, k in reversed(stack) if k == "component"), None)
+                yield f, mods, comp, ln
+                depth += ln.count("{") - ln.count("}")
+                while stack and depth <= stack[-1][1]:
+                    stack.pop()
+
+
+def port_model(repo: Path, types: dict[str, str]) -> tuple[dict[str, str], dict[str, list[dict]]]:
+    """Port type definitions (qualified name -> file) and port declarations per component directory."""
+    defs: dict[str, str] = {}
+    decls_raw: list[tuple[str, list[str], dict]] = []
+    for f, mods, comp, ln in _walk_fpp(repo):
+        if comp is None and (p := PORT_TYPE_DEF.match(ln)) and "=" not in ln:
+            defs.setdefault(".".join(mods + [p.group(1)]), _rel(f, repo))
+        if comp is None:
+            continue
+        qual = ".".join(mods + [comp])
+        if (d := PORT_DECL.match(ln)):
+            decls_raw.append((qual, mods, {"name": d.group(3), "direction": d.group(2), "kind": d.group(1) or "",
+                                           "type": d.group(4), "special": False}))
+        elif (s := SPECIAL_PORT.match(ln)):
+            decls_raw.append((qual, mods, {"name": s.group(2), "direction": "special", "kind": s.group(1),
+                                           "type": SPECIAL_TYPES[s.group(1)], "special": True}))
+    by_dir: dict[str, list[dict]] = defaultdict(list)
+    for qual, mods, d in decls_raw:
+        t = d["type"]
+        cands = [t] if "." in t else []
+        cands += [".".join(mods[:k] + [t]) for k in range(len(mods), -1, -1)] + [f"Fw.{t}", f"Svc.{t}", f"Drv.{t}"]
+        resolved = next((c for c in cands if c in defs), None)
+        comp_dir = types.get(qual)
+        if comp_dir:
+            by_dir[comp_dir].append(dict(d, type=resolved or t, resolved=resolved is not None))
+    return defs, dict(by_dir)
 
 
 # ---------------------------------------------------------------- topology
@@ -340,14 +429,34 @@ def build_dataset(repo: Path) -> dict:
                     nodes["Verification"].append({"id": vid, "method": m, "status": "DECLARED",
                                                   "text": f"{m} verification of {rid} declared in SDD"})
                     edges.append({"src": rid, "type": "VERIFIED_BY", "dst": vid})
+        func_cites: dict[str, set[str]] = defaultdict(set)  # tester method -> cited requirement ids
         for tf in test_citations(repo / d, repo):
             nodes["TestFile"].append({"id": tf["path"], "text": f"Unit test source {tf['path']}",
                                       "cited_requirements": sorted(tf["cites"])})
             edges.append({"src": tf["path"], "type": "TESTS", "dst": d})
             for rid, funcs in tf["cites"].items():
                 edges.append({"src": tf["path"], "type": "CITES", "dst": rid, "functions": funcs})
+                for fn in funcs:
+                    func_cites[fn].add(rid)
+        seen_cases: set[str] = set()
+        for tc in test_cases(repo / d, repo):
+            cid = f"{d}::{tc['suite']}.{tc['name']}"
+            if cid in seen_cases:  # same gtest name in two test programs of one component
+                cid = f"{cid}@{tc['file']}"
+            n = 2
+            while cid in seen_cases:  # same name twice in one file (e.g. under #ifdef branches)
+                cid, n = f"{cid}#{n}", n + 1
+            seen_cases.add(cid)
+            cited = sorted({r for c in tc["calls"] for r in func_cites.get(c, ())})
+            nodes["TestCase"].append({"id": cid, "suite": tc["suite"], "name": tc["name"], "file": tc["file"],
+                                      "gtest_filter": f"{tc['suite']}.{tc['name']}", "calls": tc["calls"],
+                                      "cited": cited, "text": f"Unit test case {tc['suite']}.{tc['name']} of {d}"})
+            edges.append({"src": cid, "type": "TESTS", "dst": d})
 
     req_ids = {r["id"] for r in nodes["Requirement"]}
+    for tc in nodes["TestCase"]:
+        tc["unknown_citations"] = [r for r in tc["cited"] if r not in req_ids]
+        edges += [{"src": tc["id"], "type": "CITES", "dst": r} for r in tc["cited"] if r in req_ids]
     dangling = [e for e in edges if e["type"] == "CITES" and e["dst"] not in req_ids]
     unknown_by_file: dict[str, list[str]] = defaultdict(list)
     for e in dangling:
@@ -360,6 +469,16 @@ def build_dataset(repo: Path) -> dict:
         vid = f"VER:{e['dst']}:UNIT_TEST"
         if any(v["id"] == vid for v in nodes["Verification"]):
             edges.append({"src": vid, "type": "EVIDENCED_BY", "dst": e["src"]})
+
+    port_defs, ports_by_dir = port_model(repo, types)
+    used_types = {p["type"] for ps in ports_by_dir.values() for p in ps}
+    for t in sorted(used_types | set(port_defs)):
+        nodes["PortType"].append({"id": f"port:{t}", "name": t, "defined_in": port_defs.get(t),
+                                  "text": f"F Prime port type {t} {_words(t.split('.')[-1])}"})
+    for d, ps in sorted(ports_by_dir.items()):
+        for p in ps:
+            edges.append({"src": d, "type": "USES_PORT", "dst": f"port:{p['type']}", "port": p["name"],
+                          "direction": p["direction"], "kind": p["kind"], "special": p["special"]})
 
     topo = ref_topology(repo)
     part_ids = {p["id"] for p in nodes["Part"]}
