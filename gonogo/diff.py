@@ -96,13 +96,23 @@ def check(base_db, head_db, changed_files: list[str] | None = None) -> tuple[dic
     for k, v in d["findings"].items():
         blocking += [f"new finding ({k}): {x}" for x in v["new"]]
     blocking += [f"lost every own citing test case: {i}" for i in d["citations"]["lost"]]
-    blocking += [f"new requirement without an own citing test case: {i}" for i in d["requirements"]["added_uncited"]]
+    # an uncited new requirement blocks only where the component already cites requirements (practice regression);
+    # components that never use REQUIREMENT() get a warning instead, so the gate is not noisy on F´'s current practice
+    base_s = snapshot(base_db)
+    citing_comps = {r["component"] for r in base_s["reqs"].values() if r["own_cites"] > 0}
+    head_reqs = snapshot(head_db)["reqs"]
+    warnings = []
+    for i in d["requirements"]["added_uncited"]:
+        if head_reqs[i]["component"] in citing_comps:
+            blocking.append(f"new requirement without an own citing test case, in a component that cites requirements: {i}")
+        else:
+            warnings.append(f"new requirement without an own citing test case (component does not use REQUIREMENT()): {i}")
     imp = impact(head_db, files=changed_files or [])
-    md = render_check(d, blocking, imp, changed_files or [])
-    return {"diff": d, "blocking": blocking, "impact": imp}, md, (1 if blocking else 0)
+    md = render_check(d, blocking, imp, changed_files or [], warnings)
+    return {"diff": d, "blocking": blocking, "warnings": warnings, "impact": imp}, md, (1 if blocking else 0)
 
 
-def render_check(d: dict, blocking: list[str], imp: dict, files: list[str]) -> str:
+def render_check(d: dict, blocking: list[str], imp: dict, files: list[str], warnings: list[str] | None = None) -> str:
     status = "FAIL" if blocking else "PASS"
     b, h = d["base"], d["head"]
     lines = [f"## GoNoGo traceability gate: **{status}**", "",
@@ -111,6 +121,8 @@ def render_check(d: dict, blocking: list[str], imp: dict, files: list[str]) -> s
              f"{b['requirements_cited_by_own_tests']} → {h['requirements_cited_by_own_tests']}.", ""]
     if blocking:
         lines += ["### Blocking", ""] + [f"- {x}" for x in blocking] + [""]
+    if warnings:
+        lines += ["### Warnings", ""] + [f"- {x}" for x in warnings] + [""]
     if files:
         lines += [f"### Unit tests to re-run for {len(files)} changed file(s)", "",
                   f"{imp['test_cases']} test cases in {len(imp['rerun'])} components "
