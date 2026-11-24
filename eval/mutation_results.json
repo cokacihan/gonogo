@@ -1,0 +1,161 @@
+{
+ "seed": 2026,
+ "per_class": 3,
+ "fprime_commit": "6fff089e8e2035307105cad4b28631eea1552ff6",
+ "baseline_unchanged_check": true,
+ "seconds": 88.4,
+ "summary": {
+  "citation_deleted": {
+   "mutations": 3,
+   "gonogo_detected": 3,
+   "grep_detected": 3,
+   "with_collateral": 0
+  },
+  "citation_id_drift": {
+   "mutations": 3,
+   "gonogo_detected": 3,
+   "grep_detected": 3,
+   "with_collateral": 0
+  },
+  "cross_component_cite": {
+   "mutations": 3,
+   "gonogo_detected": 3,
+   "grep_detected": 0,
+   "with_collateral": 0
+  },
+  "duplicate_id": {
+   "mutations": 3,
+   "gonogo_detected": 3,
+   "grep_detected": 3,
+   "with_collateral": 0
+  },
+  "method_blanked": {
+   "mutations": 3,
+   "gonogo_detected": 3,
+   "grep_detected": 2,
+   "with_collateral": 0
+  }
+ },
+ "mutations": [
+  {
+   "class": "citation_id_drift",
+   "target": "FPRIME-PRG-004",
+   "file": "Svc\\PassiveRateGroup\\test\\ut\\PassiveRateGroupTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "SVC-CCSDS-AES-ENCRYPTOR-005",
+   "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "SVC-DPWRITER-008",
+   "file": "Svc\\DpWriter\\test\\ut\\DpWriterTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC_CHRONO_TIME_002",
+   "file": "Svc\\ChronoTime\\test\\ut\\ChronoTimeTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "FPRIME-PRG-002",
+   "file": "Svc\\PassiveRateGroup\\test\\ut\\PassiveRateGroupTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "REQ-TIMECONVERTER-005",
+   "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "SVC-VERSION-014",
+   "file": "Svc\\Version\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "ISF-PNG-002",
+   "file": "TestDeploymentsProject\\Ref\\PingReceiver\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "SVC-FILEHANDLING-002",
+   "file": "Svc\\Subtopologies\\FileHandling\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "SVC-ROUTER-006",
+   "file": "Svc\\FprimeRouter\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "TCP-CLIENT-COMP-003",
+   "file": "Drv\\TcpClient\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "PQ-011",
+   "file": "Os\\Generic\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "PMQ-013",
+   "file": "Svc\\DpManager\\test\\ut\\DpManagerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "TCP-CLIENT-COMP-002",
+   "file": "Svc\\EventManager\\test\\ut\\EventManagerTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "DRV-BSB-ADAPTER-001",
+   "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  }
+ ]
+}

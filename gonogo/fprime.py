@@ -22,6 +22,22 @@ from pathlib import Path
 
 ROOTS = ["Svc", "Drv", "Fw", "Os", "CFDP", "Utils", "TestDeploymentsProject/Ref"]
 REF_TOP = "TestDeploymentsProject/Ref/Top"
+LEGACY_REF = "Ref"  # releases before 4.x keep the Ref deployment at the repository root
+
+
+def roots(repo: Path) -> list[str]:
+    """Source roots that exist in this checkout (layout differs between F´ releases)."""
+    out = [r for r in ROOTS if (repo / r).is_dir()]
+    if not (repo / "TestDeploymentsProject" / "Ref").is_dir() and (repo / LEGACY_REF).is_dir():
+        out.append(LEGACY_REF)
+    return out
+
+
+def ref_top(repo: Path) -> Path | None:
+    for cand in (REF_TOP, f"{LEGACY_REF}/Top"):
+        if (repo / cand / "topology.fpp").exists():
+            return repo / cand
+    return None
 SKIP_PARTS = {"googletest", "test", "build-fprime-automatic-native"}
 
 REQ_ID = re.compile(r"^[A-Z][A-Z0-9]*(?:[-_][A-Z0-9]+)*[-_]\d+[A-Za-z]?$")
@@ -84,7 +100,7 @@ def _strip_fpp(text: str) -> list[str]:
 def component_types(repo: Path) -> dict[str, str]:
     """Qualified FPP component type (e.g. Svc.CommandDispatcher) -> component directory."""
     out: dict[str, str] = {}
-    for root in ROOTS:
+    for root in roots(repo):
         for f in sorted((repo / root).rglob("*.fpp")):
             if _skip(f.relative_to(repo)):
                 continue
@@ -251,7 +267,7 @@ def test_cases(comp_dir: Path, repo: Path) -> list[dict]:
 # ---------------------------------------------------------------- ports
 def _walk_fpp(repo: Path):
     """Yield (file, module path list, inside-component name or None, stripped line) for FPP sources."""
-    for root in ROOTS:
+    for root in roots(repo):
         for f in sorted((repo / root).rglob("*.fpp")):
             if _skip(f.relative_to(repo)):
                 continue
@@ -342,12 +358,14 @@ class _Model:
     def __init__(self, repo: Path):
         self.tops: dict[str, dict] = {}   # "Module.Topology" -> block (+ "module")
         self.defs: dict[str, str] = {}    # qualified instance -> component type
-        ref_files = sorted((repo / REF_TOP).glob("*.fpp"))
+        top_dir = ref_top(repo)
+        ref_files = sorted(top_dir.glob("*.fpp")) if top_dir else []
         self.defs.update(_instance_defs(ref_files, ""))
         for f in ref_files:
             for name, t in _topologies(_strip_fpp(f.read_text(encoding="utf-8"))).items():
                 self.tops[f"Ref.{name}"] = dict(t, module="")
-        for st_dir in sorted(p for p in (repo / "Svc" / "Subtopologies").iterdir() if p.is_dir()):
+        sub_root = repo / "Svc" / "Subtopologies"
+        for st_dir in sorted(p for p in sub_root.iterdir() if p.is_dir()) if sub_root.is_dir() else []:
             mod = st_dir.name
             files = sorted(st_dir.rglob("*.fpp"))
             self.defs.update(_instance_defs(files, f"{mod}."))
@@ -393,6 +411,8 @@ class _Model:
 
 def ref_topology(repo: Path) -> dict:
     m = _Model(repo)
+    if "Ref.Ref" not in m.tops:
+        return {"subtopologies": [], "topologies": [], "instances": {}, "connections": [], "unresolved": []}
     tops = m.closure("Ref.Ref")
     instances: dict[str, str] = {}
     resolved, unresolved = [], []
@@ -435,7 +455,7 @@ def build_dataset(repo: Path) -> dict:
         dirs_with_types[d].append(t)
 
     sdds = {}
-    for root in ROOTS:
+    for root in roots(repo):
         for f in sorted((repo / root).rglob("sdd.md")):
             if f.parent.name == "docs" and not _skip(f.relative_to(repo)):
                 sdds[_rel(f.parent.parent, repo)] = f

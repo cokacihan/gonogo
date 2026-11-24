@@ -58,3 +58,26 @@ def test_agent_routes_and_abstains(db):
     for q in ["How is ABC-999 verified?", "What is the launch date?", "What breaks if Svc.NoSuchThing changes?"]:
         a = ag.ask(q)
         assert a.status == "unknown" and a.answer_ids == [], q
+
+
+def test_results_map_subdirectory_executables_to_component():
+    from gonogo.db import results_edges
+    res = {"fprime_commit": "x", "run": {"id": "1"},
+           "cases": [{"id": "Drv/Ip/Tcp/test::E.T", "status": "PASSED", "time_s": 0.0},
+                     {"id": "CFDP/Checksum::C.One", "status": "PASSED", "time_s": 0.0}]}
+    run, edges, unmapped = results_edges(res, {"Drv/Ip::E.T"})
+    assert run["id"] == "run:1"
+    assert [(e["src"], e["status"]) for e in edges] == [("Drv/Ip::E.T", "PASSED")]
+    assert unmapped == ["CFDP/Checksum::C.One"]
+
+
+def test_diff_of_identical_graphs_is_empty(store_norun):
+    from gonogo.db import connect
+    from gonogo.diff import check, diff, snapshot
+    a = connect(store_norun)
+    s = snapshot(a)
+    d = diff(s, s)
+    assert not any(d["requirements"][k] for k in ("added", "removed", "text_changed", "methods_changed"))
+    assert all(not v["new"] for v in d["findings"].values())
+    _, md, code = check(a, a, ["Svc/Health/Health.cpp"])
+    assert code == 0 and "PASS" in md and "Svc/Health" in md

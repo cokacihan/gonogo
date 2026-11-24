@@ -8,6 +8,8 @@
                                         unit tests to re-run, verdicts put back in question
   gonogo findings                       traceability hygiene findings (IDs that do not line up)
   gonogo ask "question"                 rule-based question answering with Cypher receipts
+  gonogo diff BASE HEAD                 compare two graphs (stores or dataset JSONs), e.g. two F´ releases
+  gonogo check --base B --head H [--files F...]   CI gate: PASS/FAIL + unit tests to re-run
   gonogo export --single-file OUT.rl | --json OUT.json
 """
 from __future__ import annotations
@@ -179,6 +181,40 @@ def cmd_ask(args) -> int:
     return 0 if a.status == "answered" else 2
 
 
+def cmd_diff(args) -> int:
+    from gonogo.diff import diff, open_any, snapshot
+    b, h = open_any(Path(args.base)), open_any(Path(args.head))
+    d = diff(snapshot(b), snapshot(h))
+    if args.json:
+        print(json.dumps(d, indent=1, default=list))
+        return 0
+    print(c(f"F´ {str(d['base']['commit'])[:10]} -> {str(d['head']['commit'])[:10]}", "bold"))
+    for k in d["base"]:
+        if k != "commit":
+            print(f"  {k:<34} {d['base'][k]!s:>8} -> {d['head'][k]!s:<8}")
+    r = d["requirements"]
+    print(f"\n  requirements added {len(r['added'])}, removed {len(r['removed'])}, text changed {len(r['text_changed'])}, "
+          f"methods changed {len(r['methods_changed'])}; citations gained {len(d['citations']['gained'])}, "
+          f"lost {len(d['citations']['lost'])}")
+    print(f"  components added {len(d['components']['added'])}, removed {len(d['components']['removed'])}; "
+          f"port uses added {len(d['ports']['uses_added'])}, removed {len(d['ports']['uses_removed'])}")
+    for k, v in d["findings"].items():
+        print(f"  findings {k}: new {len(v['new'])}, resolved {len(v['resolved'])}")
+    return 0
+
+
+def cmd_check(args) -> int:
+    from gonogo.diff import check, open_any
+    files = args.files
+    if args.files_from:
+        files = [ln.strip() for ln in Path(args.files_from).read_text(encoding="utf-8").splitlines() if ln.strip()]
+    res, md, code = check(open_any(Path(args.base)), open_any(Path(args.head)), files)
+    if args.markdown:
+        Path(args.markdown).write_text(md, encoding="utf-8")
+    print(md)
+    return code
+
+
 def cmd_export(args) -> int:
     if args.json:
         Path(args.json).parent.mkdir(parents=True, exist_ok=True)
@@ -212,6 +248,12 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("findings"); p.set_defaults(fn=cmd_findings); p.add_argument("--json", action="store_true")
     p = sub.add_parser("ask"); p.set_defaults(fn=cmd_ask)
     p.add_argument("question"); p.add_argument("--json", action="store_true")
+    p = sub.add_parser("diff", help="compare two stores or dataset JSONs"); p.set_defaults(fn=cmd_diff)
+    p.add_argument("base"); p.add_argument("head"); p.add_argument("--json", action="store_true")
+    p = sub.add_parser("check", help="CI gate between a base and a head graph"); p.set_defaults(fn=cmd_check)
+    p.add_argument("--base", required=True); p.add_argument("--head", required=True)
+    p.add_argument("--files", nargs="*", default=[]); p.add_argument("--files-from")
+    p.add_argument("--markdown")
     p = sub.add_parser("export"); p.set_defaults(fn=cmd_export)
     p.add_argument("--json"); p.add_argument("--single-file")
     p.add_argument("--dataset", default=str(store.DATASET)); p.add_argument("--results", default=str(store.RESULTS))

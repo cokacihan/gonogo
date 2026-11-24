@@ -41,10 +41,17 @@ def results_edges(results: dict | None, case_ids: set[str]) -> tuple[dict | None
     run_id = f"run:{results['run'].get('id') or 'local'}"
     run = {"id": run_id, "fprime_commit": results["fprime_commit"], "url": results["run"].get("url", ""),
            "runner": results["run"].get("runner", ""), "text": f"F Prime unit-test run {run_id}"}
-    edges, unmapped = [], []
+    edges, unmapped, seen = [], [], set()
     for c in results["cases"]:
-        if c["id"] in case_ids:
-            edges.append({"src": c["id"], "type": "RAN_IN", "dst": run_id, "status": c["status"], "time_s": c["time_s"]})
+        comp, _, name = c["id"].partition("::")
+        parts = comp.split("/")
+        # executables built from a sub-directory (e.g. Drv/Ip/Tcp/test) belong to the closest component above it
+        cid = next((f"{'/'.join(parts[:k])}::{name}" for k in range(len(parts), 0, -1)
+                    if f"{'/'.join(parts[:k])}::{name}" in case_ids), None)
+        if cid and cid not in seen:
+            seen.add(cid)
+            edges.append({"src": cid, "type": "RAN_IN", "dst": run_id, "status": c["status"], "time_s": c["time_s"],
+                          "reported_as": c["id"]})
         else:
             unmapped.append(c["id"])
     return run, edges, unmapped
