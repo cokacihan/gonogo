@@ -1,0 +1,2638 @@
+{
+ "seed": 2026,
+ "mission": "KESTREL-3U (fictional)",
+ "nodes": {
+  "Subsystem": [
+   {
+    "id": "EPS",
+    "name": "Electrical Power Subsystem",
+    "text": "EPS Electrical Power Subsystem"
+   },
+   {
+    "id": "ADCS",
+    "name": "Attitude Determination and Control Subsystem",
+    "text": "ADCS Attitude Determination and Control Subsystem"
+   },
+   {
+    "id": "COMMS",
+    "name": "Communications Subsystem",
+    "text": "COMMS Communications Subsystem"
+   },
+   {
+    "id": "OBC",
+    "name": "On-Board Computer and Data Handling",
+    "text": "OBC On-Board Computer and Data Handling"
+   },
+   {
+    "id": "STR",
+    "name": "Structure and Mechanisms",
+    "text": "STR Structure and Mechanisms"
+   },
+   {
+    "id": "THERM",
+    "name": "Thermal Control Subsystem",
+    "text": "THERM Thermal Control Subsystem"
+   },
+   {
+    "id": "PAY",
+    "name": "Multispectral Imager Payload",
+    "text": "PAY Multispectral Imager Payload"
+   }
+  ],
+  "Requirement": [
+   {
+    "id": "REQ-MIS-01",
+    "level": "MISSION",
+    "subsystem": "SYS",
+    "text": "The mission shall acquire multispectral images of agricultural regions at 30 m ground sampling distance from a 500 km sun-synchronous orbit."
+   },
+   {
+    "id": "REQ-MIS-02",
+    "level": "MISSION",
+    "subsystem": "SYS",
+    "text": "The mission shall operate for at least 2 years in orbit."
+   },
+   {
+    "id": "REQ-MIS-03",
+    "level": "MISSION",
+    "subsystem": "SYS",
+    "text": "The spacecraft shall comply with the 3U CubeSat design specification and deorbit within 25 years."
+   },
+   {
+    "id": "REQ-SYS-01",
+    "level": "SYSTEM",
+    "subsystem": "SYS",
+    "text": "The spacecraft shall point the imager to a ground target with an accuracy better than 0.5 deg (3 sigma)."
+   },
+   {
+    "id": "REQ-SYS-02",
+    "level": "SYSTEM",
+    "subsystem": "SYS",
+    "text": "The spacecraft shall downlink at least 800 MB of payload data per day."
+   },
+   {
+    "id": "REQ-SYS-03",
+    "level": "SYSTEM",
+    "subsystem": "SYS",
+    "text": "The spacecraft shall provide a positive power balance in all nominal operating modes over one orbit."
+   },
+   {
+    "id": "REQ-SYS-04",
+    "level": "SYSTEM",
+    "subsystem": "SYS",
+    "text": "All units shall remain within their operational temperature limits in hot and cold cases."
+   },
+   {
+    "id": "REQ-SYS-05",
+    "level": "SYSTEM",
+    "subsystem": "SYS",
+    "text": "The spacecraft mass shall not exceed 4.0 kg."
+   },
+   {
+    "id": "REQ-SYS-06",
+    "level": "SYSTEM",
+    "subsystem": "SYS",
+    "text": "The spacecraft shall survive a total ionising dose of 10 krad(Si) without loss of function."
+   },
+   {
+    "id": "REQ-SYS-07",
+    "level": "SYSTEM",
+    "subsystem": "SYS",
+    "text": "The spacecraft shall withstand the launch vehicle random vibration qualification levels."
+   },
+   {
+    "id": "REQ-SYS-08",
+    "level": "SYSTEM",
+    "subsystem": "SYS",
+    "text": "The spacecraft shall store at least 8 GB of payload data on board."
+   },
+   {
+    "id": "REQ-EPS-01",
+    "level": "SUBSYSTEM",
+    "subsystem": "EPS",
+    "text": "The solar arrays shall generate at least 7.5 W orbit-average power at end of life."
+   },
+   {
+    "id": "REQ-EPS-02",
+    "level": "SUBSYSTEM",
+    "subsystem": "EPS",
+    "text": "The battery shall provide 30 Wh usable energy with depth of discharge below 30 percent."
+   },
+   {
+    "id": "REQ-EPS-03",
+    "level": "SUBSYSTEM",
+    "subsystem": "EPS",
+    "text": "The power distribution unit shall provide latch-up protected 3.3 V and 5 V regulated buses."
+   },
+   {
+    "id": "REQ-EPS-04",
+    "level": "SUBSYSTEM",
+    "subsystem": "EPS",
+    "text": "The battery temperature shall be kept above 0 degC during charging."
+   },
+   {
+    "id": "REQ-EPS-05",
+    "level": "SUBSYSTEM",
+    "subsystem": "EPS",
+    "text": "The EPS shall keep the spacecraft unpowered until deployment switch release."
+   },
+   {
+    "id": "REQ-ADCS-01",
+    "level": "SUBSYSTEM",
+    "subsystem": "ADCS",
+    "text": "The ADCS shall determine attitude with an accuracy better than 0.1 deg (3 sigma)."
+   },
+   {
+    "id": "REQ-ADCS-02",
+    "level": "SUBSYSTEM",
+    "subsystem": "ADCS",
+    "text": "The ADCS shall control attitude with an accuracy better than 0.4 deg (3 sigma)."
+   },
+   {
+    "id": "REQ-ADCS-03",
+    "level": "SUBSYSTEM",
+    "subsystem": "ADCS",
+    "text": "The ADCS shall detumble the spacecraft from 10 deg/s to below 0.5 deg/s within 3 orbits."
+   },
+   {
+    "id": "REQ-ADCS-04",
+    "level": "SUBSYSTEM",
+    "subsystem": "ADCS",
+    "text": "The ADCS shall support sun-pointing safe mode for battery charging."
+   },
+   {
+    "id": "REQ-ADCS-05",
+    "level": "SUBSYSTEM",
+    "subsystem": "ADCS",
+    "text": "The ADCS shall provide orbit position knowledge better than 50 m from GNSS."
+   },
+   {
+    "id": "REQ-COMMS-01",
+    "level": "SUBSYSTEM",
+    "subsystem": "COMMS",
+    "text": "The X-band transmitter shall provide a downlink data rate of at least 50 Mbps."
+   },
+   {
+    "id": "REQ-COMMS-02",
+    "level": "SUBSYSTEM",
+    "subsystem": "COMMS",
+    "text": "The UHF transceiver shall provide telemetry and telecommand at 9.6 kbps."
+   },
+   {
+    "id": "REQ-COMMS-03",
+    "level": "SUBSYSTEM",
+    "subsystem": "COMMS",
+    "text": "The X-band link budget shall close with at least 3 dB margin at 10 deg elevation."
+   },
+   {
+    "id": "REQ-COMMS-04",
+    "level": "SUBSYSTEM",
+    "subsystem": "COMMS",
+    "text": "The UHF antenna shall deploy reliably after a 30 minute post-separation delay."
+   },
+   {
+    "id": "REQ-OBC-01",
+    "level": "SUBSYSTEM",
+    "subsystem": "OBC",
+    "text": "The on-board computer shall provide 16 GB of non-volatile mass memory."
+   },
+   {
+    "id": "REQ-OBC-02",
+    "level": "SUBSYSTEM",
+    "subsystem": "OBC",
+    "text": "The on-board computer shall recover from single event upsets via watchdog reset within 10 s."
+   },
+   {
+    "id": "REQ-OBC-03",
+    "level": "SUBSYSTEM",
+    "subsystem": "OBC",
+    "text": "The flight software shall support in-orbit software update with rollback."
+   },
+   {
+    "id": "REQ-OBC-04",
+    "level": "SUBSYSTEM",
+    "subsystem": "OBC",
+    "text": "The flight software shall time-tag images with an accuracy better than 1 ms (UTC)."
+   },
+   {
+    "id": "REQ-OBC-05",
+    "level": "SUBSYSTEM",
+    "subsystem": "OBC",
+    "text": "The flight software shall autonomously enter safe mode after 72 h without ground contact."
+   },
+   {
+    "id": "REQ-STR-01",
+    "level": "SUBSYSTEM",
+    "subsystem": "STR",
+    "text": "The structure first natural frequency shall be above 100 Hz."
+   },
+   {
+    "id": "REQ-STR-02",
+    "level": "SUBSYSTEM",
+    "subsystem": "STR",
+    "text": "The primary structure mass shall not exceed 0.45 kg."
+   },
+   {
+    "id": "REQ-STR-03",
+    "level": "SUBSYSTEM",
+    "subsystem": "STR",
+    "text": "The structure rails shall conform to the 3U deployer interface dimensions."
+   },
+   {
+    "id": "REQ-THERM-01",
+    "level": "SUBSYSTEM",
+    "subsystem": "THERM",
+    "text": "The thermal design shall keep the battery between 0 degC and 40 degC."
+   },
+   {
+    "id": "REQ-THERM-02",
+    "level": "SUBSYSTEM",
+    "subsystem": "THERM",
+    "text": "The thermal design shall keep the imager detector below 25 degC during acquisition."
+   },
+   {
+    "id": "REQ-THERM-03",
+    "level": "SUBSYSTEM",
+    "subsystem": "THERM",
+    "text": "Survival heaters shall be thermostatically controlled independent of flight software."
+   },
+   {
+    "id": "REQ-PAY-01",
+    "level": "SUBSYSTEM",
+    "subsystem": "PAY",
+    "text": "The imager shall provide 30 m ground sampling distance at 500 km altitude."
+   },
+   {
+    "id": "REQ-PAY-02",
+    "level": "SUBSYSTEM",
+    "subsystem": "PAY",
+    "text": "The imager shall acquire 4 spectral bands between 450 nm and 900 nm."
+   },
+   {
+    "id": "REQ-PAY-03",
+    "level": "SUBSYSTEM",
+    "subsystem": "PAY",
+    "text": "The imager electronics shall tolerate 10 krad(Si) total ionising dose."
+   },
+   {
+    "id": "REQ-PAY-04",
+    "level": "SUBSYSTEM",
+    "subsystem": "PAY",
+    "text": "The imager shall compress images losslessly with a ratio of at least 2:1."
+   }
+  ],
+  "Verification": [
+   {
+    "id": "VER-ADCS-01-A",
+    "method": "Analysis",
+    "status": "PASSED",
+    "text": "Analysis verification of REQ-ADCS-01 (PASSED)"
+   },
+   {
+    "id": "VER-ADCS-01-T",
+    "method": "Test",
+    "status": "PLANNED",
+    "text": "Test verification of REQ-ADCS-01 (PLANNED)"
+   },
+   {
+    "id": "VER-ADCS-02-A",
+    "method": "Analysis",
+    "status": "PLANNED",
+    "text": "Analysis verification of REQ-ADCS-02 (PLANNED)"
+   },
+   {
+    "id": "VER-ADCS-02-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-ADCS-02 (PASSED)"
+   },
+   {
+    "id": "VER-ADCS-03-A",
+    "method": "Analysis",
+    "status": "PASSED",
+    "text": "Analysis verification of REQ-ADCS-03 (PASSED)"
+   },
+   {
+    "id": "VER-ADCS-04-A",
+    "method": "Analysis",
+    "status": "PASSED",
+    "text": "Analysis verification of REQ-ADCS-04 (PASSED)"
+   },
+   {
+    "id": "VER-COMMS-01-T",
+    "method": "Test",
+    "status": "PLANNED",
+    "text": "Test verification of REQ-COMMS-01 (PLANNED)"
+   },
+   {
+    "id": "VER-COMMS-02-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-COMMS-02 (PASSED)"
+   },
+   {
+    "id": "VER-COMMS-03-A",
+    "method": "Analysis",
+    "status": "FAILED",
+    "text": "Analysis verification of REQ-COMMS-03 (FAILED)"
+   },
+   {
+    "id": "VER-COMMS-04-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-COMMS-04 (PASSED)"
+   },
+   {
+    "id": "VER-EPS-01-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-EPS-01 (PASSED)"
+   },
+   {
+    "id": "VER-EPS-02-A",
+    "method": "Analysis",
+    "status": "PASSED",
+    "text": "Analysis verification of REQ-EPS-02 (PASSED)"
+   },
+   {
+    "id": "VER-EPS-02-I",
+    "method": "Inspection",
+    "status": "PLANNED",
+    "text": "Inspection verification of REQ-EPS-02 (PLANNED)"
+   },
+   {
+    "id": "VER-EPS-02-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-EPS-02 (PASSED)"
+   },
+   {
+    "id": "VER-EPS-03-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-EPS-03 (PASSED)"
+   },
+   {
+    "id": "VER-EPS-04-A",
+    "method": "Analysis",
+    "status": "PASSED",
+    "text": "Analysis verification of REQ-EPS-04 (PASSED)"
+   },
+   {
+    "id": "VER-EPS-05-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-EPS-05 (PASSED)"
+   },
+   {
+    "id": "VER-MIS-01-R",
+    "method": "Review",
+    "status": "PASSED",
+    "text": "Review verification of REQ-MIS-01 (PASSED)"
+   },
+   {
+    "id": "VER-MIS-02-R",
+    "method": "Review",
+    "status": "PASSED",
+    "text": "Review verification of REQ-MIS-02 (PASSED)"
+   },
+   {
+    "id": "VER-MIS-03-R",
+    "method": "Review",
+    "status": "PASSED",
+    "text": "Review verification of REQ-MIS-03 (PASSED)"
+   },
+   {
+    "id": "VER-OBC-01-A",
+    "method": "Analysis",
+    "status": "PASSED",
+    "text": "Analysis verification of REQ-OBC-01 (PASSED)"
+   },
+   {
+    "id": "VER-OBC-01-I",
+    "method": "Inspection",
+    "status": "PASSED",
+    "text": "Inspection verification of REQ-OBC-01 (PASSED)"
+   },
+   {
+    "id": "VER-OBC-02-A",
+    "method": "Analysis",
+    "status": "PLANNED",
+    "text": "Analysis verification of REQ-OBC-02 (PLANNED)"
+   },
+   {
+    "id": "VER-OBC-03-A",
+    "method": "Analysis",
+    "status": "PASSED",
+    "text": "Analysis verification of REQ-OBC-03 (PASSED)"
+   },
+   {
+    "id": "VER-OBC-03-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-OBC-03 (PASSED)"
+   },
+   {
+    "id": "VER-OBC-04-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-OBC-04 (PASSED)"
+   },
+   {
+    "id": "VER-OBC-05-A",
+    "method": "Analysis",
+    "status": "PLANNED",
+    "text": "Analysis verification of REQ-OBC-05 (PLANNED)"
+   },
+   {
+    "id": "VER-OBC-05-T",
+    "method": "Test",
+    "status": "PLANNED",
+    "text": "Test verification of REQ-OBC-05 (PLANNED)"
+   },
+   {
+    "id": "VER-PAY-01-I",
+    "method": "Inspection",
+    "status": "PLANNED",
+    "text": "Inspection verification of REQ-PAY-01 (PLANNED)"
+   },
+   {
+    "id": "VER-PAY-01-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-PAY-01 (PASSED)"
+   },
+   {
+    "id": "VER-PAY-02-T",
+    "method": "Test",
+    "status": "PLANNED",
+    "text": "Test verification of REQ-PAY-02 (PLANNED)"
+   },
+   {
+    "id": "VER-PAY-03-I",
+    "method": "Inspection",
+    "status": "PASSED",
+    "text": "Inspection verification of REQ-PAY-03 (PASSED)"
+   },
+   {
+    "id": "VER-PAY-03-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-PAY-03 (PASSED)"
+   },
+   {
+    "id": "VER-STR-01-A",
+    "method": "Analysis",
+    "status": "PASSED",
+    "text": "Analysis verification of REQ-STR-01 (PASSED)"
+   },
+   {
+    "id": "VER-STR-01-T",
+    "method": "Test",
+    "status": "FAILED",
+    "text": "Test verification of REQ-STR-01 (FAILED)"
+   },
+   {
+    "id": "VER-STR-02-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-STR-02 (PASSED)"
+   },
+   {
+    "id": "VER-STR-03-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-STR-03 (PASSED)"
+   },
+   {
+    "id": "VER-STR-HNG-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-SYS-07 (PASSED)"
+   },
+   {
+    "id": "VER-SYS-01-A",
+    "method": "Analysis",
+    "status": "PLANNED",
+    "text": "Analysis verification of REQ-SYS-01 (PLANNED)"
+   },
+   {
+    "id": "VER-SYS-02-A",
+    "method": "Analysis",
+    "status": "PLANNED",
+    "text": "Analysis verification of REQ-SYS-02 (PLANNED)"
+   },
+   {
+    "id": "VER-SYS-02-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-SYS-02 (PASSED)"
+   },
+   {
+    "id": "VER-SYS-03-A",
+    "method": "Analysis",
+    "status": "PASSED",
+    "text": "Analysis verification of REQ-SYS-03 (PASSED)"
+   },
+   {
+    "id": "VER-SYS-03-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-SYS-03 (PASSED)"
+   },
+   {
+    "id": "VER-SYS-04-I",
+    "method": "Inspection",
+    "status": "PLANNED",
+    "text": "Inspection verification of REQ-SYS-04 (PLANNED)"
+   },
+   {
+    "id": "VER-SYS-05-I",
+    "method": "Inspection",
+    "status": "PASSED",
+    "text": "Inspection verification of REQ-SYS-05 (PASSED)"
+   },
+   {
+    "id": "VER-SYS-05-T",
+    "method": "Test",
+    "status": "PLANNED",
+    "text": "Test verification of REQ-SYS-05 (PLANNED)"
+   },
+   {
+    "id": "VER-SYS-06-I",
+    "method": "Inspection",
+    "status": "PASSED",
+    "text": "Inspection verification of REQ-SYS-06 (PASSED)"
+   },
+   {
+    "id": "VER-SYS-06-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-SYS-06 (PASSED)"
+   },
+   {
+    "id": "VER-SYS-07-T",
+    "method": "Test",
+    "status": "PLANNED",
+    "text": "Test verification of REQ-SYS-07 (PLANNED)"
+   },
+   {
+    "id": "VER-SYS-08-I",
+    "method": "Inspection",
+    "status": "PASSED",
+    "text": "Inspection verification of REQ-SYS-08 (PASSED)"
+   },
+   {
+    "id": "VER-SYS-08-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-SYS-08 (PASSED)"
+   },
+   {
+    "id": "VER-THERM-01-I",
+    "method": "Inspection",
+    "status": "PASSED",
+    "text": "Inspection verification of REQ-THERM-01 (PASSED)"
+   },
+   {
+    "id": "VER-THERM-02-T",
+    "method": "Test",
+    "status": "PASSED",
+    "text": "Test verification of REQ-THERM-02 (PASSED)"
+   }
+  ],
+  "Part": [
+   {
+    "id": "PART-EPS-SA-01",
+    "name": "Deployable solar array wing (2x3U)",
+    "subsystem": "EPS",
+    "supplier": "Helios Panels",
+    "text": "Deployable solar array wing (2x3U). Subsystem EPS. Supplier Helios Panels."
+   },
+   {
+    "id": "PART-EPS-BAT-01",
+    "name": "Li-ion battery pack 8S1P",
+    "subsystem": "EPS",
+    "supplier": "Volta Cells",
+    "text": "Li-ion battery pack 8S1P. Subsystem EPS. Supplier Volta Cells."
+   },
+   {
+    "id": "PART-EPS-PCDU-01",
+    "name": "Power conditioning and distribution unit",
+    "subsystem": "EPS",
+    "supplier": "Volta Cells",
+    "text": "Power conditioning and distribution unit. Subsystem EPS. Supplier Volta Cells."
+   },
+   {
+    "id": "PART-EPS-SW-01",
+    "name": "Deployment kill switch assembly",
+    "subsystem": "EPS",
+    "supplier": "Orbital Mechanix",
+    "text": "Deployment kill switch assembly. Subsystem EPS. Supplier Orbital Mechanix."
+   },
+   {
+    "id": "PART-ADCS-ST-01",
+    "name": "Nano star tracker",
+    "subsystem": "ADCS",
+    "supplier": "Polaris Optics",
+    "text": "Nano star tracker. Subsystem ADCS. Supplier Polaris Optics."
+   },
+   {
+    "id": "PART-ADCS-RW-01",
+    "name": "Reaction wheel triad",
+    "subsystem": "ADCS",
+    "supplier": "Gyrodyne Labs",
+    "text": "Reaction wheel triad. Subsystem ADCS. Supplier Gyrodyne Labs."
+   },
+   {
+    "id": "PART-ADCS-MTQ-01",
+    "name": "Magnetorquer set",
+    "subsystem": "ADCS",
+    "supplier": "Gyrodyne Labs",
+    "text": "Magnetorquer set. Subsystem ADCS. Supplier Gyrodyne Labs."
+   },
+   {
+    "id": "PART-ADCS-SS-01",
+    "name": "Fine sun sensor set",
+    "subsystem": "ADCS",
+    "supplier": "Polaris Optics",
+    "text": "Fine sun sensor set. Subsystem ADCS. Supplier Polaris Optics."
+   },
+   {
+    "id": "PART-ADCS-GNSS-01",
+    "name": "GNSS receiver and patch antenna",
+    "subsystem": "ADCS",
+    "supplier": "Meridian Nav",
+    "text": "GNSS receiver and patch antenna. Subsystem ADCS. Supplier Meridian Nav."
+   },
+   {
+    "id": "PART-ADCS-CTRL-01",
+    "name": "ADCS controller board",
+    "subsystem": "ADCS",
+    "supplier": "Gyrodyne Labs",
+    "text": "ADCS controller board. Subsystem ADCS. Supplier Gyrodyne Labs."
+   },
+   {
+    "id": "PART-COMMS-XTX-01",
+    "name": "X-band transmitter",
+    "subsystem": "COMMS",
+    "supplier": "Skylink RF",
+    "text": "X-band transmitter. Subsystem COMMS. Supplier Skylink RF."
+   },
+   {
+    "id": "PART-COMMS-XANT-01",
+    "name": "X-band patch array antenna",
+    "subsystem": "COMMS",
+    "supplier": "Skylink RF",
+    "text": "X-band patch array antenna. Subsystem COMMS. Supplier Skylink RF."
+   },
+   {
+    "id": "PART-COMMS-UHF-01",
+    "name": "UHF transceiver",
+    "subsystem": "COMMS",
+    "supplier": "Skylink RF",
+    "text": "UHF transceiver. Subsystem COMMS. Supplier Skylink RF."
+   },
+   {
+    "id": "PART-COMMS-UANT-01",
+    "name": "Deployable UHF dipole antenna",
+    "subsystem": "COMMS",
+    "supplier": "Orbital Mechanix",
+    "text": "Deployable UHF dipole antenna. Subsystem COMMS. Supplier Orbital Mechanix."
+   },
+   {
+    "id": "PART-OBC-CPU-01",
+    "name": "On-board computer (rad-tolerant MCU)",
+    "subsystem": "OBC",
+    "supplier": "Kernel Avionics",
+    "text": "On-board computer (rad-tolerant MCU). Subsystem OBC. Supplier Kernel Avionics."
+   },
+   {
+    "id": "PART-OBC-MEM-01",
+    "name": "Mass memory board 16 GB",
+    "subsystem": "OBC",
+    "supplier": "Kernel Avionics",
+    "text": "Mass memory board 16 GB. Subsystem OBC. Supplier Kernel Avionics."
+   },
+   {
+    "id": "PART-OBC-FSW-01",
+    "name": "Flight software build",
+    "subsystem": "OBC",
+    "supplier": "In-house",
+    "text": "Flight software build. Subsystem OBC. Supplier In-house."
+   },
+   {
+    "id": "PART-STR-FRM-01",
+    "name": "3U aluminium 7075 frame",
+    "subsystem": "STR",
+    "supplier": "Orbital Mechanix",
+    "text": "3U aluminium 7075 frame. Subsystem STR. Supplier Orbital Mechanix."
+   },
+   {
+    "id": "PART-STR-HNG-01",
+    "name": "Spring hinge and burn-wire release",
+    "subsystem": "STR",
+    "supplier": "Orbital Mechanix",
+    "text": "Spring hinge and burn-wire release. Subsystem STR. Supplier Orbital Mechanix."
+   },
+   {
+    "id": "PART-THERM-HTR-01",
+    "name": "Battery survival heater with thermostat",
+    "subsystem": "THERM",
+    "supplier": "Thermaflex",
+    "text": "Battery survival heater with thermostat. Subsystem THERM. Supplier Thermaflex."
+   },
+   {
+    "id": "PART-THERM-MLI-01",
+    "name": "Multi-layer insulation blanket",
+    "subsystem": "THERM",
+    "supplier": "Thermaflex",
+    "text": "Multi-layer insulation blanket. Subsystem THERM. Supplier Thermaflex."
+   },
+   {
+    "id": "PART-THERM-RAD-01",
+    "name": "Imager detector radiator",
+    "subsystem": "THERM",
+    "supplier": "Thermaflex",
+    "text": "Imager detector radiator. Subsystem THERM. Supplier Thermaflex."
+   },
+   {
+    "id": "PART-PAY-OPT-01",
+    "name": "Imager telescope optics",
+    "subsystem": "PAY",
+    "supplier": "Lumen Space Optics",
+    "text": "Imager telescope optics. Subsystem PAY. Supplier Lumen Space Optics."
+   },
+   {
+    "id": "PART-PAY-DET-01",
+    "name": "Multispectral CMOS detector",
+    "subsystem": "PAY",
+    "supplier": "Lumen Space Optics",
+    "text": "Multispectral CMOS detector. Subsystem PAY. Supplier Lumen Space Optics."
+   },
+   {
+    "id": "PART-PAY-PEB-01",
+    "name": "Payload electronics board",
+    "subsystem": "PAY",
+    "supplier": "Kernel Avionics",
+    "text": "Payload electronics board. Subsystem PAY. Supplier Kernel Avionics."
+   },
+   {
+    "id": "PART-PAY-FW-02",
+    "name": "Filter wheel (descoped option)",
+    "subsystem": "PAY",
+    "supplier": "Lumen Space Optics",
+    "text": "Filter wheel (descoped option). Subsystem PAY. Supplier Lumen Space Optics."
+   },
+   {
+    "id": "PART-COMMS-SBAND-01",
+    "name": "S-band patch antenna (legacy)",
+    "subsystem": "COMMS",
+    "supplier": "Skylink RF",
+    "text": "S-band patch antenna (legacy). Subsystem COMMS. Supplier Skylink RF."
+   }
+  ],
+  "Risk": [
+   {
+    "id": "RISK-01",
+    "title": "Solar array hinge fails to deploy",
+    "severity": 5,
+    "likelihood": 2,
+    "score": 10,
+    "text": "Solar array hinge fails to deploy"
+   },
+   {
+    "id": "RISK-02",
+    "title": "Battery cell thermal runaway",
+    "severity": 5,
+    "likelihood": 1,
+    "score": 5,
+    "text": "Battery cell thermal runaway"
+   },
+   {
+    "id": "RISK-03",
+    "title": "Star tracker blinding by Sun or Earth limb",
+    "severity": 3,
+    "likelihood": 4,
+    "score": 12,
+    "text": "Star tracker blinding by Sun or Earth limb"
+   },
+   {
+    "id": "RISK-04",
+    "title": "Reaction wheel bearing degradation",
+    "severity": 4,
+    "likelihood": 3,
+    "score": 12,
+    "text": "Reaction wheel bearing degradation"
+   },
+   {
+    "id": "RISK-05",
+    "title": "X-band frequency licence delay",
+    "severity": 4,
+    "likelihood": 3,
+    "score": 12,
+    "text": "X-band frequency licence delay"
+   },
+   {
+    "id": "RISK-06",
+    "title": "Single event latch-up in OBC memory",
+    "severity": 4,
+    "likelihood": 3,
+    "score": 12,
+    "text": "Single event latch-up in OBC memory"
+   },
+   {
+    "id": "RISK-07",
+    "title": "Mass growth beyond 4.0 kg",
+    "severity": 3,
+    "likelihood": 3,
+    "score": 9,
+    "text": "Mass growth beyond 4.0 kg"
+   },
+   {
+    "id": "RISK-08",
+    "title": "Imager defocus after launch vibration",
+    "severity": 4,
+    "likelihood": 3,
+    "score": 12,
+    "text": "Imager defocus after launch vibration"
+   },
+   {
+    "id": "RISK-09",
+    "title": "UHF antenna burn-wire does not release",
+    "severity": 4,
+    "likelihood": 2,
+    "score": 8,
+    "text": "UHF antenna burn-wire does not release"
+   },
+   {
+    "id": "RISK-10",
+    "title": "Detector overheating during long acquisitions",
+    "severity": 3,
+    "likelihood": 4,
+    "score": 12,
+    "text": "Detector overheating during long acquisitions"
+   },
+   {
+    "id": "RISK-11",
+    "title": "Single-supplier dependency on Gyrodyne Labs for ADCS actuators",
+    "severity": 4,
+    "likelihood": 3,
+    "score": 12,
+    "text": "Single-supplier dependency on Gyrodyne Labs for ADCS actuators"
+   },
+   {
+    "id": "RISK-12",
+    "title": "GNSS receiver loses lock at high latitude",
+    "severity": 2,
+    "likelihood": 3,
+    "score": 6,
+    "text": "GNSS receiver loses lock at high latitude"
+   },
+   {
+    "id": "RISK-13",
+    "title": "Flight software update corrupts boot image",
+    "severity": 5,
+    "likelihood": 2,
+    "score": 10,
+    "text": "Flight software update corrupts boot image"
+   },
+   {
+    "id": "RISK-14",
+    "title": "Battery capacity fade larger than predicted",
+    "severity": 3,
+    "likelihood": 3,
+    "score": 9,
+    "text": "Battery capacity fade larger than predicted"
+   }
+  ],
+  "Decision": [
+   {
+    "id": "DEC-01",
+    "title": "Use body-mounted plus 2 deployable solar wings",
+    "status": "ACCEPTED",
+    "rationale": "Body-mounted only cannot meet 7.5 W orbit average.",
+    "text": "Use body-mounted plus 2 deployable solar wings. Body-mounted only cannot meet 7.5 W orbit average."
+   },
+   {
+    "id": "DEC-02",
+    "title": "Select 8S1P Li-ion battery pack",
+    "status": "ACCEPTED",
+    "rationale": "Heritage cells with screening data available.",
+    "text": "Select 8S1P Li-ion battery pack. Heritage cells with screening data available."
+   },
+   {
+    "id": "DEC-03",
+    "title": "Add redundant watchdog and memory scrubbing",
+    "status": "ACCEPTED",
+    "rationale": "Mitigates SEU and latch-up in commercial memory.",
+    "text": "Add redundant watchdog and memory scrubbing. Mitigates SEU and latch-up in commercial memory."
+   },
+   {
+    "id": "DEC-04",
+    "title": "Use X-band for payload downlink",
+    "status": "ACCEPTED",
+    "rationale": "S-band cannot meet 800 MB per day.",
+    "text": "Use X-band for payload downlink. S-band cannot meet 800 MB per day."
+   },
+   {
+    "id": "DEC-05",
+    "title": "Retain S-band as payload downlink backup",
+    "status": "ACCEPTED",
+    "rationale": "Backup if X-band licence is delayed.",
+    "text": "Retain S-band as payload downlink backup. Backup if X-band licence is delayed."
+   },
+   {
+    "id": "DEC-06",
+    "title": "Passive thermal control with survival heater only",
+    "status": "ACCEPTED",
+    "rationale": "Lower power and complexity.",
+    "text": "Passive thermal control with survival heater only. Lower power and complexity."
+   },
+   {
+    "id": "DEC-07",
+    "title": "Active heater control by flight software for detector",
+    "status": "ACCEPTED",
+    "rationale": "Detector needs tighter temperature band.",
+    "text": "Active heater control by flight software for detector. Detector needs tighter temperature band."
+   },
+   {
+    "id": "DEC-08",
+    "title": "Descope filter wheel",
+    "status": "ACCEPTED",
+    "rationale": "Mass and reliability; bands defined by detector filters.",
+    "text": "Descope filter wheel. Mass and reliability; bands defined by detector filters."
+   },
+   {
+    "id": "DEC-09",
+    "title": "Use aluminium 7075 frame instead of CFRP",
+    "status": "ACCEPTED",
+    "rationale": "Cost and lead time.",
+    "text": "Use aluminium 7075 frame instead of CFRP. Cost and lead time."
+   },
+   {
+    "id": "DEC-10",
+    "title": "Use CFRP frame to save mass",
+    "status": "REJECTED",
+    "rationale": "Superseded by DEC-09.",
+    "text": "Use CFRP frame to save mass. Superseded by DEC-09."
+   }
+  ],
+  "Anomaly": [
+   {
+    "id": "ANOM-01",
+    "title": "Reaction wheel current spikes during thermal vacuum test",
+    "text": "Reaction wheel current spikes during thermal vacuum test"
+   },
+   {
+    "id": "ANOM-02",
+    "title": "UHF antenna partial deployment in cold test",
+    "text": "UHF antenna partial deployment in cold test"
+   },
+   {
+    "id": "ANOM-03",
+    "title": "Star tracker false star detections near South Atlantic Anomaly simulation",
+    "text": "Star tracker false star detections near South Atlantic Anomaly simulation"
+   }
+  ],
+  "Document": [
+   {
+    "id": "DOC-01",
+    "title": "Power budget analysis",
+    "text": "Power budget analysis. Orbit-average power generation of the deployable solar wings is 8.1 W at end of life against a consumption of 6.4 W in imaging mode. Battery depth of discharge stays below 25 percent in eclipse."
+   },
+   {
+    "id": "DOC-02",
+    "title": "Pointing budget and ADCS design note",
+    "text": "Pointing budget and ADCS design note. Star tracker noise and reaction wheel jitter dominate the pointing error budget. Sun exclusion angle of the star tracker constrains imaging geometry."
+   },
+   {
+    "id": "DOC-03",
+    "title": "X-band link budget",
+    "text": "X-band link budget. At 10 degree elevation the link margin is 1.8 dB, below the required 3 dB. Antenna gain or ground station G/T must increase."
+   },
+   {
+    "id": "DOC-04",
+    "title": "Thermal analysis hot and cold cases",
+    "text": "Thermal analysis hot and cold cases. In the cold case the battery reaches minus 3 degC without heater. The detector radiator keeps the detector at 21 degC for 8 minute acquisitions."
+   },
+   {
+    "id": "DOC-05",
+    "title": "Structural analysis and vibration test plan",
+    "text": "Structural analysis and vibration test plan. Finite element modal analysis predicts a first mode of 96 Hz with the deployable solar wings stowed, below the 100 Hz requirement."
+   },
+   {
+    "id": "DOC-06",
+    "title": "Radiation analysis",
+    "text": "Radiation analysis. Total ionising dose behind 2 mm aluminium is 6 krad over 2 years. Commercial memory requires scrubbing and latch-up protection."
+   },
+   {
+    "id": "DOC-07",
+    "title": "Mass budget",
+    "text": "Mass budget. Current best estimate is 3.62 kg with 10 percent margin, giving 3.98 kg against the 4.0 kg limit."
+   },
+   {
+    "id": "DOC-08",
+    "title": "Flight software architecture",
+    "text": "Flight software architecture. Dual boot images with golden image fallback. Time synchronisation uses the GNSS pulse per second."
+   },
+   {
+    "id": "DOC-09",
+    "title": "Imager optical design report",
+    "text": "Imager optical design report. Focal length 580 mm with 5.5 micrometre pixels gives 4.7 m at 500 km per pixel before binning; 6x6 binning yields about 30 m."
+   },
+   {
+    "id": "DOC-10",
+    "title": "Frequency coordination status",
+    "text": "Frequency coordination status. The X-band filing is under coordination. The S-band antenna from the previous mission is kept on the bill of materials pending a decision."
+   }
+  ]
+ },
+ "edges": [
+  {
+   "src": "REQ-SYS-01",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-01"
+  },
+  {
+   "src": "REQ-SYS-02",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-01"
+  },
+  {
+   "src": "REQ-SYS-03",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-02"
+  },
+  {
+   "src": "REQ-SYS-04",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-02"
+  },
+  {
+   "src": "REQ-SYS-05",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-03"
+  },
+  {
+   "src": "REQ-SYS-06",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-02"
+  },
+  {
+   "src": "REQ-SYS-07",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-03"
+  },
+  {
+   "src": "REQ-SYS-08",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-01"
+  },
+  {
+   "src": "REQ-EPS-01",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-03"
+  },
+  {
+   "src": "REQ-EPS-01",
+   "type": "ALLOCATED_TO",
+   "dst": "EPS"
+  },
+  {
+   "src": "REQ-EPS-02",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-03"
+  },
+  {
+   "src": "REQ-EPS-02",
+   "type": "ALLOCATED_TO",
+   "dst": "EPS"
+  },
+  {
+   "src": "REQ-EPS-03",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-03"
+  },
+  {
+   "src": "REQ-EPS-03",
+   "type": "ALLOCATED_TO",
+   "dst": "EPS"
+  },
+  {
+   "src": "REQ-EPS-04",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-04"
+  },
+  {
+   "src": "REQ-EPS-04",
+   "type": "ALLOCATED_TO",
+   "dst": "EPS"
+  },
+  {
+   "src": "REQ-EPS-05",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-03"
+  },
+  {
+   "src": "REQ-EPS-05",
+   "type": "ALLOCATED_TO",
+   "dst": "EPS"
+  },
+  {
+   "src": "REQ-ADCS-01",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-01"
+  },
+  {
+   "src": "REQ-ADCS-01",
+   "type": "ALLOCATED_TO",
+   "dst": "ADCS"
+  },
+  {
+   "src": "REQ-ADCS-02",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-01"
+  },
+  {
+   "src": "REQ-ADCS-02",
+   "type": "ALLOCATED_TO",
+   "dst": "ADCS"
+  },
+  {
+   "src": "REQ-ADCS-03",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-02"
+  },
+  {
+   "src": "REQ-ADCS-03",
+   "type": "ALLOCATED_TO",
+   "dst": "ADCS"
+  },
+  {
+   "src": "REQ-ADCS-04",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-03"
+  },
+  {
+   "src": "REQ-ADCS-04",
+   "type": "ALLOCATED_TO",
+   "dst": "ADCS"
+  },
+  {
+   "src": "REQ-ADCS-05",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-01"
+  },
+  {
+   "src": "REQ-ADCS-05",
+   "type": "ALLOCATED_TO",
+   "dst": "ADCS"
+  },
+  {
+   "src": "REQ-COMMS-01",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-02"
+  },
+  {
+   "src": "REQ-COMMS-01",
+   "type": "ALLOCATED_TO",
+   "dst": "COMMS"
+  },
+  {
+   "src": "REQ-COMMS-02",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-02"
+  },
+  {
+   "src": "REQ-COMMS-02",
+   "type": "ALLOCATED_TO",
+   "dst": "COMMS"
+  },
+  {
+   "src": "REQ-COMMS-03",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-02"
+  },
+  {
+   "src": "REQ-COMMS-03",
+   "type": "ALLOCATED_TO",
+   "dst": "COMMS"
+  },
+  {
+   "src": "REQ-COMMS-04",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-03"
+  },
+  {
+   "src": "REQ-COMMS-04",
+   "type": "ALLOCATED_TO",
+   "dst": "COMMS"
+  },
+  {
+   "src": "REQ-OBC-01",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-08"
+  },
+  {
+   "src": "REQ-OBC-01",
+   "type": "ALLOCATED_TO",
+   "dst": "OBC"
+  },
+  {
+   "src": "REQ-OBC-02",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-06"
+  },
+  {
+   "src": "REQ-OBC-02",
+   "type": "ALLOCATED_TO",
+   "dst": "OBC"
+  },
+  {
+   "src": "REQ-OBC-03",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-02"
+  },
+  {
+   "src": "REQ-OBC-03",
+   "type": "ALLOCATED_TO",
+   "dst": "OBC"
+  },
+  {
+   "src": "REQ-OBC-04",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-01"
+  },
+  {
+   "src": "REQ-OBC-04",
+   "type": "ALLOCATED_TO",
+   "dst": "OBC"
+  },
+  {
+   "src": "REQ-OBC-05",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-02"
+  },
+  {
+   "src": "REQ-OBC-05",
+   "type": "ALLOCATED_TO",
+   "dst": "OBC"
+  },
+  {
+   "src": "REQ-STR-01",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-07"
+  },
+  {
+   "src": "REQ-STR-01",
+   "type": "ALLOCATED_TO",
+   "dst": "STR"
+  },
+  {
+   "src": "REQ-STR-02",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-05"
+  },
+  {
+   "src": "REQ-STR-02",
+   "type": "ALLOCATED_TO",
+   "dst": "STR"
+  },
+  {
+   "src": "REQ-STR-03",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-03"
+  },
+  {
+   "src": "REQ-STR-03",
+   "type": "ALLOCATED_TO",
+   "dst": "STR"
+  },
+  {
+   "src": "REQ-THERM-01",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-04"
+  },
+  {
+   "src": "REQ-THERM-01",
+   "type": "ALLOCATED_TO",
+   "dst": "THERM"
+  },
+  {
+   "src": "REQ-THERM-02",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-04"
+  },
+  {
+   "src": "REQ-THERM-02",
+   "type": "ALLOCATED_TO",
+   "dst": "THERM"
+  },
+  {
+   "src": "REQ-THERM-03",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-04"
+  },
+  {
+   "src": "REQ-THERM-03",
+   "type": "ALLOCATED_TO",
+   "dst": "THERM"
+  },
+  {
+   "src": "REQ-PAY-01",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-01"
+  },
+  {
+   "src": "REQ-PAY-01",
+   "type": "ALLOCATED_TO",
+   "dst": "PAY"
+  },
+  {
+   "src": "REQ-PAY-02",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-MIS-01"
+  },
+  {
+   "src": "REQ-PAY-02",
+   "type": "ALLOCATED_TO",
+   "dst": "PAY"
+  },
+  {
+   "src": "REQ-PAY-03",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-06"
+  },
+  {
+   "src": "REQ-PAY-03",
+   "type": "ALLOCATED_TO",
+   "dst": "PAY"
+  },
+  {
+   "src": "REQ-PAY-04",
+   "type": "DERIVES_FROM",
+   "dst": "REQ-SYS-08"
+  },
+  {
+   "src": "REQ-PAY-04",
+   "type": "ALLOCATED_TO",
+   "dst": "PAY"
+  },
+  {
+   "src": "REQ-ADCS-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-ADCS-01-A"
+  },
+  {
+   "src": "REQ-ADCS-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-ADCS-01-T"
+  },
+  {
+   "src": "REQ-ADCS-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-ADCS-02-A"
+  },
+  {
+   "src": "REQ-ADCS-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-ADCS-02-T"
+  },
+  {
+   "src": "REQ-ADCS-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-ADCS-03-A"
+  },
+  {
+   "src": "REQ-ADCS-04",
+   "type": "VERIFIED_BY",
+   "dst": "VER-ADCS-04-A"
+  },
+  {
+   "src": "REQ-COMMS-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-COMMS-01-T"
+  },
+  {
+   "src": "REQ-COMMS-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-COMMS-02-T"
+  },
+  {
+   "src": "REQ-COMMS-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-COMMS-03-A"
+  },
+  {
+   "src": "REQ-COMMS-04",
+   "type": "VERIFIED_BY",
+   "dst": "VER-COMMS-04-T"
+  },
+  {
+   "src": "REQ-EPS-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-EPS-01-T"
+  },
+  {
+   "src": "REQ-EPS-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-EPS-02-A"
+  },
+  {
+   "src": "REQ-EPS-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-EPS-02-I"
+  },
+  {
+   "src": "REQ-EPS-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-EPS-02-T"
+  },
+  {
+   "src": "REQ-EPS-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-EPS-03-T"
+  },
+  {
+   "src": "REQ-EPS-04",
+   "type": "VERIFIED_BY",
+   "dst": "VER-EPS-04-A"
+  },
+  {
+   "src": "REQ-EPS-05",
+   "type": "VERIFIED_BY",
+   "dst": "VER-EPS-05-T"
+  },
+  {
+   "src": "REQ-MIS-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-MIS-01-R"
+  },
+  {
+   "src": "REQ-MIS-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-MIS-02-R"
+  },
+  {
+   "src": "REQ-MIS-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-MIS-03-R"
+  },
+  {
+   "src": "REQ-OBC-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-OBC-01-A"
+  },
+  {
+   "src": "REQ-OBC-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-OBC-01-I"
+  },
+  {
+   "src": "REQ-OBC-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-OBC-02-A"
+  },
+  {
+   "src": "REQ-OBC-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-OBC-03-A"
+  },
+  {
+   "src": "REQ-OBC-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-OBC-03-T"
+  },
+  {
+   "src": "REQ-OBC-04",
+   "type": "VERIFIED_BY",
+   "dst": "VER-OBC-04-T"
+  },
+  {
+   "src": "REQ-OBC-05",
+   "type": "VERIFIED_BY",
+   "dst": "VER-OBC-05-A"
+  },
+  {
+   "src": "REQ-OBC-05",
+   "type": "VERIFIED_BY",
+   "dst": "VER-OBC-05-T"
+  },
+  {
+   "src": "REQ-PAY-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-PAY-01-I"
+  },
+  {
+   "src": "REQ-PAY-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-PAY-01-T"
+  },
+  {
+   "src": "REQ-PAY-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-PAY-02-T"
+  },
+  {
+   "src": "REQ-PAY-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-PAY-03-I"
+  },
+  {
+   "src": "REQ-PAY-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-PAY-03-T"
+  },
+  {
+   "src": "REQ-STR-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-STR-01-A"
+  },
+  {
+   "src": "REQ-STR-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-STR-01-T"
+  },
+  {
+   "src": "REQ-STR-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-STR-02-T"
+  },
+  {
+   "src": "REQ-STR-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-STR-03-T"
+  },
+  {
+   "src": "REQ-SYS-07",
+   "type": "VERIFIED_BY",
+   "dst": "VER-STR-HNG-T"
+  },
+  {
+   "src": "REQ-SYS-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-01-A"
+  },
+  {
+   "src": "REQ-SYS-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-02-A"
+  },
+  {
+   "src": "REQ-SYS-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-02-T"
+  },
+  {
+   "src": "REQ-SYS-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-03-A"
+  },
+  {
+   "src": "REQ-SYS-03",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-03-T"
+  },
+  {
+   "src": "REQ-SYS-04",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-04-I"
+  },
+  {
+   "src": "REQ-SYS-05",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-05-I"
+  },
+  {
+   "src": "REQ-SYS-05",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-05-T"
+  },
+  {
+   "src": "REQ-SYS-06",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-06-I"
+  },
+  {
+   "src": "REQ-SYS-06",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-06-T"
+  },
+  {
+   "src": "REQ-SYS-07",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-07-T"
+  },
+  {
+   "src": "REQ-SYS-08",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-08-I"
+  },
+  {
+   "src": "REQ-SYS-08",
+   "type": "VERIFIED_BY",
+   "dst": "VER-SYS-08-T"
+  },
+  {
+   "src": "REQ-THERM-01",
+   "type": "VERIFIED_BY",
+   "dst": "VER-THERM-01-I"
+  },
+  {
+   "src": "REQ-THERM-02",
+   "type": "VERIFIED_BY",
+   "dst": "VER-THERM-02-T"
+  },
+  {
+   "src": "PART-EPS-SA-01",
+   "type": "PART_OF",
+   "dst": "EPS"
+  },
+  {
+   "src": "PART-EPS-SA-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-STR-HNG-01"
+  },
+  {
+   "src": "PART-EPS-SA-01",
+   "type": "SATISFIES",
+   "dst": "REQ-EPS-01"
+  },
+  {
+   "src": "PART-EPS-BAT-01",
+   "type": "PART_OF",
+   "dst": "EPS"
+  },
+  {
+   "src": "PART-EPS-BAT-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-THERM-HTR-01"
+  },
+  {
+   "src": "PART-EPS-BAT-01",
+   "type": "SATISFIES",
+   "dst": "REQ-EPS-02"
+  },
+  {
+   "src": "PART-EPS-BAT-01",
+   "type": "SATISFIES",
+   "dst": "REQ-EPS-04"
+  },
+  {
+   "src": "PART-EPS-PCDU-01",
+   "type": "PART_OF",
+   "dst": "EPS"
+  },
+  {
+   "src": "PART-EPS-PCDU-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-BAT-01"
+  },
+  {
+   "src": "PART-EPS-PCDU-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-SA-01"
+  },
+  {
+   "src": "PART-EPS-PCDU-01",
+   "type": "SATISFIES",
+   "dst": "REQ-EPS-03"
+  },
+  {
+   "src": "PART-EPS-SW-01",
+   "type": "PART_OF",
+   "dst": "EPS"
+  },
+  {
+   "src": "PART-EPS-SW-01",
+   "type": "SATISFIES",
+   "dst": "REQ-EPS-05"
+  },
+  {
+   "src": "PART-ADCS-ST-01",
+   "type": "PART_OF",
+   "dst": "ADCS"
+  },
+  {
+   "src": "PART-ADCS-ST-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-ADCS-ST-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-OBC-CPU-01"
+  },
+  {
+   "src": "PART-ADCS-ST-01",
+   "type": "SATISFIES",
+   "dst": "REQ-ADCS-01"
+  },
+  {
+   "src": "PART-ADCS-RW-01",
+   "type": "PART_OF",
+   "dst": "ADCS"
+  },
+  {
+   "src": "PART-ADCS-RW-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-ADCS-RW-01",
+   "type": "SATISFIES",
+   "dst": "REQ-ADCS-02"
+  },
+  {
+   "src": "PART-ADCS-MTQ-01",
+   "type": "PART_OF",
+   "dst": "ADCS"
+  },
+  {
+   "src": "PART-ADCS-MTQ-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-ADCS-MTQ-01",
+   "type": "SATISFIES",
+   "dst": "REQ-ADCS-03"
+  },
+  {
+   "src": "PART-ADCS-SS-01",
+   "type": "PART_OF",
+   "dst": "ADCS"
+  },
+  {
+   "src": "PART-ADCS-SS-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-ADCS-SS-01",
+   "type": "SATISFIES",
+   "dst": "REQ-ADCS-04"
+  },
+  {
+   "src": "PART-ADCS-GNSS-01",
+   "type": "PART_OF",
+   "dst": "ADCS"
+  },
+  {
+   "src": "PART-ADCS-GNSS-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-ADCS-GNSS-01",
+   "type": "SATISFIES",
+   "dst": "REQ-ADCS-05"
+  },
+  {
+   "src": "PART-ADCS-GNSS-01",
+   "type": "SATISFIES",
+   "dst": "REQ-OBC-04"
+  },
+  {
+   "src": "PART-ADCS-CTRL-01",
+   "type": "PART_OF",
+   "dst": "ADCS"
+  },
+  {
+   "src": "PART-ADCS-CTRL-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-ADCS-CTRL-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-ADCS-ST-01"
+  },
+  {
+   "src": "PART-ADCS-CTRL-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-ADCS-RW-01"
+  },
+  {
+   "src": "PART-ADCS-CTRL-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-ADCS-MTQ-01"
+  },
+  {
+   "src": "PART-ADCS-CTRL-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-ADCS-SS-01"
+  },
+  {
+   "src": "PART-ADCS-CTRL-01",
+   "type": "SATISFIES",
+   "dst": "REQ-ADCS-02"
+  },
+  {
+   "src": "PART-ADCS-CTRL-01",
+   "type": "SATISFIES",
+   "dst": "REQ-ADCS-03"
+  },
+  {
+   "src": "PART-ADCS-CTRL-01",
+   "type": "SATISFIES",
+   "dst": "REQ-ADCS-04"
+  },
+  {
+   "src": "PART-COMMS-XTX-01",
+   "type": "PART_OF",
+   "dst": "COMMS"
+  },
+  {
+   "src": "PART-COMMS-XTX-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-COMMS-XTX-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-OBC-CPU-01"
+  },
+  {
+   "src": "PART-COMMS-XTX-01",
+   "type": "SATISFIES",
+   "dst": "REQ-COMMS-01"
+  },
+  {
+   "src": "PART-COMMS-XTX-01",
+   "type": "SATISFIES",
+   "dst": "REQ-COMMS-03"
+  },
+  {
+   "src": "PART-COMMS-XANT-01",
+   "type": "PART_OF",
+   "dst": "COMMS"
+  },
+  {
+   "src": "PART-COMMS-XANT-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-COMMS-XTX-01"
+  },
+  {
+   "src": "PART-COMMS-XANT-01",
+   "type": "SATISFIES",
+   "dst": "REQ-COMMS-03"
+  },
+  {
+   "src": "PART-COMMS-UHF-01",
+   "type": "PART_OF",
+   "dst": "COMMS"
+  },
+  {
+   "src": "PART-COMMS-UHF-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-COMMS-UHF-01",
+   "type": "SATISFIES",
+   "dst": "REQ-COMMS-02"
+  },
+  {
+   "src": "PART-COMMS-UANT-01",
+   "type": "PART_OF",
+   "dst": "COMMS"
+  },
+  {
+   "src": "PART-COMMS-UANT-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-COMMS-UHF-01"
+  },
+  {
+   "src": "PART-COMMS-UANT-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-STR-HNG-01"
+  },
+  {
+   "src": "PART-COMMS-UANT-01",
+   "type": "SATISFIES",
+   "dst": "REQ-COMMS-04"
+  },
+  {
+   "src": "PART-OBC-CPU-01",
+   "type": "PART_OF",
+   "dst": "OBC"
+  },
+  {
+   "src": "PART-OBC-CPU-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-OBC-CPU-01",
+   "type": "SATISFIES",
+   "dst": "REQ-OBC-02"
+  },
+  {
+   "src": "PART-OBC-CPU-01",
+   "type": "SATISFIES",
+   "dst": "REQ-OBC-03"
+  },
+  {
+   "src": "PART-OBC-MEM-01",
+   "type": "PART_OF",
+   "dst": "OBC"
+  },
+  {
+   "src": "PART-OBC-MEM-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-OBC-CPU-01"
+  },
+  {
+   "src": "PART-OBC-MEM-01",
+   "type": "SATISFIES",
+   "dst": "REQ-OBC-01"
+  },
+  {
+   "src": "PART-OBC-FSW-01",
+   "type": "PART_OF",
+   "dst": "OBC"
+  },
+  {
+   "src": "PART-OBC-FSW-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-OBC-CPU-01"
+  },
+  {
+   "src": "PART-OBC-FSW-01",
+   "type": "SATISFIES",
+   "dst": "REQ-OBC-03"
+  },
+  {
+   "src": "PART-OBC-FSW-01",
+   "type": "SATISFIES",
+   "dst": "REQ-OBC-04"
+  },
+  {
+   "src": "PART-STR-FRM-01",
+   "type": "PART_OF",
+   "dst": "STR"
+  },
+  {
+   "src": "PART-STR-FRM-01",
+   "type": "SATISFIES",
+   "dst": "REQ-STR-01"
+  },
+  {
+   "src": "PART-STR-FRM-01",
+   "type": "SATISFIES",
+   "dst": "REQ-STR-02"
+  },
+  {
+   "src": "PART-STR-FRM-01",
+   "type": "SATISFIES",
+   "dst": "REQ-STR-03"
+  },
+  {
+   "src": "PART-STR-HNG-01",
+   "type": "PART_OF",
+   "dst": "STR"
+  },
+  {
+   "src": "PART-STR-HNG-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-THERM-HTR-01",
+   "type": "PART_OF",
+   "dst": "THERM"
+  },
+  {
+   "src": "PART-THERM-HTR-01",
+   "type": "SATISFIES",
+   "dst": "REQ-THERM-01"
+  },
+  {
+   "src": "PART-THERM-HTR-01",
+   "type": "SATISFIES",
+   "dst": "REQ-THERM-03"
+  },
+  {
+   "src": "PART-THERM-MLI-01",
+   "type": "PART_OF",
+   "dst": "THERM"
+  },
+  {
+   "src": "PART-THERM-MLI-01",
+   "type": "SATISFIES",
+   "dst": "REQ-THERM-01"
+  },
+  {
+   "src": "PART-THERM-RAD-01",
+   "type": "PART_OF",
+   "dst": "THERM"
+  },
+  {
+   "src": "PART-THERM-RAD-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-STR-FRM-01"
+  },
+  {
+   "src": "PART-THERM-RAD-01",
+   "type": "SATISFIES",
+   "dst": "REQ-THERM-02"
+  },
+  {
+   "src": "PART-PAY-OPT-01",
+   "type": "PART_OF",
+   "dst": "PAY"
+  },
+  {
+   "src": "PART-PAY-OPT-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-STR-FRM-01"
+  },
+  {
+   "src": "PART-PAY-OPT-01",
+   "type": "SATISFIES",
+   "dst": "REQ-PAY-01"
+  },
+  {
+   "src": "PART-PAY-DET-01",
+   "type": "PART_OF",
+   "dst": "PAY"
+  },
+  {
+   "src": "PART-PAY-DET-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-PAY-OPT-01"
+  },
+  {
+   "src": "PART-PAY-DET-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-THERM-RAD-01"
+  },
+  {
+   "src": "PART-PAY-DET-01",
+   "type": "SATISFIES",
+   "dst": "REQ-PAY-02"
+  },
+  {
+   "src": "PART-PAY-PEB-01",
+   "type": "PART_OF",
+   "dst": "PAY"
+  },
+  {
+   "src": "PART-PAY-PEB-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-EPS-PCDU-01"
+  },
+  {
+   "src": "PART-PAY-PEB-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-PAY-DET-01"
+  },
+  {
+   "src": "PART-PAY-PEB-01",
+   "type": "DEPENDS_ON",
+   "dst": "PART-OBC-MEM-01"
+  },
+  {
+   "src": "PART-PAY-PEB-01",
+   "type": "SATISFIES",
+   "dst": "REQ-PAY-03"
+  },
+  {
+   "src": "PART-PAY-PEB-01",
+   "type": "SATISFIES",
+   "dst": "REQ-PAY-04"
+  },
+  {
+   "src": "PART-PAY-FW-02",
+   "type": "PART_OF",
+   "dst": "PAY"
+  },
+  {
+   "src": "PART-PAY-FW-02",
+   "type": "DEPENDS_ON",
+   "dst": "PART-PAY-OPT-01"
+  },
+  {
+   "src": "PART-COMMS-SBAND-01",
+   "type": "PART_OF",
+   "dst": "COMMS"
+  },
+  {
+   "src": "RISK-01",
+   "type": "THREATENS",
+   "dst": "REQ-EPS-01"
+  },
+  {
+   "src": "RISK-01",
+   "type": "THREATENS",
+   "dst": "PART-STR-HNG-01"
+  },
+  {
+   "src": "RISK-02",
+   "type": "THREATENS",
+   "dst": "REQ-EPS-02"
+  },
+  {
+   "src": "RISK-02",
+   "type": "THREATENS",
+   "dst": "PART-EPS-BAT-01"
+  },
+  {
+   "src": "RISK-03",
+   "type": "THREATENS",
+   "dst": "REQ-ADCS-01"
+  },
+  {
+   "src": "RISK-04",
+   "type": "THREATENS",
+   "dst": "REQ-ADCS-02"
+  },
+  {
+   "src": "RISK-04",
+   "type": "THREATENS",
+   "dst": "PART-ADCS-RW-01"
+  },
+  {
+   "src": "RISK-05",
+   "type": "THREATENS",
+   "dst": "REQ-COMMS-01"
+  },
+  {
+   "src": "RISK-05",
+   "type": "THREATENS",
+   "dst": "REQ-SYS-02"
+  },
+  {
+   "src": "RISK-06",
+   "type": "THREATENS",
+   "dst": "REQ-OBC-02"
+  },
+  {
+   "src": "RISK-06",
+   "type": "THREATENS",
+   "dst": "PART-OBC-MEM-01"
+  },
+  {
+   "src": "RISK-07",
+   "type": "THREATENS",
+   "dst": "REQ-SYS-05"
+  },
+  {
+   "src": "RISK-08",
+   "type": "THREATENS",
+   "dst": "REQ-PAY-01"
+  },
+  {
+   "src": "RISK-08",
+   "type": "THREATENS",
+   "dst": "PART-PAY-OPT-01"
+  },
+  {
+   "src": "RISK-09",
+   "type": "THREATENS",
+   "dst": "REQ-COMMS-04"
+  },
+  {
+   "src": "RISK-10",
+   "type": "THREATENS",
+   "dst": "REQ-THERM-02"
+  },
+  {
+   "src": "RISK-10",
+   "type": "THREATENS",
+   "dst": "REQ-PAY-02"
+  },
+  {
+   "src": "RISK-11",
+   "type": "THREATENS",
+   "dst": "PART-ADCS-RW-01"
+  },
+  {
+   "src": "RISK-11",
+   "type": "THREATENS",
+   "dst": "PART-ADCS-MTQ-01"
+  },
+  {
+   "src": "RISK-11",
+   "type": "THREATENS",
+   "dst": "PART-ADCS-CTRL-01"
+  },
+  {
+   "src": "RISK-12",
+   "type": "THREATENS",
+   "dst": "REQ-ADCS-05"
+  },
+  {
+   "src": "RISK-13",
+   "type": "THREATENS",
+   "dst": "REQ-OBC-03"
+  },
+  {
+   "src": "RISK-14",
+   "type": "THREATENS",
+   "dst": "REQ-EPS-02"
+  },
+  {
+   "src": "RISK-14",
+   "type": "THREATENS",
+   "dst": "REQ-MIS-02"
+  },
+  {
+   "src": "RISK-01",
+   "type": "MITIGATED_BY",
+   "dst": "VER-EPS-01-T"
+  },
+  {
+   "src": "RISK-01",
+   "type": "MITIGATED_BY",
+   "dst": "VER-STR-HNG-T"
+  },
+  {
+   "src": "RISK-02",
+   "type": "MITIGATED_BY",
+   "dst": "DEC-02"
+  },
+  {
+   "src": "RISK-02",
+   "type": "MITIGATED_BY",
+   "dst": "VER-EPS-02-T"
+  },
+  {
+   "src": "RISK-03",
+   "type": "MITIGATED_BY",
+   "dst": "VER-ADCS-01-A"
+  },
+  {
+   "src": "RISK-05",
+   "type": "MITIGATED_BY",
+   "dst": "DEC-05"
+  },
+  {
+   "src": "RISK-06",
+   "type": "MITIGATED_BY",
+   "dst": "DEC-03"
+  },
+  {
+   "src": "RISK-07",
+   "type": "MITIGATED_BY",
+   "dst": "VER-SYS-05-I"
+  },
+  {
+   "src": "RISK-08",
+   "type": "MITIGATED_BY",
+   "dst": "VER-PAY-01-T"
+  },
+  {
+   "src": "RISK-09",
+   "type": "MITIGATED_BY",
+   "dst": "VER-COMMS-04-T"
+  },
+  {
+   "src": "RISK-10",
+   "type": "MITIGATED_BY",
+   "dst": "DEC-07"
+  },
+  {
+   "src": "RISK-13",
+   "type": "MITIGATED_BY",
+   "dst": "VER-OBC-03-T"
+  },
+  {
+   "src": "RISK-14",
+   "type": "MITIGATED_BY",
+   "dst": "VER-EPS-02-A"
+  },
+  {
+   "src": "DEC-01",
+   "type": "AFFECTS",
+   "dst": "PART-EPS-SA-01"
+  },
+  {
+   "src": "DEC-01",
+   "type": "AFFECTS",
+   "dst": "REQ-EPS-01"
+  },
+  {
+   "src": "DEC-02",
+   "type": "AFFECTS",
+   "dst": "PART-EPS-BAT-01"
+  },
+  {
+   "src": "DEC-03",
+   "type": "AFFECTS",
+   "dst": "PART-OBC-CPU-01"
+  },
+  {
+   "src": "DEC-03",
+   "type": "AFFECTS",
+   "dst": "PART-OBC-MEM-01"
+  },
+  {
+   "src": "DEC-03",
+   "type": "AFFECTS",
+   "dst": "REQ-OBC-02"
+  },
+  {
+   "src": "DEC-04",
+   "type": "AFFECTS",
+   "dst": "PART-COMMS-XTX-01"
+  },
+  {
+   "src": "DEC-04",
+   "type": "AFFECTS",
+   "dst": "REQ-COMMS-01"
+  },
+  {
+   "src": "DEC-05",
+   "type": "AFFECTS",
+   "dst": "PART-COMMS-SBAND-01"
+  },
+  {
+   "src": "DEC-06",
+   "type": "AFFECTS",
+   "dst": "PART-THERM-HTR-01"
+  },
+  {
+   "src": "DEC-06",
+   "type": "AFFECTS",
+   "dst": "PART-THERM-MLI-01"
+  },
+  {
+   "src": "DEC-07",
+   "type": "AFFECTS",
+   "dst": "PART-THERM-RAD-01"
+  },
+  {
+   "src": "DEC-07",
+   "type": "AFFECTS",
+   "dst": "PART-OBC-FSW-01"
+  },
+  {
+   "src": "DEC-08",
+   "type": "AFFECTS",
+   "dst": "PART-PAY-FW-02"
+  },
+  {
+   "src": "DEC-09",
+   "type": "AFFECTS",
+   "dst": "PART-STR-FRM-01"
+  },
+  {
+   "src": "DEC-09",
+   "type": "AFFECTS",
+   "dst": "REQ-STR-02"
+  },
+  {
+   "src": "DEC-10",
+   "type": "AFFECTS",
+   "dst": "PART-STR-FRM-01"
+  },
+  {
+   "src": "DEC-05",
+   "type": "CONFLICTS_WITH",
+   "dst": "DEC-04"
+  },
+  {
+   "src": "DEC-07",
+   "type": "CONFLICTS_WITH",
+   "dst": "DEC-06"
+  },
+  {
+   "src": "DEC-10",
+   "type": "CONFLICTS_WITH",
+   "dst": "DEC-09"
+  },
+  {
+   "src": "ANOM-01",
+   "type": "OBSERVED_IN",
+   "dst": "VER-ADCS-02-T"
+  },
+  {
+   "src": "ANOM-01",
+   "type": "INVOLVES",
+   "dst": "PART-ADCS-RW-01"
+  },
+  {
+   "src": "ANOM-02",
+   "type": "OBSERVED_IN",
+   "dst": "VER-COMMS-04-T"
+  },
+  {
+   "src": "ANOM-02",
+   "type": "INVOLVES",
+   "dst": "PART-COMMS-UANT-01"
+  },
+  {
+   "src": "ANOM-02",
+   "type": "INVOLVES",
+   "dst": "PART-STR-HNG-01"
+  },
+  {
+   "src": "ANOM-03",
+   "type": "OBSERVED_IN",
+   "dst": "VER-ADCS-01-A"
+  },
+  {
+   "src": "ANOM-03",
+   "type": "INVOLVES",
+   "dst": "PART-ADCS-ST-01"
+  },
+  {
+   "src": "REQ-SYS-03",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-01"
+  },
+  {
+   "src": "REQ-EPS-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-01"
+  },
+  {
+   "src": "REQ-EPS-02",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-01"
+  },
+  {
+   "src": "PART-EPS-SA-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-01"
+  },
+  {
+   "src": "PART-EPS-BAT-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-01"
+  },
+  {
+   "src": "REQ-SYS-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-02"
+  },
+  {
+   "src": "REQ-ADCS-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-02"
+  },
+  {
+   "src": "REQ-ADCS-02",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-02"
+  },
+  {
+   "src": "PART-ADCS-ST-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-02"
+  },
+  {
+   "src": "PART-ADCS-RW-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-02"
+  },
+  {
+   "src": "REQ-COMMS-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-03"
+  },
+  {
+   "src": "REQ-COMMS-03",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-03"
+  },
+  {
+   "src": "PART-COMMS-XTX-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-03"
+  },
+  {
+   "src": "PART-COMMS-XANT-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-03"
+  },
+  {
+   "src": "REQ-SYS-04",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-04"
+  },
+  {
+   "src": "REQ-THERM-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-04"
+  },
+  {
+   "src": "REQ-THERM-02",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-04"
+  },
+  {
+   "src": "PART-THERM-HTR-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-04"
+  },
+  {
+   "src": "PART-THERM-RAD-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-04"
+  },
+  {
+   "src": "REQ-SYS-07",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-05"
+  },
+  {
+   "src": "REQ-STR-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-05"
+  },
+  {
+   "src": "PART-STR-FRM-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-05"
+  },
+  {
+   "src": "REQ-SYS-06",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-06"
+  },
+  {
+   "src": "REQ-OBC-02",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-06"
+  },
+  {
+   "src": "REQ-PAY-03",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-06"
+  },
+  {
+   "src": "PART-OBC-MEM-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-06"
+  },
+  {
+   "src": "PART-PAY-PEB-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-06"
+  },
+  {
+   "src": "REQ-SYS-05",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-07"
+  },
+  {
+   "src": "REQ-STR-02",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-07"
+  },
+  {
+   "src": "REQ-OBC-03",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-08"
+  },
+  {
+   "src": "REQ-OBC-04",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-08"
+  },
+  {
+   "src": "PART-OBC-FSW-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-08"
+  },
+  {
+   "src": "PART-OBC-CPU-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-08"
+  },
+  {
+   "src": "REQ-PAY-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-09"
+  },
+  {
+   "src": "REQ-PAY-02",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-09"
+  },
+  {
+   "src": "PART-PAY-OPT-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-09"
+  },
+  {
+   "src": "PART-PAY-DET-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-09"
+  },
+  {
+   "src": "REQ-COMMS-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-10"
+  },
+  {
+   "src": "PART-COMMS-SBAND-01",
+   "type": "DOCUMENTED_IN",
+   "dst": "DOC-10"
+  }
+ ]
+}
