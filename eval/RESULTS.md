@@ -11,7 +11,7 @@ computed in plain Python without Relate.
 | Answerable: macro F1 | 1.0 | 0.142 | 0.152 |
 | Answerable: exact set match | 1.0 | 0.027 | 0.054 |
 | Out-of-scope: correct abstention | 1.0 | 0.0 | 0.0 |
-| Median latency (ms) | 0.46 | 0.56 | 1.06 |
+| Median latency (ms) | 0.42 | 0.54 | 1.08 |
 
 <details><summary>F1 by category</summary>
 
@@ -32,21 +32,21 @@ computed in plain Python without Relate.
 
 | Metric | graph_agent | vector_only | fulltext_only |
 |---|---|---|---|
-| Answerable: macro F1 | 0.838 | 0.136 | 0.159 |
-| Answerable: exact set match | 0.838 | 0.027 | 0.054 |
+| Answerable: macro F1 | 1.0 | 0.136 | 0.159 |
+| Answerable: exact set match | 1.0 | 0.027 | 0.054 |
 | Out-of-scope: correct abstention | 1.0 | 0.0 | 0.2 |
-| Median latency (ms) | 0.42 | 0.56 | 1.08 |
+| Median latency (ms) | 0.32 | 0.54 | 1.08 |
 
 <details><summary>F1 by category</summary>
 
 | Category | graph_agent | vector_only | fulltext_only |
 |---|---|---|---|
-| coverage | 0.667 | 0.126 | 0.132 |
+| coverage | 1.0 | 0.126 | 0.132 |
 | decision | 1.0 | 0.0 | 0.0 |
-| impact | 0.889 | 0.172 | 0.225 |
+| impact | 1.0 | 0.172 | 0.225 |
 | out_of_scope | 1.0 | 0.0 | 0.2 |
-| risk | 0.833 | 0.139 | 0.0 |
-| structure | 0.75 | 0.0 | 0.0 |
+| risk | 1.0 | 0.139 | 0.0 |
+| structure | 1.0 | 0.0 | 0.0 |
 | supplier | 1.0 | 0.75 | 1.0 |
 | trace | 1.0 | 0.0 | 0.222 |
 
@@ -56,21 +56,21 @@ computed in plain Python without Relate.
 
 | Metric | graph_agent | vector_only | fulltext_only |
 |---|---|---|---|
-| Answerable: macro F1 | 0.787 | 0.13 | 0.179 |
-| Answerable: exact set match | 0.757 | 0.027 | 0.054 |
+| Answerable: macro F1 | 0.922 | 0.13 | 0.179 |
+| Answerable: exact set match | 0.892 | 0.027 | 0.054 |
 | Out-of-scope: correct abstention | 1.0 | 0.0 | 0.0 |
-| Median latency (ms) | 0.46 | 0.56 | 1.1 |
+| Median latency (ms) | 0.35 | 0.56 | 1.08 |
 
 <details><summary>F1 by category</summary>
 
 | Category | graph_agent | vector_only | fulltext_only |
 |---|---|---|---|
-| coverage | 0.667 | 0.136 | 0.163 |
+| coverage | 1.0 | 0.136 | 0.163 |
 | decision | 1.0 | 0.0 | 0.167 |
 | impact | 0.854 | 0.191 | 0.22 |
 | out_of_scope | 1.0 | 0.0 | 0.0 |
-| risk | 0.741 | 0.0 | 0.0 |
-| structure | 0.5 | 0.0 | 0.0 |
+| risk | 0.907 | 0.0 | 0.0 |
+| structure | 0.75 | 0.0 | 0.0 |
 | supplier | 1.0 | 0.929 | 1.0 |
 | trace | 1.0 | 0.0 | 0.167 |
 

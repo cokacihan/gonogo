@@ -50,15 +50,19 @@ GLOBAL_RULES: list[tuple[str, tuple[str, ...]]] = [
                                 r"(high|critical|red|severe).*(unmitigated|no mitigation|without (a |any )?mitigation|not mitigated|lack(s|ing)? mitigation)")),
     ("unmitigated_risks", (r"unmitigated", r"no mitigation", r"without (a |any )?mitigation", r"not mitigated", r"lack(s|ing)? mitigation")),
     ("high_risks", (r"(high|top|critical|severe|red)[- ](zone )?risks?", r"risks?.*(high|critical|severe)")),
-    ("analysis_only_requirements", (r"only (by |through |via )?analysis", r"analysis[- ]only", r"just analysis")),
+    ("analysis_only_requirements", (r"only (by |through |via )?analysis", r"analysis[- ]only", r"just analysis",
+                                    r"(sole|solely|exclusively|purely)\b.*\banalysis", r"analysis\b.*\b(sole|solely|exclusive)")),
     ("unverified_requirements", (r"(not|never|no|without|lack\w*|missing)\s+(any\s+)?(verif|test)", r"unverified", r"untested",
-                                 r"verification gaps?", r"coverage gaps?")),
+                                 r"verification gaps?", r"coverage gaps?",
+                                 r"not covered by", r"zero verif", r"no verif")),
     ("failed_requirements", (r"fail",)),
     ("closure_by_subsystem", (r"closure", r"percent", r"progress", r"\bclosed\b.*subsystem", r"subsystem.*\bclosed\b", r"per subsystem")),
     ("open_requirements", (r"\bopen\b", r"not (yet )?closed", r"still (un|not )")),
     ("orphan_parts", (r"orphan", r"unused part", r"parts?.*(satisf\w* no|no requirement|not (linked|traced))", r"dead part")),
-    ("unsatisfied_requirements", (r"no part", r"not satisfied", r"unsatisfied", r"unallocated", r"nothing satisf")),
-    ("most_connected_parts", (r"most (connected|critical|important|requirements)", r"satisf\w* the most", r"single point")),
+    ("unsatisfied_requirements", (r"no part", r"not satisfied", r"unsatisfied", r"unallocated", r"nothing satisf",
+                                  r"no satisfying part", r"requirements?\b.*\b(lack\w*|without|no)\b.*\bpart")),
+    ("most_connected_parts", (r"most (connected|critical|important|requirements)", r"satisf\w* the most", r"single point",
+                              r"part\b.*\b(highest|largest|most|maximum)\b.*requirement")),
 ]
 
 IMPACT = (r"impact", r"affect", r"blast", r"ripple", r"break", r"\bchang", r"re-?run", r"re-?verif", r"replac")
@@ -80,10 +84,10 @@ class Agent:
         return row["label"] if row else None
 
     def _resolve_by_name(self, question: str, label: str) -> dict | None:
-        rows, _, _ = run(self.db, "vector_search", q=question, k=25)
+        rows, _, _ = run(self.db, "vector_search_label", q=question, label=label, k=1)
         for r in rows:
-            if r["label"] == label and r["score"] >= RESOLVE_MIN_SCORE:
-                return {"mention": question, "id": r["id"], "score": round(r["score"], 3), "via": "Relate vector index"}
+            if r["score"] >= RESOLVE_MIN_SCORE:
+                return {"mention": question, "id": r["id"], "score": round(r["score"], 3), "via": "Relate vector similarity"}
         return None
 
     def _suggest(self, question: str, k: int = 5) -> list[dict]:
@@ -131,7 +135,8 @@ class Agent:
 
     def _entity_intent(self, question: str, q: str, eid: str, label: str, resolved: list) -> Answer:
         # "which/what risks ..." asks for risks even if it also says "affect"
-        if label in ("Part", "Requirement") and re.search(r"\b(which|what|list|any)\s+(\w+\s+)?risks?\b", q):
+        if label in ("Part", "Requirement") and (re.search(r"\b(which|what|list|any)\s+(\w+\s+)?risks?\b", q)
+                                                 or re.search(r"\brisks\b", q)):
             return self._answer(question, "risks_threatening", resolved=resolved, id=eid)
         if label == "Part":
             if _has(q, r"risk") and not _has(q, *IMPACT):

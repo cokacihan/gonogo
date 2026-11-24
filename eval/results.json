@@ -12,7 +12,7 @@
      "answerable_macro_precision": 1.0,
      "answerable_macro_recall": 1.0,
      "out_of_scope_abstention": 1.0,
-     "median_ms": 0.46,
+     "median_ms": 0.42,
      "by_category_f1": {
       "coverage": 1.0,
       "decision": 1.0,
@@ -31,7 +31,7 @@
      "answerable_macro_precision": 0.182,
      "answerable_macro_recall": 0.179,
      "out_of_scope_abstention": 0.0,
-     "median_ms": 0.56,
+     "median_ms": 0.54,
      "by_category_f1": {
       "coverage": 0.137,
       "decision": 0.0,
@@ -50,7 +50,7 @@
      "answerable_macro_precision": 0.181,
      "answerable_macro_recall": 0.195,
      "out_of_scope_abstention": 0.0,
-     "median_ms": 1.06,
+     "median_ms": 1.08,
      "by_category_f1": {
       "coverage": 0.143,
       "decision": 0.0,
@@ -75,7 +75,7 @@
       "REQ-PAY-04",
       "REQ-THERM-03"
      ],
-     "ms": 1.28,
+     "ms": 1.38,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -92,7 +92,7 @@
       "REQ-PAY-04",
       "REQ-THERM-03"
      ],
-     "ms": 0.28,
+     "ms": 0.3,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -108,7 +108,7 @@
       "REQ-COMMS-03",
       "REQ-STR-01"
      ],
-     "ms": 0.49,
+     "ms": 0.57,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -132,7 +132,7 @@
       "REQ-SYS-04",
       "REQ-THERM-03"
      ],
-     "ms": 0.88,
+     "ms": 0.94,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -152,7 +152,7 @@
       "REQ-OBC-02",
       "REQ-SYS-01"
      ],
-     "ms": 0.39,
+     "ms": 0.43,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -167,7 +167,7 @@
      "got": [
       "REQ-OBC-05"
      ],
-     "ms": 0.46,
+     "ms": 0.45,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -184,7 +184,7 @@
       "VER-ADCS-02-T",
       "VER-COMMS-04-T"
      ],
-     "ms": 0.27,
+     "ms": 0.26,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -200,7 +200,7 @@
       "PART-COMMS-SBAND-01",
       "PART-PAY-FW-02"
      ],
-     "ms": 0.27,
+     "ms": 0.22,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -216,7 +216,7 @@
       "PART-COMMS-SBAND-01",
       "PART-PAY-FW-02"
      ],
-     "ms": 0.25,
+     "ms": 0.2,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -232,7 +232,7 @@
       "PART-ADCS-CTRL-01",
       "PART-STR-FRM-01"
      ],
-     "ms": 0.73,
+     "ms": 0.71,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -249,7 +249,7 @@
       "PART-EPS-SA-01",
       "PART-STR-HNG-01"
      ],
-     "ms": 0.75,
+     "ms": 0.62,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -265,7 +265,7 @@
       "RISK-04",
       "RISK-11"
      ],
-     "ms": 0.36,
+     "ms": 0.26,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -281,7 +281,7 @@
       "RISK-04",
       "RISK-11"
      ],
-     "ms": 0.26,
+     "ms": 0.21,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -302,7 +302,7 @@
       "RISK-10",
       "RISK-11"
      ],
-     "ms": 0.26,
+     "ms": 0.17,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -320,7 +320,7 @@
       "DEC-06",
       "DEC-07"
      ],
-     "ms": 0.29,
+     "ms": 0.2,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -338,7 +338,7 @@
       "DEC-06",
       "DEC-07"
      ],
-     "ms": 0.27,
+     "ms": 0.17,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -369,7 +369,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 1.29,
+     "ms": 1.12,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -436,7 +436,7 @@
       "VER-SYS-08-I",
       "VER-SYS-08-T"
      ],
-     "ms": 1.61,
+     "ms": 1.56,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -472,7 +472,7 @@
       "VER-SYS-08-T",
       "VER-THERM-02-T"
      ],
-     "ms": 1.02,
+     "ms": 0.91,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -508,7 +508,7 @@
       "VER-SYS-08-I",
       "VER-SYS-08-T"
      ],
-     "ms": 1.09,
+     "ms": 0.88,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -539,7 +539,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 5.72,
+     "ms": 4.9,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -563,7 +563,7 @@
       "VER-SYS-02-A",
       "VER-SYS-02-T"
      ],
-     "ms": 1.71,
+     "ms": 1.36,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -592,7 +592,7 @@
       "VER-OBC-04-T",
       "VER-SYS-01-A"
      ],
-     "ms": 0.74,
+     "ms": 0.66,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -623,7 +623,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 0.58,
+     "ms": 0.59,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -682,7 +682,7 @@
       "VER-SYS-08-I",
       "VER-SYS-08-T"
      ],
-     "ms": 1.13,
+     "ms": 0.79,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -698,7 +698,7 @@
       "REQ-MIS-02",
       "REQ-SYS-03"
      ],
-     "ms": 0.46,
+     "ms": 0.4,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -730,7 +730,7 @@
       "REQ-MIS-02",
       "REQ-SYS-06"
      ],
-     "ms": 0.34,
+     "ms": 0.24,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -745,7 +745,7 @@
      "got": [
       "RISK-04"
      ],
-     "ms": 0.38,
+     "ms": 0.27,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -761,7 +761,7 @@
       "RISK-04",
       "RISK-11"
      ],
-     "ms": 0.47,
+     "ms": 0.25,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -777,7 +777,7 @@
       "RISK-02",
       "RISK-14"
      ],
-     "ms": 0.35,
+     "ms": 0.27,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -792,7 +792,7 @@
      "got": [
       "VER-COMMS-03-A"
      ],
-     "ms": 0.39,
+     "ms": 0.35,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -809,7 +809,7 @@
       "VER-EPS-02-I",
       "VER-EPS-02-T"
      ],
-     "ms": 0.23,
+     "ms": 0.22,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -826,7 +826,7 @@
       "PART-OBC-MEM-01",
       "REQ-OBC-02"
      ],
-     "ms": 0.25,
+     "ms": 0.24,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -842,7 +842,7 @@
       "PART-STR-FRM-01",
       "REQ-STR-02"
      ],
-     "ms": 0.24,
+     "ms": 0.22,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -859,7 +859,7 @@
       "PART-ADCS-MTQ-01",
       "PART-ADCS-RW-01"
      ],
-     "ms": 0.19,
+     "ms": 0.16,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -877,7 +877,7 @@
       "PART-COMMS-XANT-01",
       "PART-COMMS-XTX-01"
      ],
-     "ms": 0.13,
+     "ms": 0.12,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -890,7 +890,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.74,
+     "ms": 0.66,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -903,7 +903,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.64,
+     "ms": 0.54,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -916,7 +916,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.6,
+     "ms": 0.58,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -929,7 +929,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.65,
+     "ms": 0.58,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -942,7 +942,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.6,
+     "ms": 0.56,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -955,7 +955,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.6,
+     "ms": 0.54,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -968,7 +968,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.57,
+     "ms": 0.6,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -981,7 +981,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.53,
+     "ms": 0.67,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -999,7 +999,7 @@
       "REQ-OBC-05",
       "REQ-THERM-03"
      ],
-     "ms": 0.56,
+     "ms": 0.6,
      "precision": 0.5,
      "recall": 0.2,
      "f1": 0.2857,
@@ -1012,7 +1012,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.55,
+     "ms": 0.64,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1027,7 +1027,7 @@
      "got": [
       "REQ-OBC-03"
      ],
-     "ms": 0.58,
+     "ms": 0.6,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1051,7 +1051,7 @@
       "VER-PAY-03-T",
       "VER-THERM-02-T"
      ],
-     "ms": 0.55,
+     "ms": 0.58,
      "precision": 0.2,
      "recall": 0.6667,
      "f1": 0.3077,
@@ -1066,7 +1066,7 @@
      "got": [
       "PART-THERM-MLI-01"
      ],
-     "ms": 0.54,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1081,7 +1081,7 @@
      "got": [
       "PART-COMMS-XANT-01"
      ],
-     "ms": 0.55,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1094,7 +1094,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.58,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1107,7 +1107,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.62,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1122,7 +1122,7 @@
      "got": [
       "RISK-04"
      ],
-     "ms": 0.63,
+     "ms": 0.55,
      "precision": 1.0,
      "recall": 0.5,
      "f1": 0.6667,
@@ -1137,7 +1137,7 @@
      "got": [
       "RISK-10"
      ],
-     "ms": 0.56,
+     "ms": 0.6,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1152,7 +1152,7 @@
      "got": [
       "RISK-12"
      ],
-     "ms": 0.68,
+     "ms": 0.63,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1165,7 +1165,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.61,
+     "ms": 0.6,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1178,7 +1178,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.6,
+     "ms": 0.85,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1201,7 +1201,7 @@
       "VER-OBC-01-A",
       "VER-STR-01-A"
      ],
-     "ms": 0.55,
+     "ms": 0.59,
      "precision": 0.5556,
      "recall": 0.2941,
      "f1": 0.3846,
@@ -1223,7 +1223,7 @@
       "VER-OBC-04-T",
       "VER-PAY-01-T"
      ],
-     "ms": 0.57,
+     "ms": 0.6,
      "precision": 0.75,
      "recall": 0.1132,
      "f1": 0.1967,
@@ -1247,7 +1247,7 @@
       "VER-SYS-01-A",
       "VER-THERM-01-I"
      ],
-     "ms": 0.59,
+     "ms": 0.55,
      "precision": 0.1,
      "recall": 0.0455,
      "f1": 0.0625,
@@ -1271,7 +1271,7 @@
       "VER-PAY-03-T",
       "VER-STR-01-A"
      ],
-     "ms": 0.61,
+     "ms": 0.54,
      "precision": 0.5,
      "recall": 0.2273,
      "f1": 0.3125,
@@ -1289,7 +1289,7 @@
       "REQ-EPS-03",
       "REQ-EPS-05"
      ],
-     "ms": 0.66,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1312,7 +1312,7 @@
       "VER-PAY-02-T",
       "VER-THERM-02-T"
      ],
-     "ms": 0.59,
+     "ms": 0.61,
      "precision": 0.2222,
      "recall": 0.2,
      "f1": 0.2105,
@@ -1336,7 +1336,7 @@
       "VER-SYS-04-I",
       "VER-SYS-08-I"
      ],
-     "ms": 0.63,
+     "ms": 0.53,
      "precision": 0.2,
      "recall": 0.1333,
      "f1": 0.16,
@@ -1359,7 +1359,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 0.56,
+     "ms": 0.53,
      "precision": 0.2222,
      "recall": 0.1176,
      "f1": 0.1538,
@@ -1383,7 +1383,7 @@
       "VER-SYS-01-A",
       "VER-THERM-01-I"
      ],
-     "ms": 0.54,
+     "ms": 0.6,
      "precision": 0.6,
      "recall": 0.1333,
      "f1": 0.2182,
@@ -1398,7 +1398,7 @@
      "got": [
       "REQ-MIS-01"
      ],
-     "ms": 0.55,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1411,7 +1411,7 @@
      "category": "trace",
      "answerable": true,
      "got": [],
-     "ms": 0.54,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1424,7 +1424,7 @@
      "category": "trace",
      "answerable": true,
      "got": [],
-     "ms": 0.55,
+     "ms": 0.51,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1437,7 +1437,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.54,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1450,7 +1450,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.56,
+     "ms": 0.58,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1463,7 +1463,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.57,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1487,7 +1487,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 0.57,
+     "ms": 0.52,
      "precision": 0.1,
      "recall": 1.0,
      "f1": 0.1818,
@@ -1511,7 +1511,7 @@
       "VER-SYS-02-A",
       "VER-SYS-02-T"
      ],
-     "ms": 0.56,
+     "ms": 0.59,
      "precision": 0.3,
      "recall": 1.0,
      "f1": 0.4615,
@@ -1524,7 +1524,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.53,
+     "ms": 0.59,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1543,7 +1543,7 @@
       "REQ-EPS-03",
       "REQ-OBC-03"
      ],
-     "ms": 0.55,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1563,7 +1563,7 @@
       "PART-OBC-CPU-01",
       "PART-PAY-PEB-01"
      ],
-     "ms": 0.54,
+     "ms": 0.52,
      "precision": 0.5,
      "recall": 1.0,
      "f1": 0.6667,
@@ -1581,7 +1581,7 @@
       "PART-COMMS-XANT-01",
       "PART-COMMS-XTX-01"
      ],
-     "ms": 0.57,
+     "ms": 0.5,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -1605,7 +1605,7 @@
       "REQ-THERM-01",
       "RISK-08"
      ],
-     "ms": 0.56,
+     "ms": 0.58,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1629,7 +1629,7 @@
       "REQ-THERM-01",
       "REQ-THERM-02"
      ],
-     "ms": 0.54,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1653,7 +1653,7 @@
       "RISK-03",
       "RISK-09"
      ],
-     "ms": 0.56,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1677,7 +1677,7 @@
       "VER-ADCS-03-A",
       "VER-ADCS-04-A"
      ],
-     "ms": 0.59,
+     "ms": 0.47,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1701,7 +1701,7 @@
       "VER-STR-01-T",
       "VER-SYS-07-T"
      ],
-     "ms": 0.65,
+     "ms": 0.54,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1714,7 +1714,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 1.33,
+     "ms": 1.25,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1730,7 +1730,7 @@
       "REQ-STR-02",
       "REQ-SYS-05"
      ],
-     "ms": 1.4,
+     "ms": 1.42,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1745,7 +1745,7 @@
      "got": [
       "REQ-SYS-01"
      ],
-     "ms": 1.1,
+     "ms": 1.11,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1758,7 +1758,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.7,
+     "ms": 0.69,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1771,7 +1771,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.89,
+     "ms": 0.86,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1787,7 +1787,7 @@
       "REQ-STR-02",
       "REQ-SYS-05"
      ],
-     "ms": 0.95,
+     "ms": 0.94,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1822,7 +1822,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.67,
+     "ms": 0.75,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1853,7 +1853,7 @@
       "PART-ADCS-MTQ-01",
       "PART-ADCS-RW-01"
      ],
-     "ms": 1.09,
+     "ms": 1.13,
      "precision": 0.25,
      "recall": 0.5,
      "f1": 0.3333,
@@ -1866,7 +1866,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.74,
+     "ms": 0.71,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1881,7 +1881,7 @@
      "got": [
       "RISK-12"
      ],
-     "ms": 0.72,
+     "ms": 0.7,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1894,7 +1894,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.91,
+     "ms": 0.87,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1909,7 +1909,7 @@
      "got": [
       "RISK-12"
      ],
-     "ms": 0.98,
+     "ms": 1.03,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1922,7 +1922,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.65,
+     "ms": 0.69,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1935,7 +1935,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.84,
+     "ms": 0.73,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -1957,7 +1957,7 @@
       "VER-ADCS-01-A",
       "VER-ADCS-01-T"
      ],
-     "ms": 1.14,
+     "ms": 1.18,
      "precision": 0.125,
      "recall": 0.0588,
      "f1": 0.08,
@@ -1981,7 +1981,7 @@
       "VER-OBC-05-A",
       "VER-STR-01-A"
      ],
-     "ms": 1.61,
+     "ms": 1.62,
      "precision": 0.7,
      "recall": 0.1321,
      "f1": 0.2222,
@@ -2003,7 +2003,7 @@
       "VER-THERM-01-I",
       "VER-THERM-02-T"
      ],
-     "ms": 1.21,
+     "ms": 1.3,
      "precision": 0.125,
      "recall": 0.0455,
      "f1": 0.0667,
@@ -2025,7 +2025,7 @@
       "VER-PAY-02-T",
       "VER-PAY-03-I"
      ],
-     "ms": 1.18,
+     "ms": 1.16,
      "precision": 0.875,
      "recall": 0.3182,
      "f1": 0.4667,
@@ -2060,7 +2060,7 @@
       "REQ-COMMS-03",
       "REQ-STR-01"
      ],
-     "ms": 1.07,
+     "ms": 1.13,
      "precision": 0.6,
      "recall": 0.3,
      "f1": 0.4,
@@ -2083,7 +2083,7 @@
       "VER-SYS-05-T",
       "VER-SYS-06-I"
      ],
-     "ms": 1.43,
+     "ms": 1.45,
      "precision": 0.1111,
      "recall": 0.0667,
      "f1": 0.0833,
@@ -2107,7 +2107,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 1.31,
+     "ms": 1.71,
      "precision": 0.3,
      "recall": 0.1765,
      "f1": 0.2222,
@@ -2130,7 +2130,7 @@
       "VER-MIS-03-R",
       "VER-OBC-01-A"
      ],
-     "ms": 1.44,
+     "ms": 1.51,
      "precision": 0.5556,
      "recall": 0.1111,
      "f1": 0.1852,
@@ -2149,7 +2149,7 @@
       "REQ-STR-03",
       "REQ-SYS-01"
      ],
-     "ms": 1.44,
+     "ms": 1.53,
      "precision": 0.2,
      "recall": 0.5,
      "f1": 0.2857,
@@ -2165,7 +2165,7 @@
       "REQ-ADCS-02",
       "REQ-ADCS-04"
      ],
-     "ms": 1.36,
+     "ms": 1.38,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2180,7 +2180,7 @@
      "got": [
       "REQ-STR-03"
      ],
-     "ms": 1.37,
+     "ms": 1.33,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2193,7 +2193,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 1.26,
+     "ms": 1.33,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2206,7 +2206,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 1.05,
+     "ms": 1.09,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2219,7 +2219,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 1.25,
+     "ms": 1.29,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2242,7 +2242,7 @@
       "VER-OBC-03-A",
       "VER-OBC-03-T"
      ],
-     "ms": 1.28,
+     "ms": 1.43,
      "precision": 0.1111,
      "recall": 1.0,
      "f1": 0.2,
@@ -2264,7 +2264,7 @@
       "VER-EPS-04-A",
       "VER-EPS-05-T"
      ],
-     "ms": 1.27,
+     "ms": 1.4,
      "precision": 0.375,
      "recall": 1.0,
      "f1": 0.5455,
@@ -2277,7 +2277,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.91,
+     "ms": 1.06,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2290,7 +2290,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.83,
+     "ms": 0.92,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2307,7 +2307,7 @@
       "PART-ADCS-MTQ-01",
       "PART-ADCS-RW-01"
      ],
-     "ms": 0.79,
+     "ms": 0.85,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2325,7 +2325,7 @@
       "PART-COMMS-XANT-01",
       "PART-COMMS-XTX-01"
      ],
-     "ms": 0.79,
+     "ms": 0.84,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2349,7 +2349,7 @@
       "REQ-SYS-07",
       "RISK-08"
      ],
-     "ms": 0.95,
+     "ms": 0.98,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2373,7 +2373,7 @@
       "REQ-SYS-07",
       "REQ-THERM-01"
      ],
-     "ms": 0.98,
+     "ms": 1.02,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2397,7 +2397,7 @@
       "RISK-03",
       "RISK-09"
      ],
-     "ms": 0.98,
+     "ms": 1.08,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2421,7 +2421,7 @@
       "VER-ADCS-01-A",
       "VER-ADCS-01-T"
      ],
-     "ms": 1.47,
+     "ms": 1.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2445,7 +2445,7 @@
       "REQ-SYS-04",
       "RISK-06"
      ],
-     "ms": 1.2,
+     "ms": 1.03,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -2458,19 +2458,19 @@
    "summary": {
     "graph_agent": {
      "questions": 42,
-     "answerable_macro_f1": 0.838,
-     "answerable_exact_match": 0.838,
-     "answerable_macro_precision": 0.838,
-     "answerable_macro_recall": 0.838,
+     "answerable_macro_f1": 1.0,
+     "answerable_exact_match": 1.0,
+     "answerable_macro_precision": 1.0,
+     "answerable_macro_recall": 1.0,
      "out_of_scope_abstention": 1.0,
-     "median_ms": 0.42,
+     "median_ms": 0.32,
      "by_category_f1": {
-      "coverage": 0.667,
+      "coverage": 1.0,
       "decision": 1.0,
-      "impact": 0.889,
+      "impact": 1.0,
       "out_of_scope": 1.0,
-      "risk": 0.833,
-      "structure": 0.75,
+      "risk": 1.0,
+      "structure": 1.0,
       "supplier": 1.0,
       "trace": 1.0
      }
@@ -2482,7 +2482,7 @@
      "answerable_macro_precision": 0.17,
      "answerable_macro_recall": 0.181,
      "out_of_scope_abstention": 0.0,
-     "median_ms": 0.56,
+     "median_ms": 0.54,
      "by_category_f1": {
       "coverage": 0.126,
       "decision": 0.0,
@@ -2538,12 +2538,16 @@
      "text": "Identify requirements not covered by test, analysis, or inspection.",
      "category": "coverage",
      "answerable": true,
-     "got": [],
-     "ms": 0.68,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "got": [
+      "REQ-ADCS-05",
+      "REQ-PAY-04",
+      "REQ-THERM-03"
+     ],
+     "ms": 0.19,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -2555,7 +2559,7 @@
       "REQ-COMMS-03",
       "REQ-STR-01"
      ],
-     "ms": 0.26,
+     "ms": 0.21,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2579,7 +2583,7 @@
       "REQ-SYS-04",
       "REQ-THERM-03"
      ],
-     "ms": 0.54,
+     "ms": 0.58,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2591,12 +2595,19 @@
      "text": "Find requirements whose sole verification method is analysis.",
      "category": "coverage",
      "answerable": true,
-     "got": [],
-     "ms": 1.42,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "got": [
+      "REQ-ADCS-03",
+      "REQ-ADCS-04",
+      "REQ-COMMS-03",
+      "REQ-EPS-04",
+      "REQ-OBC-02",
+      "REQ-SYS-01"
+     ],
+     "ms": 0.42,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -2604,12 +2615,14 @@
      "text": "List requirements with no satisfying part.",
      "category": "coverage",
      "answerable": true,
-     "got": [],
-     "ms": 0.56,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "got": [
+      "REQ-OBC-05"
+     ],
+     "ms": 0.27,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -2622,7 +2635,7 @@
       "VER-ADCS-02-T",
       "VER-COMMS-04-T"
      ],
-     "ms": 0.23,
+     "ms": 0.43,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2638,7 +2651,7 @@
       "PART-COMMS-SBAND-01",
       "PART-PAY-FW-02"
      ],
-     "ms": 0.19,
+     "ms": 0.24,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2654,7 +2667,7 @@
       "PART-COMMS-SBAND-01",
       "PART-PAY-FW-02"
      ],
-     "ms": 0.18,
+     "ms": 0.2,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2666,12 +2679,15 @@
      "text": "Identify the part covering the highest number of requirements.",
      "category": "structure",
      "answerable": true,
-     "got": [],
-     "ms": 0.6,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "got": [
+      "PART-ADCS-CTRL-01",
+      "PART-STR-FRM-01"
+     ],
+     "ms": 0.51,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -2684,7 +2700,7 @@
       "PART-EPS-SA-01",
       "PART-STR-HNG-01"
      ],
-     "ms": 0.54,
+     "ms": 0.55,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2700,7 +2716,7 @@
       "RISK-04",
       "RISK-11"
      ],
-     "ms": 0.24,
+     "ms": 0.28,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2716,7 +2732,7 @@
       "RISK-04",
       "RISK-11"
      ],
-     "ms": 0.23,
+     "ms": 0.19,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2737,7 +2753,7 @@
       "RISK-10",
       "RISK-11"
      ],
-     "ms": 0.18,
+     "ms": 0.17,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2755,7 +2771,7 @@
       "DEC-06",
       "DEC-07"
      ],
-     "ms": 0.19,
+     "ms": 0.21,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2773,7 +2789,7 @@
       "DEC-06",
       "DEC-07"
      ],
-     "ms": 0.18,
+     "ms": 0.15,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2804,7 +2820,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 0.89,
+     "ms": 0.94,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2871,7 +2887,7 @@
       "VER-SYS-08-I",
       "VER-SYS-08-T"
      ],
-     "ms": 1.48,
+     "ms": 1.43,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2907,7 +2923,7 @@
       "VER-SYS-08-T",
       "VER-THERM-02-T"
      ],
-     "ms": 0.92,
+     "ms": 1.07,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2943,7 +2959,7 @@
       "VER-SYS-08-I",
       "VER-SYS-08-T"
      ],
-     "ms": 0.87,
+     "ms": 0.89,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2974,7 +2990,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 1.66,
+     "ms": 1.42,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -2986,12 +3002,23 @@
      "text": "Re-verification required after X-band transmitter replacement.",
      "category": "impact",
      "answerable": true,
-     "got": [],
-     "ms": 1.48,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "got": [
+      "PART-COMMS-XANT-01",
+      "REQ-COMMS-01",
+      "REQ-COMMS-03",
+      "REQ-MIS-01",
+      "REQ-SYS-02",
+      "VER-COMMS-01-T",
+      "VER-COMMS-03-A",
+      "VER-MIS-01-R",
+      "VER-SYS-02-A",
+      "VER-SYS-02-T"
+     ],
+     "ms": 1.26,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -3016,7 +3043,7 @@
       "VER-OBC-04-T",
       "VER-SYS-01-A"
      ],
-     "ms": 0.58,
+     "ms": 0.68,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3047,7 +3074,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 0.55,
+     "ms": 0.74,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3106,7 +3133,7 @@
       "VER-SYS-08-I",
       "VER-SYS-08-T"
      ],
-     "ms": 0.85,
+     "ms": 0.93,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3122,7 +3149,7 @@
       "REQ-MIS-02",
       "REQ-SYS-03"
      ],
-     "ms": 0.29,
+     "ms": 0.37,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3138,7 +3165,7 @@
       "REQ-MIS-01",
       "REQ-SYS-01"
      ],
-     "ms": 0.24,
+     "ms": 0.26,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3154,7 +3181,7 @@
       "REQ-MIS-02",
       "REQ-SYS-06"
      ],
-     "ms": 0.22,
+     "ms": 0.23,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3169,7 +3196,7 @@
      "got": [
       "RISK-04"
      ],
-     "ms": 0.23,
+     "ms": 0.26,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3182,29 +3209,14 @@
      "category": "risk",
      "answerable": true,
      "got": [
-      "PART-ADCS-CTRL-01",
-      "REQ-ADCS-02",
-      "REQ-ADCS-03",
-      "REQ-ADCS-04",
-      "REQ-MIS-01",
-      "REQ-MIS-02",
-      "REQ-SYS-01",
-      "REQ-SYS-03",
-      "VER-ADCS-02-A",
-      "VER-ADCS-02-T",
-      "VER-ADCS-03-A",
-      "VER-ADCS-04-A",
-      "VER-MIS-01-R",
-      "VER-MIS-02-R",
-      "VER-SYS-01-A",
-      "VER-SYS-03-A",
-      "VER-SYS-03-T"
+      "RISK-04",
+      "RISK-11"
      ],
-     "ms": 0.77,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "ms": 0.25,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -3216,7 +3228,7 @@
       "RISK-02",
       "RISK-14"
      ],
-     "ms": 0.26,
+     "ms": 0.24,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3231,7 +3243,7 @@
      "got": [
       "VER-COMMS-03-A"
      ],
-     "ms": 0.21,
+     "ms": 0.23,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3265,7 +3277,7 @@
       "PART-OBC-MEM-01",
       "REQ-OBC-02"
      ],
-     "ms": 0.24,
+     "ms": 0.33,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3281,7 +3293,7 @@
       "PART-STR-FRM-01",
       "REQ-STR-02"
      ],
-     "ms": 0.22,
+     "ms": 0.25,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3298,7 +3310,7 @@
       "PART-ADCS-MTQ-01",
       "PART-ADCS-RW-01"
      ],
-     "ms": 0.13,
+     "ms": 0.16,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3316,7 +3328,7 @@
       "PART-COMMS-XANT-01",
       "PART-COMMS-XTX-01"
      ],
-     "ms": 0.12,
+     "ms": 0.13,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3329,7 +3341,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.67,
+     "ms": 0.63,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3342,7 +3354,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.62,
+     "ms": 0.56,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3355,7 +3367,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.78,
+     "ms": 0.51,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3368,7 +3380,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.74,
+     "ms": 0.69,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3381,7 +3393,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.61,
+     "ms": 0.63,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -3394,7 +3406,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.62,
+     "ms": 0.54,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3407,7 +3419,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.58,
+     "ms": 0.55,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3420,7 +3432,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.56,
+     "ms": 0.54,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3436,7 +3448,7 @@
       "REQ-ADCS-05",
       "REQ-THERM-03"
      ],
-     "ms": 0.55,
+     "ms": 0.5,
      "precision": 1.0,
      "recall": 0.2,
      "f1": 0.3333,
@@ -3449,7 +3461,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.56,
+     "ms": 0.54,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3466,7 +3478,7 @@
       "REQ-OBC-03",
       "REQ-OBC-04"
      ],
-     "ms": 0.62,
+     "ms": 0.56,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3490,7 +3502,7 @@
       "VER-OBC-03-T",
       "VER-OBC-04-T"
      ],
-     "ms": 0.79,
+     "ms": 0.61,
      "precision": 0.1,
      "recall": 0.3333,
      "f1": 0.1538,
@@ -3503,7 +3515,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.6,
+     "ms": 0.54,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3516,7 +3528,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.59,
+     "ms": 0.5,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3529,7 +3541,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.66,
+     "ms": 0.63,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3542,7 +3554,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.62,
+     "ms": 0.55,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3560,7 +3572,7 @@
       "RISK-10",
       "RISK-12"
      ],
-     "ms": 0.68,
+     "ms": 0.52,
      "precision": 0.25,
      "recall": 0.5,
      "f1": 0.3333,
@@ -3573,7 +3585,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.62,
+     "ms": 0.48,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3589,7 +3601,7 @@
       "RISK-02",
       "RISK-12"
      ],
-     "ms": 0.71,
+     "ms": 0.51,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3602,7 +3614,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.6,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3615,7 +3627,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.59,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3638,7 +3650,7 @@
       "VER-ADCS-03-A",
       "VER-ADCS-04-A"
      ],
-     "ms": 0.59,
+     "ms": 0.47,
      "precision": 0.6667,
      "recall": 0.3529,
      "f1": 0.4615,
@@ -3682,7 +3694,7 @@
       "VER-THERM-01-I",
       "VER-THERM-02-T"
      ],
-     "ms": 0.58,
+     "ms": 0.53,
      "precision": 0.1,
      "recall": 0.0455,
      "f1": 0.0625,
@@ -3706,7 +3718,7 @@
       "VER-STR-01-A",
       "VER-SYS-01-A"
      ],
-     "ms": 0.55,
+     "ms": 0.52,
      "precision": 0.5,
      "recall": 0.2273,
      "f1": 0.3125,
@@ -3728,7 +3740,7 @@
       "VER-SYS-06-I",
       "VER-SYS-08-I"
      ],
-     "ms": 0.55,
+     "ms": 0.57,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3752,7 +3764,7 @@
       "VER-SYS-05-T",
       "VER-SYS-07-T"
      ],
-     "ms": 0.55,
+     "ms": 0.72,
      "precision": 0.2,
      "recall": 0.2,
      "f1": 0.2,
@@ -3776,7 +3788,7 @@
       "VER-SYS-08-I",
       "VER-SYS-08-T"
      ],
-     "ms": 0.53,
+     "ms": 0.57,
      "precision": 0.1,
      "recall": 0.0667,
      "f1": 0.08,
@@ -3800,7 +3812,7 @@
       "VER-SYS-02-A",
       "VER-SYS-03-A"
      ],
-     "ms": 0.54,
+     "ms": 0.5,
      "precision": 0.2,
      "recall": 0.1176,
      "f1": 0.1481,
@@ -3824,7 +3836,7 @@
       "VER-STR-01-A",
       "VER-SYS-01-A"
      ],
-     "ms": 0.54,
+     "ms": 0.52,
      "precision": 0.6,
      "recall": 0.1333,
      "f1": 0.2182,
@@ -3837,7 +3849,7 @@
      "category": "trace",
      "answerable": true,
      "got": [],
-     "ms": 0.65,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3876,7 +3888,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.53,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3892,7 +3904,7 @@
       "RISK-10",
       "RISK-11"
      ],
-     "ms": 0.54,
+     "ms": 0.5,
      "precision": 0.5,
      "recall": 0.5,
      "f1": 0.5,
@@ -3905,7 +3917,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.58,
+     "ms": 0.63,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3929,7 +3941,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 0.55,
+     "ms": 0.67,
      "precision": 0.1,
      "recall": 1.0,
      "f1": 0.1818,
@@ -3953,7 +3965,7 @@
       "VER-SYS-02-A",
       "VER-SYS-02-T"
      ],
-     "ms": 0.52,
+     "ms": 0.54,
      "precision": 0.3,
      "recall": 1.0,
      "f1": 0.4615,
@@ -3966,7 +3978,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.54,
+     "ms": 0.62,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -3983,7 +3995,7 @@
       "REQ-COMMS-04",
       "REQ-EPS-03"
      ],
-     "ms": 0.5,
+     "ms": 0.56,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4006,7 +4018,7 @@
       "PART-PAY-PEB-01",
       "PART-STR-HNG-01"
      ],
-     "ms": 0.51,
+     "ms": 0.61,
      "precision": 0.3333,
      "recall": 1.0,
      "f1": 0.5,
@@ -4024,7 +4036,7 @@
       "PART-COMMS-XANT-01",
       "PART-COMMS-XTX-01"
      ],
-     "ms": 0.55,
+     "ms": 0.54,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -4048,7 +4060,7 @@
       "RISK-13",
       "VER-SYS-01-A"
      ],
-     "ms": 0.53,
+     "ms": 0.58,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4072,7 +4084,7 @@
       "PART-THERM-RAD-01",
       "PAY"
      ],
-     "ms": 0.54,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4096,7 +4108,7 @@
       "REQ-COMMS-04",
       "RISK-03"
      ],
-     "ms": 0.54,
+     "ms": 0.51,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4120,7 +4132,7 @@
       "VER-SYS-02-A",
       "VER-SYS-03-A"
      ],
-     "ms": 0.54,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4144,7 +4156,7 @@
       "VER-SYS-05-T",
       "VER-SYS-07-T"
      ],
-     "ms": 0.57,
+     "ms": 0.49,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4173,7 +4185,7 @@
       "REQ-STR-02",
       "REQ-SYS-05"
      ],
-     "ms": 1.13,
+     "ms": 1.1,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4190,7 +4202,7 @@
       "REQ-STR-03",
       "REQ-SYS-01"
      ],
-     "ms": 0.87,
+     "ms": 0.78,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4203,7 +4215,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.66,
+     "ms": 0.73,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4216,7 +4228,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 1.08,
+     "ms": 1.09,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4237,7 +4249,7 @@
       "REQ-OBC-04",
       "REQ-PAY-04"
      ],
-     "ms": 0.96,
+     "ms": 0.95,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4261,7 +4273,7 @@
       "VER-EPS-02-T",
       "VER-EPS-03-T"
      ],
-     "ms": 0.95,
+     "ms": 0.97,
      "precision": 0.3,
      "recall": 1.0,
      "f1": 0.4615,
@@ -4274,7 +4286,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.66,
+     "ms": 0.64,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4302,7 +4314,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 1.53,
+     "ms": 1.43,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4315,7 +4327,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.76,
+     "ms": 0.67,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4330,7 +4342,7 @@
      "got": [
       "RISK-12"
      ],
-     "ms": 0.78,
+     "ms": 0.69,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4343,7 +4355,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.68,
+     "ms": 0.69,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4358,7 +4370,7 @@
      "got": [
       "RISK-12"
      ],
-     "ms": 0.7,
+     "ms": 0.8,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4371,7 +4383,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.66,
+     "ms": 0.67,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4384,7 +4396,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.77,
+     "ms": 0.7,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4407,7 +4419,7 @@
       "VER-ADCS-01-T",
       "VER-ADCS-02-A"
      ],
-     "ms": 1.41,
+     "ms": 1.31,
      "precision": 0.2222,
      "recall": 0.1176,
      "f1": 0.1538,
@@ -4430,7 +4442,7 @@
       "VER-OBC-03-A",
       "VER-OBC-03-T"
      ],
-     "ms": 1.28,
+     "ms": 1.3,
      "precision": 0.8889,
      "recall": 0.1509,
      "f1": 0.2581,
@@ -4453,7 +4465,7 @@
       "VER-THERM-01-I",
       "VER-THERM-02-T"
      ],
-     "ms": 1.53,
+     "ms": 1.4,
      "precision": 0.1111,
      "recall": 0.0455,
      "f1": 0.0645,
@@ -4476,7 +4488,7 @@
       "VER-PAY-03-I",
       "VER-PAY-03-T"
      ],
-     "ms": 1.29,
+     "ms": 1.3,
      "precision": 0.8889,
      "recall": 0.3636,
      "f1": 0.5161,
@@ -4496,7 +4508,7 @@
       "VER-ADCS-01-T",
       "VER-ADCS-02-A"
      ],
-     "ms": 1.16,
+     "ms": 1.12,
      "precision": 0.1667,
      "recall": 0.0588,
      "f1": 0.087,
@@ -4514,7 +4526,7 @@
       "REQ-COMMS-01",
       "REQ-COMMS-03"
      ],
-     "ms": 1.59,
+     "ms": 1.11,
      "precision": 0.75,
      "recall": 0.3,
      "f1": 0.4286,
@@ -4538,7 +4550,7 @@
       "VER-SYS-06-I",
       "VER-SYS-06-T"
      ],
-     "ms": 1.93,
+     "ms": 1.41,
      "precision": 0.1,
      "recall": 0.0667,
      "f1": 0.08,
@@ -4562,7 +4574,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 1.78,
+     "ms": 1.36,
      "precision": 0.3,
      "recall": 0.1765,
      "f1": 0.2222,
@@ -4586,7 +4598,7 @@
       "VER-OBC-01-A",
       "VER-OBC-01-I"
      ],
-     "ms": 2.01,
+     "ms": 1.42,
      "precision": 0.6,
      "recall": 0.1333,
      "f1": 0.2182,
@@ -4604,7 +4616,7 @@
       "REQ-STR-03",
       "REQ-SYS-01"
      ],
-     "ms": 2.43,
+     "ms": 1.47,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4621,7 +4633,7 @@
       "REQ-ADCS-04",
       "REQ-MIS-02"
      ],
-     "ms": 2.49,
+     "ms": 1.41,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4636,7 +4648,7 @@
      "got": [
       "REQ-MIS-02"
      ],
-     "ms": 2.55,
+     "ms": 1.34,
      "precision": 1.0,
      "recall": 0.5,
      "f1": 0.6667,
@@ -4649,7 +4661,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 2.04,
+     "ms": 1.37,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4662,7 +4674,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 1.21,
+     "ms": 1.08,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4675,7 +4687,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 1.33,
+     "ms": 1.29,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4699,7 +4711,7 @@
       "VER-OBC-03-T",
       "VER-PAY-03-I"
      ],
-     "ms": 1.49,
+     "ms": 1.27,
      "precision": 0.1,
      "recall": 1.0,
      "f1": 0.1818,
@@ -4721,7 +4733,7 @@
       "VER-EPS-04-A",
       "VER-EPS-05-T"
      ],
-     "ms": 1.3,
+     "ms": 1.21,
      "precision": 0.375,
      "recall": 1.0,
      "f1": 0.5455,
@@ -4734,7 +4746,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 1.18,
+     "ms": 1.14,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4747,7 +4759,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.91,
+     "ms": 0.82,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4764,7 +4776,7 @@
       "PART-ADCS-MTQ-01",
       "PART-ADCS-RW-01"
      ],
-     "ms": 0.8,
+     "ms": 0.78,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -4782,7 +4794,7 @@
       "PART-COMMS-XANT-01",
       "PART-COMMS-XTX-01"
      ],
-     "ms": 0.76,
+     "ms": 0.74,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -4798,7 +4810,7 @@
       "REQ-SYS-07",
       "RISK-08"
      ],
-     "ms": 0.68,
+     "ms": 0.69,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4811,7 +4823,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.65,
+     "ms": 0.62,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -4854,7 +4866,7 @@
       "VER-ADCS-03-A",
       "VER-ADCS-04-A"
      ],
-     "ms": 1.04,
+     "ms": 1.06,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4878,7 +4890,7 @@
       "REQ-SYS-04",
       "RISK-06"
      ],
-     "ms": 0.88,
+     "ms": 0.82,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -4891,19 +4903,19 @@
    "summary": {
     "graph_agent": {
      "questions": 42,
-     "answerable_macro_f1": 0.787,
-     "answerable_exact_match": 0.757,
-     "answerable_macro_precision": 0.796,
-     "answerable_macro_recall": 0.797,
+     "answerable_macro_f1": 0.922,
+     "answerable_exact_match": 0.892,
+     "answerable_macro_precision": 0.931,
+     "answerable_macro_recall": 0.932,
      "out_of_scope_abstention": 1.0,
-     "median_ms": 0.46,
+     "median_ms": 0.35,
      "by_category_f1": {
-      "coverage": 0.667,
+      "coverage": 1.0,
       "decision": 1.0,
       "impact": 0.854,
       "out_of_scope": 1.0,
-      "risk": 0.741,
-      "structure": 0.5,
+      "risk": 0.907,
+      "structure": 0.75,
       "supplier": 1.0,
       "trace": 1.0
      }
@@ -4934,7 +4946,7 @@
      "answerable_macro_precision": 0.277,
      "answerable_macro_recall": 0.189,
      "out_of_scope_abstention": 0.0,
-     "median_ms": 1.1,
+     "median_ms": 1.08,
      "by_category_f1": {
       "coverage": 0.163,
       "decision": 0.167,
@@ -4954,12 +4966,16 @@
      "text": "Show requirements with zero verifications.",
      "category": "coverage",
      "answerable": true,
-     "got": [],
-     "ms": 1.48,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "got": [
+      "REQ-ADCS-05",
+      "REQ-PAY-04",
+      "REQ-THERM-03"
+     ],
+     "ms": 0.33,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -5012,7 +5028,7 @@
       "REQ-SYS-04",
       "REQ-THERM-03"
      ],
-     "ms": 0.5,
+     "ms": 0.53,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5025,13 +5041,18 @@
      "category": "coverage",
      "answerable": true,
      "got": [
-      "VER-OBC-02-A"
+      "REQ-ADCS-03",
+      "REQ-ADCS-04",
+      "REQ-COMMS-03",
+      "REQ-EPS-04",
+      "REQ-OBC-02",
+      "REQ-SYS-01"
      ],
-     "ms": 0.95,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "ms": 0.36,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -5039,12 +5060,14 @@
      "text": "Requirements lacking any part satisfaction.",
      "category": "coverage",
      "answerable": true,
-     "got": [],
-     "ms": 0.58,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "got": [
+      "REQ-OBC-05"
+     ],
+     "ms": 0.23,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -5098,12 +5121,15 @@
      "text": "Part with maximum requirement satisfaction count.",
      "category": "structure",
      "answerable": true,
-     "got": [],
-     "ms": 0.59,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "got": [
+      "PART-ADCS-CTRL-01",
+      "PART-STR-FRM-01"
+     ],
+     "ms": 0.47,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -5116,7 +5142,7 @@
       "PART-EPS-SA-01",
       "PART-STR-HNG-01"
      ],
-     "ms": 0.61,
+     "ms": 0.5,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5132,7 +5158,7 @@
       "RISK-04",
       "RISK-11"
      ],
-     "ms": 0.25,
+     "ms": 0.28,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5153,7 +5179,7 @@
       "RISK-10",
       "RISK-11"
      ],
-     "ms": 0.18,
+     "ms": 0.21,
      "precision": 0.2857,
      "recall": 1.0,
      "f1": 0.4444,
@@ -5174,7 +5200,7 @@
       "RISK-10",
       "RISK-11"
      ],
-     "ms": 0.17,
+     "ms": 0.14,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5192,7 +5218,7 @@
       "DEC-06",
       "DEC-07"
      ],
-     "ms": 0.2,
+     "ms": 0.21,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5210,7 +5236,7 @@
       "DEC-06",
       "DEC-07"
      ],
-     "ms": 0.19,
+     "ms": 0.14,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5308,7 +5334,7 @@
       "VER-SYS-08-I",
       "VER-SYS-08-T"
      ],
-     "ms": 1.42,
+     "ms": 1.37,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5344,7 +5370,7 @@
       "VER-SYS-08-T",
       "VER-THERM-02-T"
      ],
-     "ms": 0.95,
+     "ms": 0.92,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5365,7 +5391,7 @@
       "REQ-PAY-01",
       "RISK-08"
      ],
-     "ms": 0.53,
+     "ms": 0.48,
      "precision": 0.4286,
      "recall": 0.1364,
      "f1": 0.2069,
@@ -5396,7 +5422,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 1.59,
+     "ms": 1.35,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5420,7 +5446,7 @@
       "VER-SYS-02-A",
       "VER-SYS-02-T"
      ],
-     "ms": 1.52,
+     "ms": 1.31,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5449,7 +5475,7 @@
       "VER-OBC-04-T",
       "VER-SYS-01-A"
      ],
-     "ms": 0.64,
+     "ms": 0.7,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5471,7 +5497,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 0.43,
+     "ms": 0.46,
      "precision": 0.75,
      "recall": 0.3529,
      "f1": 0.48,
@@ -5530,7 +5556,7 @@
       "VER-SYS-08-I",
       "VER-SYS-08-T"
      ],
-     "ms": 0.85,
+     "ms": 0.82,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5546,7 +5572,7 @@
       "REQ-MIS-02",
       "REQ-SYS-03"
      ],
-     "ms": 0.26,
+     "ms": 0.29,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5562,7 +5588,7 @@
       "REQ-MIS-01",
       "REQ-SYS-01"
      ],
-     "ms": 0.23,
+     "ms": 0.24,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5578,7 +5604,7 @@
       "REQ-MIS-02",
       "REQ-SYS-06"
      ],
-     "ms": 0.22,
+     "ms": 0.23,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5593,7 +5619,7 @@
      "got": [
       "RISK-04"
      ],
-     "ms": 0.22,
+     "ms": 0.34,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5606,29 +5632,14 @@
      "category": "risk",
      "answerable": true,
      "got": [
-      "PART-ADCS-CTRL-01",
-      "REQ-ADCS-02",
-      "REQ-ADCS-03",
-      "REQ-ADCS-04",
-      "REQ-MIS-01",
-      "REQ-MIS-02",
-      "REQ-SYS-01",
-      "REQ-SYS-03",
-      "VER-ADCS-02-A",
-      "VER-ADCS-02-T",
-      "VER-ADCS-03-A",
-      "VER-ADCS-04-A",
-      "VER-MIS-01-R",
-      "VER-MIS-02-R",
-      "VER-SYS-01-A",
-      "VER-SYS-03-A",
-      "VER-SYS-03-T"
+      "RISK-04",
+      "RISK-11"
      ],
-     "ms": 0.8,
-     "precision": 0.0,
-     "recall": 0.0,
-     "f1": 0.0,
-     "exact": 0.0
+     "ms": 0.34,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": 1.0
     },
     {
      "system": "graph_agent",
@@ -5640,7 +5651,7 @@
       "RISK-02",
       "RISK-14"
      ],
-     "ms": 0.35,
+     "ms": 0.31,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5655,7 +5666,7 @@
      "got": [
       "VER-COMMS-03-A"
      ],
-     "ms": 0.27,
+     "ms": 0.28,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5672,7 +5683,7 @@
       "VER-EPS-02-I",
       "VER-EPS-02-T"
      ],
-     "ms": 0.22,
+     "ms": 0.25,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5689,7 +5700,7 @@
       "PART-OBC-MEM-01",
       "REQ-OBC-02"
      ],
-     "ms": 0.24,
+     "ms": 0.45,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5705,7 +5716,7 @@
       "PART-STR-FRM-01",
       "REQ-STR-02"
      ],
-     "ms": 0.21,
+     "ms": 0.44,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5722,7 +5733,7 @@
       "PART-ADCS-MTQ-01",
       "PART-ADCS-RW-01"
      ],
-     "ms": 0.14,
+     "ms": 0.22,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5740,7 +5751,7 @@
       "PART-COMMS-XANT-01",
       "PART-COMMS-XTX-01"
      ],
-     "ms": 0.13,
+     "ms": 0.16,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5753,7 +5764,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.59,
+     "ms": 0.64,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5766,7 +5777,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.55,
+     "ms": 0.57,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5779,7 +5790,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.52,
+     "ms": 0.6,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5805,7 +5816,7 @@
      "category": "out_of_scope",
      "answerable": false,
      "got": [],
-     "ms": 0.53,
+     "ms": 0.63,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -5818,7 +5829,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.61,
+     "ms": 0.57,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -5831,7 +5842,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.57,
+     "ms": 0.54,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -5844,7 +5855,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.57,
+     "ms": 0.5,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -5862,7 +5873,7 @@
       "REQ-SYS-04",
       "REQ-THERM-03"
      ],
-     "ms": 0.63,
+     "ms": 0.53,
      "precision": 0.75,
      "recall": 0.3,
      "f1": 0.4286,
@@ -5875,7 +5886,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.7,
+     "ms": 0.68,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -5888,7 +5899,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 0.59,
+     "ms": 0.64,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -5925,7 +5936,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.6,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -5940,7 +5951,7 @@
      "got": [
       "PART-OBC-FSW-01"
      ],
-     "ms": 0.58,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -5953,7 +5964,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.6,
+     "ms": 0.52,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -5968,7 +5979,7 @@
      "got": [
       "PART-ADCS-GNSS-01"
      ],
-     "ms": 0.6,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -5983,7 +5994,7 @@
      "got": [
       "RISK-12"
      ],
-     "ms": 0.55,
+     "ms": 0.51,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -5999,7 +6010,7 @@
       "RISK-08",
       "RISK-10"
      ],
-     "ms": 0.61,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6014,7 +6025,7 @@
      "got": [
       "RISK-12"
      ],
-     "ms": 0.51,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6027,7 +6038,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.53,
+     "ms": 0.55,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6042,7 +6053,7 @@
      "got": [
       "DEC-03"
      ],
-     "ms": 0.62,
+     "ms": 0.54,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6066,7 +6077,7 @@
       "VER-OBC-01-A",
       "VER-STR-01-A"
      ],
-     "ms": 0.58,
+     "ms": 0.6,
      "precision": 0.6,
      "recall": 0.3529,
      "f1": 0.4444,
@@ -6087,7 +6098,7 @@
       "VER-PAY-01-I",
       "VER-PAY-01-T"
      ],
-     "ms": 0.61,
+     "ms": 0.52,
      "precision": 0.5714,
      "recall": 0.0755,
      "f1": 0.1333,
@@ -6111,7 +6122,7 @@
       "VER-SYS-01-A",
       "VER-THERM-01-I"
      ],
-     "ms": 0.58,
+     "ms": 0.51,
      "precision": 0.1,
      "recall": 0.0455,
      "f1": 0.0625,
@@ -6135,7 +6146,7 @@
       "VER-STR-01-A",
       "VER-STR-01-T"
      ],
-     "ms": 0.55,
+     "ms": 0.63,
      "precision": 0.5,
      "recall": 0.2273,
      "f1": 0.3125,
@@ -6175,7 +6186,7 @@
       "VER-MIS-03-R",
       "VER-STR-01-A"
      ],
-     "ms": 0.51,
+     "ms": 0.63,
      "precision": 0.25,
      "recall": 0.2,
      "f1": 0.2222,
@@ -6198,7 +6209,7 @@
       "VER-SYS-05-I",
       "VER-SYS-08-I"
      ],
-     "ms": 0.6,
+     "ms": 0.53,
      "precision": 0.1111,
      "recall": 0.0667,
      "f1": 0.0833,
@@ -6222,7 +6233,7 @@
       "VER-SYS-07-T",
       "VER-SYS-08-I"
      ],
-     "ms": 0.52,
+     "ms": 0.53,
      "precision": 0.2,
      "recall": 0.1176,
      "f1": 0.1481,
@@ -6246,7 +6257,7 @@
       "VER-STR-01-A",
       "VER-SYS-01-A"
      ],
-     "ms": 0.57,
+     "ms": 0.54,
      "precision": 0.6,
      "recall": 0.1333,
      "f1": 0.2182,
@@ -6259,7 +6270,7 @@
      "category": "trace",
      "answerable": true,
      "got": [],
-     "ms": 0.55,
+     "ms": 0.53,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6272,7 +6283,7 @@
      "category": "trace",
      "answerable": true,
      "got": [],
-     "ms": 0.53,
+     "ms": 0.54,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6287,7 +6298,7 @@
      "got": [
       "REQ-EPS-05"
      ],
-     "ms": 0.55,
+     "ms": 0.51,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6300,7 +6311,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.53,
+     "ms": 0.64,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6315,7 +6326,7 @@
      "got": [
       "RISK-10"
      ],
-     "ms": 0.54,
+     "ms": 0.56,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6328,7 +6339,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.53,
+     "ms": 0.56,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6352,7 +6363,7 @@
       "VER-PAY-03-T",
       "VER-SYS-03-T"
      ],
-     "ms": 0.57,
+     "ms": 0.76,
      "precision": 0.1,
      "recall": 1.0,
      "f1": 0.1818,
@@ -6376,7 +6387,7 @@
       "VER-PAY-02-T",
       "VER-SYS-02-T"
      ],
-     "ms": 0.56,
+     "ms": 0.84,
      "precision": 0.3,
      "recall": 1.0,
      "f1": 0.4615,
@@ -6393,7 +6404,7 @@
       "REQ-COMMS-04",
       "REQ-EPS-03"
      ],
-     "ms": 0.55,
+     "ms": 0.56,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6409,7 +6420,7 @@
       "PART-PAY-FW-02",
       "REQ-MIS-01"
      ],
-     "ms": 0.55,
+     "ms": 0.57,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6445,7 +6456,7 @@
       "PART-COMMS-XANT-01",
       "PART-COMMS-XTX-01"
      ],
-     "ms": 0.56,
+     "ms": 0.57,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -6469,7 +6480,7 @@
       "REQ-SYS-07",
       "RISK-08"
      ],
-     "ms": 0.5,
+     "ms": 0.66,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6493,7 +6504,7 @@
       "REQ-THERM-01",
       "REQ-THERM-02"
      ],
-     "ms": 0.53,
+     "ms": 0.65,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6517,7 +6528,7 @@
       "REQ-THERM-02",
       "RISK-03"
      ],
-     "ms": 0.49,
+     "ms": 0.62,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6541,7 +6552,7 @@
       "VER-EPS-02-A",
       "VER-MIS-02-R"
      ],
-     "ms": 0.54,
+     "ms": 0.56,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6565,7 +6576,7 @@
       "VER-STR-02-T",
       "VER-SYS-07-T"
      ],
-     "ms": 0.5,
+     "ms": 0.65,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6586,7 +6597,7 @@
       "REQ-OBC-04",
       "REQ-PAY-04"
      ],
-     "ms": 0.84,
+     "ms": 0.97,
      "precision": 0.1429,
      "recall": 0.3333,
      "f1": 0.2,
@@ -6599,7 +6610,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 1.1,
+     "ms": 1.12,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6635,7 +6646,7 @@
      "got": [
       "REQ-SYS-04"
      ],
-     "ms": 0.72,
+     "ms": 0.82,
      "precision": 1.0,
      "recall": 0.1,
      "f1": 0.1818,
@@ -6650,7 +6661,7 @@
      "got": [
       "REQ-OBC-02"
      ],
-     "ms": 0.83,
+     "ms": 0.86,
      "precision": 1.0,
      "recall": 0.1667,
      "f1": 0.2857,
@@ -6676,7 +6687,7 @@
      "category": "coverage",
      "answerable": true,
      "got": [],
-     "ms": 1.14,
+     "ms": 1.15,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6689,7 +6700,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.74,
+     "ms": 0.83,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6702,7 +6713,7 @@
      "category": "structure",
      "answerable": true,
      "got": [],
-     "ms": 0.69,
+     "ms": 0.7,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6717,7 +6728,7 @@
      "got": [
       "PART-THERM-HTR-01"
      ],
-     "ms": 1.04,
+     "ms": 0.95,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6735,7 +6746,7 @@
       "PART-ADCS-MTQ-01",
       "PART-ADCS-RW-01"
      ],
-     "ms": 1.09,
+     "ms": 0.93,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6750,7 +6761,7 @@
      "got": [
       "RISK-12"
      ],
-     "ms": 0.76,
+     "ms": 0.82,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6763,7 +6774,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 0.66,
+     "ms": 0.69,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6778,7 +6789,7 @@
      "got": [
       "RISK-12"
      ],
-     "ms": 0.67,
+     "ms": 0.77,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6794,7 +6805,7 @@
       "DEC-04",
       "DEC-07"
      ],
-     "ms": 0.74,
+     "ms": 0.82,
      "precision": 1.0,
      "recall": 0.5,
      "f1": 0.6667,
@@ -6809,7 +6820,7 @@
      "got": [
       "DEC-03"
      ],
-     "ms": 0.8,
+     "ms": 0.86,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -6832,7 +6843,7 @@
       "VER-ADCS-01-A",
       "VER-ADCS-01-T"
      ],
-     "ms": 1.13,
+     "ms": 1.24,
      "precision": 0.1111,
      "recall": 0.0588,
      "f1": 0.0769,
@@ -6855,7 +6866,7 @@
       "VER-OBC-03-T",
       "VER-OBC-04-T"
      ],
-     "ms": 1.27,
+     "ms": 1.21,
      "precision": 0.8889,
      "recall": 0.1509,
      "f1": 0.2581,
@@ -6876,7 +6887,7 @@
       "VER-THERM-01-I",
       "VER-THERM-02-T"
      ],
-     "ms": 1.24,
+     "ms": 1.34,
      "precision": 0.1429,
      "recall": 0.0455,
      "f1": 0.069,
@@ -6898,7 +6909,7 @@
       "VER-PAY-02-T",
       "VER-PAY-03-I"
      ],
-     "ms": 1.2,
+     "ms": 1.16,
      "precision": 0.875,
      "recall": 0.3182,
      "f1": 0.4667,
@@ -6915,7 +6926,7 @@
       "REQ-STR-03",
       "REQ-SYS-01"
      ],
-     "ms": 1.2,
+     "ms": 1.22,
      "precision": 0.3333,
      "recall": 0.0588,
      "f1": 0.1,
@@ -6934,7 +6945,7 @@
       "REQ-COMMS-03",
       "REQ-STR-01"
      ],
-     "ms": 1.08,
+     "ms": 1.11,
      "precision": 0.6,
      "recall": 0.3,
      "f1": 0.4,
@@ -6957,7 +6968,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 1.43,
+     "ms": 1.47,
      "precision": 0.2222,
      "recall": 0.1333,
      "f1": 0.1667,
@@ -6981,7 +6992,7 @@
       "VER-SYS-03-A",
       "VER-SYS-03-T"
      ],
-     "ms": 1.34,
+     "ms": 1.29,
      "precision": 0.3,
      "recall": 0.1765,
      "f1": 0.2222,
@@ -7005,7 +7016,7 @@
       "VER-OBC-01-A",
       "VER-OBC-01-I"
      ],
-     "ms": 1.53,
+     "ms": 1.39,
      "precision": 0.6,
      "recall": 0.1333,
      "f1": 0.2182,
@@ -7021,7 +7032,7 @@
       "REQ-EPS-05",
       "REQ-MIS-02"
      ],
-     "ms": 1.51,
+     "ms": 1.54,
      "precision": 0.5,
      "recall": 0.5,
      "f1": 0.5,
@@ -7036,7 +7047,7 @@
      "got": [
       "REQ-ADCS-02"
      ],
-     "ms": 1.26,
+     "ms": 1.42,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -7067,7 +7078,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 1.31,
+     "ms": 1.56,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -7080,7 +7091,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 1.14,
+     "ms": 1.43,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -7093,7 +7104,7 @@
      "category": "risk",
      "answerable": true,
      "got": [],
-     "ms": 1.35,
+     "ms": 1.31,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -7116,7 +7127,7 @@
       "VER-OBC-03-A",
       "VER-OBC-03-T"
      ],
-     "ms": 1.26,
+     "ms": 1.27,
      "precision": 0.1111,
      "recall": 1.0,
      "f1": 0.2,
@@ -7137,7 +7148,7 @@
       "VER-EPS-04-A",
       "VER-EPS-05-T"
      ],
-     "ms": 1.25,
+     "ms": 1.27,
      "precision": 0.4286,
      "recall": 1.0,
      "f1": 0.6,
@@ -7150,7 +7161,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.89,
+     "ms": 0.87,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -7163,7 +7174,7 @@
      "category": "decision",
      "answerable": true,
      "got": [],
-     "ms": 0.83,
+     "ms": 0.82,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -7180,7 +7191,7 @@
       "PART-ADCS-MTQ-01",
       "PART-ADCS-RW-01"
      ],
-     "ms": 0.7,
+     "ms": 0.75,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -7198,7 +7209,7 @@
       "PART-COMMS-XANT-01",
       "PART-COMMS-XTX-01"
      ],
-     "ms": 0.72,
+     "ms": 0.84,
      "precision": 1.0,
      "recall": 1.0,
      "f1": 1.0,
@@ -7220,7 +7231,7 @@
       "REQ-SYS-07",
       "RISK-08"
      ],
-     "ms": 0.72,
+     "ms": 0.79,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -7244,7 +7255,7 @@
       "REQ-THERM-01",
       "REQ-THERM-02"
      ],
-     "ms": 1.0,
+     "ms": 0.98,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -7268,7 +7279,7 @@
       "REQ-SYS-08",
       "RISK-03"
      ],
-     "ms": 1.23,
+     "ms": 1.32,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,
@@ -7292,7 +7303,7 @@
       "VER-ADCS-01-T",
       "VER-ADCS-02-A"
      ],
-     "ms": 1.17,
+     "ms": 1.05,
      "precision": 0.0,
      "recall": 0.0,
      "f1": 0.0,

@@ -159,6 +159,12 @@ _t("vector_search", "Nearest entities by lexical embedding (Relate vector index)
    "ORDER BY score DESC, id",
    params=("q", "dim", "k"))
 
+_t("vector_search_label", "Nearest entities of one label (exact cosine scan in Relate)",
+   "MATCH (n:Entity) WHERE $label IN labels(n) "
+   "WITH n, vector.similarity.cosine(n.embedding, vector($q, $dim, FLOAT32)) AS score "
+   "RETURN n.id AS id, $label AS label, score, n.text AS text ORDER BY score DESC, id LIMIT $k",
+   params=("q", "dim", "label", "k"))
+
 _t("fulltext_search", "Full-text matches (Relate full-text index)",
    "CALL db.index.fulltext.queryNodes('entity_text', $text) YIELD node, score "
    "RETURN node.id AS id, [l IN labels(node) WHERE l <> 'Entity'][0] AS label, score, node.text AS text "
