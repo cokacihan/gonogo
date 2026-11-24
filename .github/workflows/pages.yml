@@ -1,0 +1,37 @@
+# Publishes the browser explorer (web/) to GitHub Pages. Manual trigger: Pages needs the repository to be public
+# on a free plan, so this runs only when asked.
+name: Explorer on GitHub Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Rebuild the web bundle from the committed dataset and CI results
+        run: |
+          python -m pip install relate-db
+          python -m gonogo.web_export --out web/data
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+      - id: deployment
+        uses: actions/deploy-pages@v4

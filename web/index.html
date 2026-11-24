@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GoNoGo: F´ requirements backed by passing tests</title>
+  <meta name="description" content="Explore which NASA F´ flight-software requirements are backed by passing unit tests, and which tests a change requires. Runs on Relate (WASM) in your browser.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#board">Skip to the poll board</a>
+  <header class="masthead">
+    <a class="wordmark" href="./" aria-label="GoNoGo home">GoNoGo</a>
+    <p class="provenance" id="provenance">Loading the graph…</p>
+    <a class="repo" href="https://github.com/cokacihan/tracegraph">Source and README</a>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <h1 id="title">Which F´ requirements are backed by passing tests?</h1>
+      <p class="lede">Every lamp is a component of NASA's F´ flight-software framework. It lights green only when each
+        test that cites a requirement passed in a real CI run. The graph, the verdicts and the Cypher behind them run
+        on <a href="https://github.com/relatedb/relate">Relate</a>, compiled to WebAssembly, in this tab.</p>
+      <p class="status" id="status" role="status" aria-live="polite">Starting Relate in your browser…</p>
+    </section>
+
+    <div class="workspace">
+    <section class="console" aria-labelledby="board-title">
+      <div class="console-head">
+        <h2 id="board-title">Readiness poll</h2>
+        <div class="scope" role="radiogroup" aria-label="Which components to show">
+          <button type="button" role="radio" aria-checked="true" data-scope="ref">Ref deployment</button>
+          <button type="button" role="radio" aria-checked="false" data-scope="all">All components</button>
+        </div>
+      </div>
+      <p class="console-key">
+        <span class="key go">GO: all citing tests passed</span>
+        <span class="key inc">INCOMPLETE: cannot conclude</span>
+        <span class="key nogo">NO-GO: a citing test failed</span>
+      </p>
+      <div class="board" id="board" tabindex="-1" aria-label="Components; choose one to see its requirements"></div>
+      <p class="totals" id="totals"></p>
+    </section>
+
+    <section class="detail" id="detail" aria-live="polite" aria-labelledby="detail-title">
+      <h2 id="detail-title">Pick a component</h2>
+      <p class="hint">Choose a lamp to see each requirement, why it has its verdict, the tests behind it and the query
+        that decided it.</p>
+    </section>
+    </div>
+
+    <section class="impact" aria-labelledby="impact-title">
+      <h2 id="impact-title">What must I re-run after a change?</h2>
+      <p>List the F´ files you changed, one per line, paths from the repository root. A changed component re-runs its own
+        unit tests; a changed port-type definition re-runs the tests of every component that uses it. Topology changes
+        are flagged for integration review only.</p>
+      <form id="impact-form" class="impact-form">
+        <label for="files">Changed files</label>
+        <textarea id="files" rows="3" spellcheck="false">Svc/Sched/Sched.fpp</textarea>
+        <div class="row">
+          <button type="submit">Find tests to re-run</button>
+          <button type="button" class="quiet" data-example="Svc/Health/Health.cpp">Try Svc/Health/Health.cpp</button>
+          <button type="button" class="quiet" data-example="Svc/Ping/Ping.fpp">Try the Ping port type</button>
+        </div>
+      </form>
+      <div id="impact-out" class="impact-out" aria-live="polite"></div>
+    </section>
+
+    <section class="releases" aria-labelledby="releases-title">
+      <h2 id="releases-title">Four F´ releases, one graph each</h2>
+      <p>Each release was imported into its own Relate store and compared side by side. Bars count requirements; the line
+        is the share cited by a test of their own component.</p>
+      <figure id="release-chart" class="release-chart"></figure>
+    </section>
+
+    <section class="query" aria-labelledby="query-title">
+      <h2 id="query-title">Ask the graph yourself</h2>
+      <p>This runs Cypher against the in-browser Relate database. Nothing leaves your machine.</p>
+      <form id="query-form">
+        <label for="examples">Example</label>
+        <select id="examples"></select>
+        <label for="cypher">Cypher</label>
+        <textarea id="cypher" rows="6" spellcheck="false"></textarea>
+        <div class="row"><button type="submit">Run query</button><span id="query-meta" class="meta"></span></div>
+      </form>
+      <div id="query-out" class="query-out" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>GoNoGo reports traceability evidence from repository text and CI results. It is decision support, not a
+      flight-readiness authority, and it is not affiliated with NASA, JPL or the F´ project. Data extracted from
+      <a href="https://github.com/nasa/fprime">nasa/fprime</a> is Apache-2.0, © California Institute of Technology.
+      Relate is Apache-2.0. GoNoGo is MIT-licensed.</p>
+  </footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

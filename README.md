@@ -48,6 +48,21 @@ python -m gonogo diff data/releases/fprime-v4.0.0.json data/releases/fprime-v4.4
 python -m pytest
 ```
 
+### In the browser
+
+[`web/`](web) is a static explorer. It loads the same graph into Relate compiled to WebAssembly
+(`@relate/relate-wasm`) and runs the very same verdict and impact Cypher in the tab. It offers:
+- a readiness poll board;
+- requirement-level verdicts with their tests and receipts;
+- a "what must I re-run?" box;
+- the release timeline;
+- a free Cypher query box.
+
+```bash
+python -m gonogo.web_export          # refresh web/data from the dataset and CI results
+python -m http.server 8000 -d web    # then open http://localhost:8000
+```
+
 `why` on a requirement whose tests cite it under a different ID (real output):
 
 <!-- gonogo:why_hth -->

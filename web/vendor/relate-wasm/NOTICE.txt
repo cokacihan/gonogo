@@ -1,0 +1,2 @@
+Relate WebAssembly build, copied unmodified from the npm package @relate/relate-wasm 1.2.0
+(https://github.com/relatedb/relate), Apache License 2.0.

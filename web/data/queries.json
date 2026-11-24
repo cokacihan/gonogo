@@ -1,0 +1,96 @@
+{
+ "reason_text": {
+  "FAILED_TEST": "a citing test case of this component FAILED in the run",
+  "NO_METHOD": "the SDD row names no recognisable verification method",
+  "AMBIGUOUS_ID": "the same requirement ID is defined more than once",
+  "CITED_UNDER_DIFFERENT_ID": "a test of this component cites an undefined ID ending in this one",
+  "CITED_BY_OTHER_COMPONENT": "only tests of another component cite it",
+  "NO_CITING_TEST": "no test case cites it with REQUIREMENT(\"ID\")",
+  "NOT_EXECUTED": "a citing test case did not run in the loaded run",
+  "EVIDENCE_OUTSIDE_REPO": "a declared method (e.g. Inspection) leaves no record in the repository"
+ },
+ "verdicts": "CALL {\n  MATCH (x:Requirement)\n  WITH split(x.id, '@')[0] AS ref, count(*) AS n WHERE n > 1\n  RETURN collect(ref) AS dup_refs\n}\nMATCH (p:Part)-[:SATISFIES]->(r:Requirement)\nWITH dup_refs, p, r, split(r.id, '@')[0] AS ref\nOPTIONAL MATCH (r)-[:VERIFIED_BY]->(v:Verification)\nWITH dup_refs, p, r, ref, collect(DISTINCT v.method) AS methods\nOPTIONAL MATCH (tc:TestCase)-[:CITES]->(r)\nOPTIONAL MATCH (tc)-[:TESTS]->(tp:Part)\nOPTIONAL MATCH (tc)-[ran:RAN_IN]->(:TestRun {id: $run})\nWITH dup_refs, p, r, ref, methods,\n     collect(DISTINCT CASE WHEN tc IS NULL THEN null\n             ELSE {id: tc.id, own: tp = p, status: coalesce(ran.status, 'NOT_RUN')} END) AS cites\nOPTIONAL MATCH (dt:TestCase)-[:TESTS]->(p)\n  WHERE any(u IN dt.unknown_citations WHERE u <> ref AND (u ENDS WITH '-' + ref OR u ENDS WITH '_' + ref))\nWITH dup_refs, p, r, ref, methods, cites, collect(DISTINCT dt.id) AS drift\nWITH p, r, ref, methods, drift, ref IN dup_refs AS ambiguous,\n     [c IN cites WHERE c.own] AS own, [c IN cites WHERE NOT c.own] AS other\nWITH p, r, methods, drift, ambiguous, own, other,\n     [c IN own WHERE c.status = 'FAILED'] AS failed,\n     [c IN own WHERE c.status IN ['NOT_RUN', 'SKIPPED']] AS not_run,\n     [m IN methods WHERE NOT m IN $test_methods] AS outside\nWITH p, r, methods, drift, own, other, failed, [x IN [\n       CASE WHEN size(methods) = 0 THEN 'NO_METHOD' END,\n       CASE WHEN ambiguous THEN 'AMBIGUOUS_ID' END,\n       CASE WHEN size(own) = 0 AND size(drift) > 0 THEN 'CITED_UNDER_DIFFERENT_ID' END,\n       CASE WHEN size(own) = 0 AND size(drift) = 0 AND size(other) > 0 THEN 'CITED_BY_OTHER_COMPONENT' END,\n       CASE WHEN size(own) = 0 AND size(drift) = 0 AND size(other) = 0 THEN 'NO_CITING_TEST' END,\n       CASE WHEN size(failed) = 0 AND size(not_run) > 0 THEN 'NOT_EXECUTED' END,\n       CASE WHEN size(outside) > 0 AND NOT ($accept_declared AND size(own) > 0) THEN 'EVIDENCE_OUTSIDE_REPO' END\n     ] WHERE x IS NOT NULL] AS reasons\nRETURN r.id AS id, p.id AS component, r.text AS text, r.source AS source, methods,\n       CASE WHEN size(failed) > 0 THEN 'NO-GO' WHEN size(reasons) = 0 THEN 'GO' ELSE 'INCOMPLETE' END AS verdict,\n       CASE WHEN size(failed) > 0 THEN ['FAILED_TEST'] + reasons ELSE reasons END AS reasons,\n       [c IN own | c.id + ' ' + c.status] AS own_tests,\n       [c IN other | c.id + ' ' + c.status] AS other_tests,\n       drift AS drift_tests\nORDER BY component, id",
+ "tests_to_rerun": "MATCH (s:Part)\nWHERE s.id IN $components OR EXISTS { MATCH (s)-[:USES_PORT]->(pt:PortType) WHERE pt.id IN $port_types }\nOPTIONAL MATCH (s)-[u:USES_PORT]->(pt2:PortType) WHERE pt2.id IN $port_types\nWITH s, collect(DISTINCT pt2.id + ' as ' + u.port) AS via_ports\nOPTIONAL MATCH (tc:TestCase)-[:TESTS]->(s)\nWITH s, via_ports, collect(tc.gtest_filter) AS filters\nOPTIONAL MATCH (s)-[:SATISFIES]->(r:Requirement)\nRETURN s.id AS component, s.id IN $components AS changed_directly, via_ports,\n       size(filters) AS test_cases, filters, collect(r.id) AS requirements\nORDER BY changed_directly DESC, component",
+ "integration": "MATCH (i:Instance)-[:INSTANCE_OF]->(p:Part) WHERE p.id IN $components\nMATCH (i)-[c:CONNECTS_TO]-(o:Instance)\nRETURN i.id AS instance, CASE WHEN startNode(c) = i THEN 'out' ELSE 'in' END AS direction,\n       o.id AS peer, c.src_port AS src_port, c.dst_port AS dst_port, c.graph AS graph\nORDER BY instance, direction, peer",
+ "test_methods": [
+  "Test",
+  "Unit Test"
+ ],
+ "templates": {
+  "fp_unknown_citations": {
+   "title": "Test files citing requirement IDs that no SDD defines",
+   "cypher": "MATCH (t:TestFile) WHERE size(t.unknown_citations) > 0 OPTIONAL MATCH (t)-[:TESTS]->(p:Part) RETURN t.id AS file, p.id AS component, t.unknown_citations AS unknown_ids ORDER BY file",
+   "params": []
+  },
+  "fp_duplicate_requirement_ids": {
+   "title": "Requirement IDs defined more than once",
+   "cypher": "MATCH (r:Requirement) WITH split(r.id, '@')[0] AS ref, collect(r) AS rs WHERE size(rs) > 1 UNWIND rs AS r RETURN ref AS id, r.component AS component, r.source AS source ORDER BY id, source",
+   "params": []
+  },
+  "fp_cross_component_citations": {
+   "title": "Requirements cited by unit tests of another component",
+   "cypher": "MATCH (tc:TestCase)-[:CITES]->(r:Requirement)<-[:SATISFIES]-(p:Part), (tc)-[:TESTS]->(q:Part) WHERE p <> q RETURN r.id AS id, p.id AS owner, q.id AS cited_by, count(tc) AS test_cases ORDER BY id, cited_by",
+   "params": []
+  },
+  "unverified_requirements": {
+   "title": "Requirements whose SDD row names no verification method",
+   "cypher": "MATCH (p:Part)-[:SATISFIES]->(r:Requirement) WHERE NOT (r)-[:VERIFIED_BY]->() RETURN r.id AS id, p.id AS component, r.methods_raw AS declared ORDER BY component, id",
+   "params": []
+  },
+  "fp_components_without_requirements": {
+   "title": "Components in the Ref deployment whose directory has no SDD requirements",
+   "cypher": "MATCH (i:Instance)-[:INSTANCE_OF]->(p:Part) WHERE NOT (p)-[:SATISFIES]->(:Requirement) RETURN p.id AS id, collect(i.name) AS instances, p.has_sdd AS has_sdd ORDER BY id",
+   "params": []
+  },
+  "fp_requirement_evidence": {
+   "title": "Test cases citing one requirement",
+   "cypher": "MATCH (p:Part)-[:SATISFIES]->(r:Requirement {id: $id}) OPTIONAL MATCH (tc:TestCase)-[:CITES]->(r) OPTIONAL MATCH (tc)-[:TESTS]->(q:Part) RETURN r.id AS requirement, p.id AS component, r.text AS text, r.methods_raw AS declared, r.source AS source, collect(tc.id) AS test_cases, collect(DISTINCT q.id) AS tested_by_components",
+   "params": [
+    "id"
+   ]
+  },
+  "fp_part_requirements": {
+   "title": "Requirements of one component and the test cases citing them",
+   "cypher": "MATCH (p:Part {id: $id})-[:SATISFIES]->(r:Requirement) OPTIONAL MATCH (tc:TestCase)-[:TESTS]->(p) WHERE (tc)-[:CITES]->(r) RETURN r.id AS id, r.methods AS methods, collect(tc.gtest_filter) AS cited_by ORDER BY id",
+   "params": [
+    "id"
+   ]
+  },
+  "fp_port_type_users": {
+   "title": "Components using one port type",
+   "cypher": "MATCH (p:Part)-[u:USES_PORT]->(t:PortType {id: $id}) RETURN p.id AS id, u.port AS port, u.direction AS direction, u.kind AS kind ORDER BY id, port",
+   "params": [
+    "id"
+   ]
+  },
+  "fp_instance_neighbours": {
+   "title": "Port connections of one Ref deployment instance (integration view)",
+   "cypher": "MATCH (i:Instance {id: $id})-[c:CONNECTS_TO]-(o:Instance) RETURN o.id AS id, CASE WHEN startNode(c) = i THEN 'out' ELSE 'in' END AS direction, c.src_port AS src_port, c.dst_port AS dst_port, c.graph AS graph ORDER BY direction, id",
+   "params": [
+    "id"
+   ]
+  },
+  "fp_part_by_type": {
+   "title": "Component directory for an FPP type name",
+   "cypher": "MATCH (p:Part) WHERE $type IN p.types RETURN p.id AS id",
+   "params": [
+    "type"
+   ]
+  },
+  "describe": {
+   "title": "Neighbourhood of one entity",
+   "cypher": "MATCH (n:Entity {id: $id}) OPTIONAL MATCH (n)-[rel]-(m:Entity) RETURN n.id AS node, n.text AS text, type(rel) AS rel, CASE WHEN startNode(rel) = n THEN 'out' ELSE 'in' END AS direction, m.id AS id ORDER BY rel, id LIMIT 200",
+   "params": [
+    "id"
+   ]
+  },
+  "fulltext_search": {
+   "title": "Full-text matches (Relate full-text index)",
+   "cypher": "CALL db.index.fulltext.queryNodes('entity_text', $text) YIELD node, score RETURN node.id AS id, [l IN labels(node) WHERE l <> 'Entity'][0] AS label, score, node.text AS text ORDER BY score DESC, id LIMIT $k",
+   "params": [
+    "text",
+    "k"
+   ]
+  }
+ }
+}
