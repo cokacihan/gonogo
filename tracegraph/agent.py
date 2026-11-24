@@ -130,6 +130,9 @@ class Agent:
                       suggestions=self._suggest(question))
 
     def _entity_intent(self, question: str, q: str, eid: str, label: str, resolved: list) -> Answer:
+        # "which/what risks ..." asks for risks even if it also says "affect"
+        if label in ("Part", "Requirement") and re.search(r"\b(which|what|list|any)\s+(\w+\s+)?risks?\b", q):
+            return self._answer(question, "risks_threatening", resolved=resolved, id=eid)
         if label == "Part":
             if _has(q, r"risk") and not _has(q, *IMPACT):
                 return self._answer(question, "risks_threatening", resolved=resolved, id=eid)
