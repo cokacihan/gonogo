@@ -9,3 +9,11 @@ data/raw/
 spike/*.rl
 spike/wasm/package-lock.json
 .pytest_cache/
+# Internal working notes (Turkish, local only; never published)
+BASLANGIC.md
+CLAUDE.md
+FIKIR.md
+KURALLAR.md
+PLAN.md
+SPIKE.md
+DEVIR.md
