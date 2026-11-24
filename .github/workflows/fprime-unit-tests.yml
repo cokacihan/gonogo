@@ -1,0 +1,84 @@
+# Runs NASA F´ unit tests at a pinned commit and records per-test-case results.
+# GoNoGo only says GO for a requirement when every test case citing it PASSED in such a run.
+name: F´ unit-test evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      fprime_sha:
+        description: "nasa/fprime commit to test (must match data/fprime_dataset.json source.commit)"
+        required: true
+        default: "6fff089e8e2035307105cad4b28631eea1552ff6"
+      jobs:
+        description: "Parallel build jobs"
+        required: false
+        default: "4"
+
+permissions:
+  contents: read
+
+jobs:
+  fprime-uts:
+    name: "Build and run F´ UTs"
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    env:
+      FPRIME_SHA: ${{ inputs.fprime_sha }}
+      # every gtest executable writes <exe>.xml into this directory
+      GTEST_OUTPUT: "xml:${{ github.workspace }}/gtest-xml/"
+    steps:
+      - name: Checkout GoNoGo
+        uses: actions/checkout@v4
+
+      - name: Checkout nasa/fprime at the pinned commit
+        uses: actions/checkout@v4
+        with:
+          repository: nasa/fprime
+          ref: ${{ inputs.fprime_sha }}
+          path: fprime
+          fetch-depth: 0
+          filter: blob:none
+          submodules: true
+
+      - name: Setup F´ tools (official action)
+        uses: nasa/fprime-actions/setup@devel
+        with:
+          location: ${{ github.workspace }}/fprime
+
+      - name: Prepare report directory
+        run: mkdir -p gtest-xml
+
+      - name: Generate, build and run unit tests (official action)
+        id: uts
+        continue-on-error: true   # failing tests are evidence too; we still want the report
+        uses: nasa/fprime-actions/run-unit-tests@devel
+        with:
+          working-directory: fprime
+          jobs: ${{ inputs.jobs }}
+
+      - name: Convert gtest XML to GoNoGo results
+        if: always()
+        run: |
+          mkdir -p gtest-xml out
+          ls gtest-xml | head -20
+          python3 gonogo/testresults.py gtest-xml out/fprime_test_results.json --fprime-commit "$FPRIME_SHA"
+          echo "### F´ unit-test evidence" >> "$GITHUB_STEP_SUMMARY"
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          r = json.load(open("out/fprime_test_results.json"))
+          c = r["cases"]
+          print(f"- F´ commit: `{r['fprime_commit']}`")
+          print(f"- executables: {len(r['executables'])}, test cases: {len(c)}")
+          for s in ("PASSED", "FAILED", "SKIPPED"):
+              print(f"- {s}: {sum(x['status'] == s for x in c)}")
+          PY
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fprime-test-results
+          path: |
+            out/fprime_test_results.json
+            gtest-xml/
+          retention-days: 30
