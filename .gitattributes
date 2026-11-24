@@ -1,0 +1,4 @@
+# Relate stores must be stored byte-for-byte (no line-ending conversion)
+*.rl binary
+data/fprime/** binary
+*.parquet binary
