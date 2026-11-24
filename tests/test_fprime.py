@@ -5,7 +5,7 @@ from collections import defaultdict
 import pytest
 
 from gonogo import fprime
-from gonogo.db import FPRIME_DATASET, build, connect
+from gonogo.db import build, connect
 from gonogo.queries import answer_ids, run
 
 
@@ -77,101 +77,66 @@ def test_topology_import_and_alias_resolution(tmp_path):
     assert topo["unresolved"] == []
     assert set(topo["instances"]) == {"drv", "rg", "Core.disp", "Core.q"}
 
+SDD_HELPER_CITATION = '''
+void Tester ::runNominal() {
+    helper();
+}
+void Tester ::helper() {
+    REQUIREMENT("ABC-001");  // brace in a string "{" must not confuse depth
+}
+TEST(Nominal, Run) {
+    Tester tester;
+    tester.runNominal();
+}
+TEST(Nominal, Nothing) {
+    Tester tester;
+}
+'''
+
+
+def test_test_case_citations_follow_helper_calls(tmp_path):
+    comp = tmp_path / "Svc" / "X"
+    _write(tmp_path, "Svc/X/test/ut/Tester.cpp", SDD_HELPER_CITATION)
+    cases = {c["name"]: c for c in fprime.test_cases(comp, tmp_path)}
+    assert cases["Run"]["cited"] == ["ABC-001"]
+    assert cases["Nothing"]["cited"] == []
+
 
 # ------------------------------------------------------------------ real dataset vs graph
-@pytest.fixture(scope="module")
-def fp_data():
-    if not FPRIME_DATASET.exists():
-        pytest.skip("data/fprime_dataset.json missing (run: python -m gonogo.fprime)")
-    return json.loads(FPRIME_DATASET.read_text(encoding="utf-8"))
-
-
-@pytest.fixture(scope="module")
-def fp_db(fp_data, tmp_path_factory):
-    path = tmp_path_factory.mktemp("fp") / "fprime.rl"
-    build(fp_data, path)
-    conn = connect(path)
-    yield conn
-    conn.close()
-
-
 def _edges(data, t):
     return [e for e in data["edges"] if e["type"] == t]
 
 
-def test_counts_round_trip(fp_data, fp_db):
-    n = fp_db.execute("MATCH (n:Entity) RETURN count(n) AS n").single()["n"]
+def test_counts_round_trip(fp_data, db_norun):
+    n = db_norun.execute("MATCH (n:Entity) RETURN count(n) AS n").single()["n"]
     assert n == sum(len(v) for v in fp_data["nodes"].values())
-    assert fp_db.execute("MATCH ()-[r]->() RETURN count(r) AS n").single()["n"] == len(fp_data["edges"])
+    assert db_norun.execute("MATCH ()-[r]->() RETURN count(r) AS n").single()["n"] == len(fp_data["edges"])
 
 
-def test_unit_test_without_citation(fp_data, fp_db):
-    evidenced = {e["src"] for e in _edges(fp_data, "EVIDENCED_BY")}
-    ut = {v["id"] for v in fp_data["nodes"]["Verification"] if v["method"] == "Unit Test"}
-    req_of = {e["dst"]: e["src"] for e in _edges(fp_data, "VERIFIED_BY")}
-    expected = {req_of[v] for v in ut - evidenced}
-    rows, _, _ = run(fp_db, "fp_unit_test_without_citation")
-    assert answer_ids("fp_unit_test_without_citation", rows) == expected
+def test_case_level_citations_cover_file_level(fp_data):
+    reqs = {r["id"] for r in fp_data["nodes"]["Requirement"]}
+    by_case = {r for c in fp_data["nodes"]["TestCase"] for r in c["cited"] if r in reqs}
+    by_file = {r for f in fp_data["nodes"]["TestFile"] for r in f["cited_requirements"] if r in reqs}
+    assert by_file <= by_case
 
 
-def test_unknown_citations_and_duplicates(fp_data, fp_db):
+def test_unknown_citations_and_duplicates(fp_data, db_norun):
     exp_unknown = {e["dst"] for e in fp_data["diagnostics"]["dangling_citations"]}
-    assert answer_ids("fp_unknown_citations", run(fp_db, "fp_unknown_citations")[0]) == exp_unknown
+    assert answer_ids("fp_unknown_citations", run(db_norun, "fp_unknown_citations")[0]) == exp_unknown
     exp_dup = {d["id"] for d in fp_data["diagnostics"]["duplicate_requirement_ids"]}
-    assert answer_ids("fp_duplicate_requirement_ids", run(fp_db, "fp_duplicate_requirement_ids")[0]) == exp_dup
+    assert answer_ids("fp_duplicate_requirement_ids", run(db_norun, "fp_duplicate_requirement_ids")[0]) == exp_dup
 
 
-def test_component_impact_matches_python_bfs(fp_data, fp_db):
-    inst_of = {e["src"]: e["dst"] for e in _edges(fp_data, "INSTANCE_OF")}
-    out = defaultdict(set)
-    for e in _edges(fp_data, "CONNECTS_TO"):
-        out[e["src"]].add(e["dst"])
-    sat = defaultdict(set)
-    for e in _edges(fp_data, "SATISFIES"):
-        sat[e["src"]].add(e["dst"])
-    ver = defaultdict(set)
-    for e in _edges(fp_data, "VERIFIED_BY"):
-        ver[e["src"]].add(e["dst"])
-    for part in ["Svc/RateGroupDriver", "Svc/ActiveRateGroup", "Svc/CmdDispatcher", "Svc/Health"]:
-        srcs = {i for i, p in inst_of.items() if p == part}
-        frontier, seen = set(srcs), set()
-        for _ in range(2):  # FP_IMPACT_HOPS
-            frontier = {d for s in frontier for d in out[s]}
-            seen |= frontier
-        downstream = seen - srcs
-        parts = {inst_of[d] for d in downstream if d in inst_of} - {part}
-        reqs = {r for p in parts | {part} for r in sat[p]}
-        vers = {v for r in reqs for v in ver[r]}
-        (row,) = run(fp_db, "fp_component_impact", id=part)[0]
-        assert set(row["downstream_instances"]) == downstream, part
-        assert set(row["parts"]) == parts, part
-        assert set(row["requirements"]) == reqs, part
-        assert set(row["verifications"]) == vers, part
+def test_cross_component_citations(fp_data, db_norun):
+    owner = {e["dst"]: e["src"] for e in _edges(fp_data, "SATISFIES")}
+    case_comp = {e["src"]: e["dst"] for e in _edges(fp_data, "TESTS") if "::" in e["src"]}
+    exp = {e["dst"] for e in _edges(fp_data, "CITES") if "::" in e["src"] and case_comp[e["src"]] != owner[e["dst"]]}
+    assert answer_ids("fp_cross_component_citations", run(db_norun, "fp_cross_component_citations")[0]) == exp
 
 
-# ------------------------------------------------------------------ agent on the F´ store
-def test_agent_routes_fprime_questions(fp_db):
-    from gonogo.agent import Agent
-    ag = Agent(fp_db)
-    assert ag.kind == "fprime"
-    cases = {
-        "What is affected if Svc/RateGroupDriver changes?": "fp_component_impact",
-        "What breaks if Svc.ActiveRateGroup is modified?": "fp_component_impact",
-        "Which unit tests cite requirement IDs that no SDD defines?": "fp_unknown_citations",
-        "Are there duplicate requirement IDs?": "fp_duplicate_requirement_ids",
-        "Which unit-test requirements are not cited by any test?": "fp_unit_test_without_citation",
-        "How is HTH-003 verified?": "fp_requirement_evidence",
-        "What is rateGroupDriverComp connected to?": "fp_instance_neighbours",
-    }
-    for q, tmpl in cases.items():
-        a = ag.ask(q)
-        assert a.status == "answered" and a.template == tmpl, (q, a.template)
-        assert a.cypher and a.rows is not None
-
-
-def test_agent_fprime_abstains_on_unknown_ids(fp_db):
-    from gonogo.agent import Agent
-    ag = Agent(fp_db)
-    for q in ["How is ABC-999 verified?", "What is affected if Svc.NoSuchThing changes?", "What is the launch date?"]:
-        a = ag.ask(q)
-        assert a.status == "unknown" and a.answer_ids == [], q
+def test_known_real_findings_present(fp_data):
+    """Hand-checked against the F´ sources at the pinned commit (see README, 'Findings')."""
+    unknown = {e["dst"] for e in fp_data["diagnostics"]["dangling_citations"]}
+    assert {f"ISF-HTH-00{i}" for i in range(1, 8)} <= unknown
+    dups = {d["id"] for d in fp_data["diagnostics"]["duplicate_requirement_ids"]}
+    assert {"FH-002", "SVC-CCSDS-SPD-009"} <= dups

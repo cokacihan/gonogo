@@ -176,30 +176,75 @@ def test_citations(comp_dir: Path, repo: Path) -> list[dict]:
     return out
 
 
+CALL_RE = re.compile(r"\b([A-Za-z_]\w*)\s*\(")
+_STRING = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
+
+
+def _code_lines(text: str):
+    """Yield (raw line, code without comments/strings) so braces in strings never confuse depth."""
+    in_block = False
+    for raw in text.splitlines():
+        code = _STRING.sub('""', raw)
+        if in_block:
+            if "*/" not in code:
+                yield raw, ""
+                continue
+            code, in_block = code.split("*/", 1)[1], False
+        while "/*" in code:
+            head, tail = code.split("/*", 1)
+            if "*/" in tail:
+                code = head + tail.split("*/", 1)[1]
+            else:
+                code, in_block = head, True
+        yield raw, code.split("//", 1)[0]
+
+
 def test_cases(comp_dir: Path, repo: Path) -> list[dict]:
-    """gtest TEST(Suite, Name) cases in the component's test sources and the tester methods they call."""
-    out = []
+    """gtest cases of a component with the requirements they cite, following calls through the test sources.
+
+    REQUIREMENT("ID") usually sits in a helper (TEST -> tester.runNominal() -> helper() -> REQUIREMENT), so
+    a per-component call graph of the test sources is built and each case's citations are its closure.
+    Same-named functions in one component's tests are merged, which can over-approximate.
+    """
     test_dir = comp_dir / "test"
     if not test_dir.is_dir():
-        return out
-    for f in sorted(test_dir.rglob("*.cpp")):
-        lines = f.read_text(encoding="utf-8", errors="replace").splitlines()
-        i = 0
-        while i < len(lines):
-            m = GTEST.match(lines[i])
-            if not m:
-                i += 1
+        return []
+    funcs: dict[str, dict] = defaultdict(lambda: {"calls": set(), "cites": set()})
+    cases: list[dict] = []
+    for f in sorted(p for p in test_dir.rglob("*") if p.suffix in (".cpp", ".hpp", ".cc", ".h") and p.is_file()):
+        depth, cur, start, opened = 0, None, 0, False
+        for raw, code in _code_lines(f.read_text(encoding="utf-8", errors="replace")):
+            if cur is None:
+                if (g := GTEST.match(code)):
+                    cur = {"suite": g.group(1), "name": g.group(2), "file": _rel(f, repo), "calls": set(), "cites": set()}
+                    cases.append(cur)
+                elif (m := FUNC_DEF.match(code)) and m.group(1) not in NOT_FUNCS:
+                    cur = funcs[m.group(1)]
+                    cur.setdefault("name_", m.group(1))
+                if cur is not None:
+                    start, opened = depth, False
+            if cur is not None:
+                cur["cites"].update(REQ_MACRO.findall(raw))
+                own = cur.get("name_")
+                cur["calls"].update(c for c in CALL_RE.findall(code) if c != own and c not in NOT_FUNCS and not c.isupper())
+            depth += code.count("{") - code.count("}")
+            if cur is not None:
+                if "{" in code:
+                    opened = True
+                if (opened and depth <= start) or (not opened and code.rstrip().endswith(";")):
+                    cur = None
+    out = []
+    for c in cases:
+        seen, stack, cited = set(), list(c["calls"]), set(c["cites"])
+        while stack:
+            fn = stack.pop()
+            if fn in seen or fn not in funcs:
                 continue
-            depth, body, j = 0, [], i
-            while j < len(lines):
-                depth += lines[j].count("{") - lines[j].count("}")
-                body.append(lines[j])
-                j += 1
-                if depth <= 0 and any("{" in b for b in body):
-                    break
-            calls = sorted({c for b in body[1:] for c in METHOD_CALL.findall(b)})
-            out.append({"suite": m.group(1), "name": m.group(2), "file": _rel(f, repo), "calls": calls})
-            i = j
+            seen.add(fn)
+            cited |= funcs[fn]["cites"]
+            stack += list(funcs[fn]["calls"])
+        out.append({"suite": c["suite"], "name": c["name"], "file": c["file"], "calls": sorted(c["calls"]),
+                    "cited": sorted(cited)})
     return out
 
 
@@ -447,7 +492,7 @@ def build_dataset(repo: Path) -> dict:
             while cid in seen_cases:  # same name twice in one file (e.g. under #ifdef branches)
                 cid, n = f"{cid}#{n}", n + 1
             seen_cases.add(cid)
-            cited = sorted({r for c in tc["calls"] for r in func_cites.get(c, ())})
+            cited = tc["cited"]
             nodes["TestCase"].append({"id": cid, "suite": tc["suite"], "name": tc["name"], "file": tc["file"],
                                       "gtest_filter": f"{tc['suite']}.{tc['name']}", "calls": tc["calls"],
                                       "cited": cited, "text": f"Unit test case {tc['suite']}.{tc['name']} of {d}"})

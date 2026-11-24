@@ -1,4 +1,10 @@
-"""Build and open the persistent Relate stores."""
+"""Build and open the persistent Relate store of an F´ repository.
+
+Store mode: **directory** (WAL + Parquet checkpoint). Measured on this graph, the same data took
+21.6 MB as a single `.rl` file versus 0.86 MB as a directory, because Relate's directory mode
+checkpoints to compressed Parquet. A directory store is also what a CI job builds and diffs, so it
+is the committed default; `gonogo export --single-file` writes a portable `.rl` snapshot on demand.
+"""
 from __future__ import annotations
 
 import json
@@ -12,16 +18,13 @@ from gonogo.embed import DIM, embed
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
-DB_PATH = DATA_DIR / "tracegraph.rl"
+STORE = DATA_DIR / "fprime"                       # committed Relate store (directory mode)
+DATASET = DATA_DIR / "fprime_dataset.json"        # output of gonogo.fprime (repository text -> graph)
+RESULTS = DATA_DIR / "fprime_test_results.json"   # output of the CI unit-test run (gonogo.testresults)
 
-FPRIME_DB_PATH = DATA_DIR / "fprime"  # directory mode: WAL + Parquet checkpoint (compact, git-friendly)
-FPRIME_DATASET = DATA_DIR / "fprime_dataset.json"
-
-LABELS = ["Subsystem", "Requirement", "Verification", "Part", "Risk", "Decision", "Anomaly", "Document",
-          "TestFile", "Instance", "TestCase", "PortType"]
-REL_TYPES = ["DERIVES_FROM", "ALLOCATED_TO", "VERIFIED_BY", "PART_OF", "DEPENDS_ON", "SATISFIES",
-             "THREATENS", "MITIGATED_BY", "AFFECTS", "CONFLICTS_WITH", "OBSERVED_IN", "INVOLVES",
-             "DOCUMENTED_IN", "CITES", "EVIDENCED_BY", "TESTS", "INSTANCE_OF", "CONNECTS_TO", "USES_PORT"]
+LABELS = ["Part", "Requirement", "Verification", "Document", "TestFile", "TestCase", "PortType", "Instance"]
+REL_TYPES = ["SATISFIES", "DOCUMENTED_IN", "VERIFIED_BY", "CITES", "EVIDENCED_BY", "TESTS", "USES_PORT",
+             "INSTANCE_OF", "CONNECTS_TO", "RAN_IN"]
 
 
 def _remove_store(path: Path) -> None:
@@ -31,64 +34,91 @@ def _remove_store(path: Path) -> None:
         path.unlink()
 
 
-def build(dataset: dict, path: Path = DB_PATH) -> dict:
-    """(Re)create the store from a dataset dict. Returns counts read back from the graph."""
+def results_edges(results: dict | None, case_ids: set[str]) -> tuple[dict | None, list[dict], list[str]]:
+    """TestRun node, RAN_IN edges for test cases we know, and result ids we could not map."""
+    if not results:
+        return None, [], []
+    run_id = f"run:{results['run'].get('id') or 'local'}"
+    run = {"id": run_id, "fprime_commit": results["fprime_commit"], "url": results["run"].get("url", ""),
+           "runner": results["run"].get("runner", ""), "text": f"F Prime unit-test run {run_id}"}
+    edges, unmapped = [], []
+    for c in results["cases"]:
+        if c["id"] in case_ids:
+            edges.append({"src": c["id"], "type": "RAN_IN", "dst": run_id, "status": c["status"], "time_s": c["time_s"]})
+        else:
+            unmapped.append(c["id"])
+    return run, edges, unmapped
+
+
+def build(dataset: dict, path: Path = STORE, results: dict | None = None) -> dict:
+    """(Re)create the store. Returns counts read back from the graph plus result-mapping diagnostics."""
     _remove_store(path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    nodes_by_label = {k: list(v) for k, v in dataset["nodes"].items()}
+    edges = list(dataset["edges"])
+    case_ids = {c["id"] for c in nodes_by_label.get("TestCase", [])}
+    run, run_edges, unmapped = results_edges(results, case_ids)
+    if run:
+        nodes_by_label["TestRun"] = [run]
+        edges += run_edges
     db = relate.connect(str(path))
     try:
         db.execute("CREATE INDEX entity_id IF NOT EXISTS FOR (n:Entity) ON (n.id)")
-        for label in LABELS:
-            rows = [dict(n, embedding=embed(n["text"])) for n in dataset["nodes"].get(label, [])]
-            if not rows:
-                continue
-            # Label names come from the fixed LABELS whitelist, never from user input.
-            db.execute(
-                f"UNWIND $rows AS r CREATE (n:Entity:{label}) "
-                "SET n = r, n.embedding = vector(r.embedding, $dim, FLOAT32)",
-                {"rows": rows, "dim": DIM},
-            )
+        for label in LABELS + ["TestRun"]:
+            rows = [dict(n, embedding=embed(n["text"])) for n in nodes_by_label.get(label, [])]
+            if rows:  # label names come from the fixed whitelist above, never from input
+                db.execute(f"UNWIND $rows AS r CREATE (n:Entity:{label}) "
+                           "SET n = r, n.embedding = vector(r.embedding, $dim, FLOAT32)", {"rows": rows, "dim": DIM})
         by_type: dict[str, list[dict]] = defaultdict(list)
-        for e in dataset["edges"]:
+        for e in edges:
             props = {k: v for k, v in e.items() if k not in ("src", "type", "dst")}
             by_type[e["type"]].append({"src": e["src"], "dst": e["dst"], "props": props})
         for rel, rows in by_type.items():
             if rel not in REL_TYPES:
                 raise ValueError(f"unknown relationship type {rel}")
-            cur = db.execute(
-                f"UNWIND $rows AS e MATCH (a:Entity {{id: e.src}}), (b:Entity {{id: e.dst}}) "
-                f"CREATE (a)-[r:{rel}]->(b) SET r = e.props",
-                {"rows": rows},
-            )
+            cur = db.execute(f"UNWIND $rows AS e MATCH (a:Entity {{id: e.src}}), (b:Entity {{id: e.dst}}) "
+                             f"CREATE (a)-[r:{rel}]->(b) SET r = e.props", {"rows": rows})
             n_created = cur.consume().counters["relationships_created"]
             if n_created != len(rows):
-                raise RuntimeError(f"{rel}: {n_created} of {len(rows)} relationships created (dangling id?)")
-        db.execute(
-            "CREATE VECTOR INDEX entity_embedding IF NOT EXISTS FOR (n:Entity) ON (n.embedding) "
-            "OPTIONS {indexConfig: {`vector.dimensions`: %d, `vector.similarity_function`: 'cosine'}}" % DIM
-        )
+                raise RuntimeError(f"{rel}: {n_created} of {len(rows)} relationships created (dangling or duplicate id)")
+        db.execute("CREATE VECTOR INDEX entity_embedding IF NOT EXISTS FOR (n:Entity) ON (n.embedding) "
+                   "OPTIONS {indexConfig: {`vector.dimensions`: %d, `vector.similarity_function`: 'cosine'}}" % DIM)
         db.execute("CREATE FULLTEXT INDEX entity_text IF NOT EXISTS FOR (n:Entity) ON EACH [n.text, n.id]")
         src = dataset.get("source", {})
-        db.execute("MERGE (m:Meta {key: 'dataset'}) SET m.kind = $kind, m.seed = $seed, m.mission = $mission, "
-                   "m.source_repo = $repo, m.source_commit = $commit, m.source_license = $lic",
-                   {"kind": dataset.get("kind", "synthetic"), "seed": dataset.get("seed"),
-                    "mission": dataset["mission"], "repo": src.get("repo"), "commit": src.get("commit"),
-                    "lic": src.get("license")})
-        nodes = db.execute("MATCH (n:Entity) RETURN count(n) AS n").single()["n"]
-        rels = db.execute("MATCH ()-[r]->() RETURN count(r) AS n").single()["n"]
+        db.execute("MERGE (m:Meta {key: 'dataset'}) SET m.source_repo = $repo, m.source_commit = $commit, "
+                   "m.source_license = $lic, m.run = $run, m.unmapped_results = $unmapped",
+                   {"repo": src.get("repo"), "commit": src.get("commit"), "lic": src.get("license"),
+                    "run": run["id"] if run else None, "unmapped": len(unmapped)})
+        n_nodes = db.execute("MATCH (n:Entity) RETURN count(n) AS n").single()["n"]
+        n_rels = db.execute("MATCH ()-[r]->() RETURN count(r) AS n").single()["n"]
     finally:
         db.close()
-    return {"nodes": nodes, "relationships": rels, "path": str(path)}
+    return {"nodes": n_nodes, "relationships": n_rels, "path": str(path), "run": run["id"] if run else None,
+            "results_mapped": len(run_edges), "results_unmapped": len(unmapped)}
 
 
-def connect(path: Path = DB_PATH, read_only: bool = True) -> relate.Connection:
+def load_inputs(dataset_path: Path = DATASET, results_path: Path = RESULTS) -> tuple[dict, dict | None]:
+    dataset = json.loads(dataset_path.read_text(encoding="utf-8"))
+    results = json.loads(results_path.read_text(encoding="utf-8")) if results_path.exists() else None
+    if results and results.get("fprime_commit") != dataset["source"]["commit"]:
+        raise ValueError(f"test results are for F´ {results.get('fprime_commit')}, "
+                         f"dataset is for {dataset['source']['commit']}")
+    return dataset, results
+
+
+def connect(path: Path = STORE, read_only: bool = True) -> relate.Connection:
     if not path.exists():
         raise FileNotFoundError(f"{path} not found. Run: python -m gonogo build")
     return relate.connect(str(path), read_only=read_only)
 
 
-def export_json(path: Path = DB_PATH) -> dict:
-    """Export nodes/edges (without embeddings) for the browser (Relate WASM) demo."""
+def meta(db) -> dict:
+    row = db.execute("MATCH (m:Meta {key: 'dataset'}) RETURN properties(m) AS p").fetchone()
+    return row["p"] if row else {}
+
+
+def export_json(path: Path = STORE) -> dict:
+    """Nodes and relationships without embeddings, for the browser explorer (Relate WASM)."""
     db = connect(path)
     try:
         nodes = [r.data() for r in db.execute(
@@ -97,19 +127,14 @@ def export_json(path: Path = DB_PATH) -> dict:
         for n in nodes:
             n["props"].pop("embedding", None)
         edges = [r.data() for r in db.execute(
-            "MATCH (a:Entity)-[r]->(b:Entity) RETURN a.id AS src, type(r) AS type, b.id AS dst "
-            "ORDER BY src, type, dst")]
+            "MATCH (a:Entity)-[r]->(b:Entity) RETURN a.id AS src, type(r) AS type, b.id AS dst, "
+            "properties(r) AS props ORDER BY src, type, dst")]
+        info = meta(db)
     finally:
         db.close()
-    return {"nodes": nodes, "edges": edges}
-
-
-def dataset_kind(db) -> str:
-    row = db.execute("MATCH (m:Meta {key: 'dataset'}) RETURN m.kind AS k").fetchone()
-    return (row["k"] if row else None) or "synthetic"
+    return {"meta": info, "nodes": nodes, "edges": edges}
 
 
 if __name__ == "__main__":
-    print(build(json.loads((DATA_DIR / "dataset.json").read_text(encoding="utf-8"))))
-    if FPRIME_DATASET.exists():
-        print(build(json.loads(FPRIME_DATASET.read_text(encoding="utf-8")), FPRIME_DB_PATH))
+    ds, res = load_inputs()
+    print(build(ds, STORE, res))
