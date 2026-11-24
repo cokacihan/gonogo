@@ -482,6 +482,9 @@ def build_dataset(repo: Path) -> dict:
                 if rid in req_seen:
                     duplicates.append({"id": rid, "first": req_seen[rid], "again": d})
                     rid = f"{rid}@{d}"
+                    n = 2
+                    while any(x["id"] == rid for x in nodes["Requirement"]):  # defined 3+ times
+                        rid, n = f"{r['id']}@{d}#{n}", n + 1
                 req_seen.setdefault(r["id"], d)
                 nodes["Requirement"].append({"id": rid, "level": "COMPONENT", "subsystem": d.split("/")[0],
                                              "component": d, "text": r["text"], "rationale": r["rationale"],
