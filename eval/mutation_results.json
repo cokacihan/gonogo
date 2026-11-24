@@ -1,38 +1,44 @@
 {
  "seed": 2026,
- "per_class": 3,
+ "per_class": 20,
  "fprime_commit": "6fff089e8e2035307105cad4b28631eea1552ff6",
  "baseline_unchanged_check": true,
- "seconds": 88.4,
+ "seconds": 615.4,
  "summary": {
   "citation_deleted": {
-   "mutations": 3,
-   "gonogo_detected": 3,
-   "grep_detected": 3,
+   "mutations": 20,
+   "gonogo_detected": 20,
+   "grep_detected": 20,
    "with_collateral": 0
   },
   "citation_id_drift": {
-   "mutations": 3,
-   "gonogo_detected": 3,
-   "grep_detected": 3,
+   "mutations": 20,
+   "gonogo_detected": 20,
+   "grep_detected": 20,
    "with_collateral": 0
   },
   "cross_component_cite": {
-   "mutations": 3,
-   "gonogo_detected": 3,
+   "mutations": 20,
+   "gonogo_detected": 20,
    "grep_detected": 0,
    "with_collateral": 0
   },
   "duplicate_id": {
-   "mutations": 3,
-   "gonogo_detected": 3,
-   "grep_detected": 3,
-   "with_collateral": 0
+   "mutations": 20,
+   "gonogo_detected": 20,
+   "grep_detected": 20,
+   "with_collateral": 1
   },
   "method_blanked": {
-   "mutations": 3,
-   "gonogo_detected": 3,
-   "grep_detected": 2,
+   "mutations": 20,
+   "gonogo_detected": 20,
+   "grep_detected": 12,
+   "with_collateral": 0
+  },
+  "port_type_use_added": {
+   "mutations": 20,
+   "gonogo_detected": 20,
+   "grep_detected": 20,
    "with_collateral": 0
   }
  },
@@ -62,7 +68,7 @@
    "collateral": []
   },
   {
-   "class": "citation_deleted",
+   "class": "citation_id_drift",
    "target": "SVC_CHRONO_TIME_002",
    "file": "Svc\\ChronoTime\\test\\ut\\ChronoTimeTester.cpp",
    "gonogo": true,
@@ -70,7 +76,7 @@
    "collateral": []
   },
   {
-   "class": "citation_deleted",
+   "class": "citation_id_drift",
    "target": "FPRIME-PRG-002",
    "file": "Svc\\PassiveRateGroup\\test\\ut\\PassiveRateGroupTester.cpp",
    "gonogo": true,
@@ -78,7 +84,7 @@
    "collateral": []
   },
   {
-   "class": "citation_deleted",
+   "class": "citation_id_drift",
    "target": "REQ-TIMECONVERTER-005",
    "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
    "gonogo": true,
@@ -86,8 +92,376 @@
    "collateral": []
   },
   {
+   "class": "citation_id_drift",
+   "target": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-004",
+   "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "SVC-DPWRITER-001",
+   "file": "Svc\\DpWriter\\test\\ut\\DpWriterTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "SVC-CCSDS-SDLS-FILE-KEY-MANAGER-002",
+   "file": "Svc\\Ccsds\\SdlsFileKeyManager\\test\\ut\\SdlsFileKeyManagerTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "REQ-TIMECONVERTER-007",
+   "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "AL-002",
+   "file": "Svc\\EventManager\\test\\ut\\EventManagerTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "SVC-CCSDS-AES-ENCRYPTOR-003",
+   "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "CD-004",
+   "file": "Svc\\CmdDispatcher\\test\\ut\\CommandDispatcherTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "FPRIME-BM-002",
+   "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "ISF-CMDS-003",
+   "file": "Svc\\CmdSequencer\\test\\ut\\ImmediateBase.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-003",
+   "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "FPRIME-BM-001",
+   "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "TLC-001",
+   "file": "Svc\\TlmChan\\test\\ut\\TlmChanTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "TLC-003",
+   "file": "Svc\\TlmChan\\test\\ut\\TlmChanTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_id_drift",
+   "target": "SVC-CCSDS-SDLS-FILE-KEY-MANAGER-004",
+   "file": "Svc\\Ccsds\\SdlsFileKeyManager\\test\\ut\\SdlsFileKeyManagerTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-DPWRITER-001",
+   "file": "Svc\\DpWriter\\test\\ut\\DpWriterTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-CCSDS-AES-ENCRYPTOR-005",
+   "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "REQ-TIMECONVERTER-002",
+   "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-001",
+   "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "REQ-TIMECONVERTER-012",
+   "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-CCSDS-AES-ENCRYPTOR-010",
+   "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-CCSDS-CLEARTEXT-DECRYPTOR-001",
+   "file": "Svc\\Ccsds\\ClearTextDecryptor\\test\\ut\\ClearTextDecryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-CCSDS-CLEARTEXT-DECRYPTOR-004",
+   "file": "Svc\\Ccsds\\ClearTextDecryptor\\test\\ut\\ClearTextDecryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "FPRIME-BM-004",
+   "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-CCSDS-AES-ENCRYPTOR-008",
+   "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "CD-004",
+   "file": "Svc\\CmdDispatcher\\test\\ut\\CommandDispatcherTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "RGD-001",
+   "file": "Svc\\RateGroupDriver\\test\\ut\\RateGroupDriverImplTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "REQ-TIMECONVERTER-015",
+   "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "ISF-CMDS-003",
+   "file": "Svc\\CmdSequencer\\test\\ut\\ImmediateBase.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-CMD-SPLITTER-003",
+   "file": "Svc\\CmdSplitter\\test\\ut\\CmdSplitterTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "REQ-TIMECONVERTER-006",
+   "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-DPWRITER-008",
+   "file": "Svc\\DpWriter\\test\\ut\\DpWriterTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-CCSDS-AES-ENCRYPTOR-006",
+   "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC_CHRONO_TIME_003",
+   "file": "Svc\\ChronoTime\\test\\ut\\ChronoTimeTester.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "citation_deleted",
+   "target": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-005",
+   "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
    "class": "duplicate_id",
-   "target": "SVC-VERSION-014",
+   "target": "REQ-TIMECONVERTER-010",
+   "file": "Svc\\TimeConverter\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "SVC-DPCOMPRESSPROC-001",
+   "file": "Svc\\DpCompressProc\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "LINUX-GPIO-COMP-002",
+   "file": "Drv\\LinuxGpioDriver\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "FPRIME-FU-002",
+   "file": "Svc\\FileUplink\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "FD-002",
+   "file": "Svc\\FileDownlink\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "FPRIME-PRG-002",
+   "file": "Svc\\PassiveRateGroup\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "HTH-006",
+   "file": "Svc\\Health\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "AP-002",
+   "file": "Svc\\ActivePhaser\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "FPY-SEQ-018",
+   "file": "Svc\\FpySequencer\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "SVC-DPCOMPRESSION-005",
+   "file": "Svc\\Subtopologies\\DpCompression\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "RCD-002",
+   "file": "Svc\\RateGroupDriver\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "SVC-BUFFERLOGGER-007",
+   "file": "Svc\\BufferLogger\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "SVC-VERSION-007",
    "file": "Svc\\Version\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
@@ -95,15 +469,65 @@
   },
   {
    "class": "duplicate_id",
-   "target": "ISF-PNG-002",
-   "file": "TestDeploymentsProject\\Ref\\PingReceiver\\docs\\sdd.md",
+   "target": "STAMEM-002",
+   "file": "Svc\\StaticMemory\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
    "collateral": []
   },
   {
    "class": "duplicate_id",
-   "target": "SVC-FILEHANDLING-002",
+   "target": "PRMDB-001",
+   "file": "Svc\\PrmDb\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "SVC-ROUTER-008",
+   "file": "Svc\\FprimeRouter\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "SVC-COMLOGGER-003",
+   "file": "Svc\\ComLogger\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": [
+    "SVC-COMLOGGER-002@Svc/ComLoggerDp"
+   ]
+  },
+  {
+   "class": "duplicate_id",
+   "target": "GENHUB-003",
+   "file": "Svc\\GenericHub\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "SVC-POSIX-TIME-002",
+   "file": "Svc\\PosixTime\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "duplicate_id",
+   "target": "ISF-SBF-002",
+   "file": "TestDeploymentsProject\\Ref\\RecvBuffApp\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "SVC-FILEHANDLING-006",
    "file": "Svc\\Subtopologies\\FileHandling\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
@@ -111,39 +535,231 @@
   },
   {
    "class": "method_blanked",
-   "target": "SVC-ROUTER-006",
-   "file": "Svc\\FprimeRouter\\docs\\sdd.md",
+   "target": "SVC-CCSDS-CLEARTEXT-DECRYPTOR-003",
+   "file": "Svc\\Ccsds\\ClearTextDecryptor\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
    "collateral": []
   },
   {
    "class": "method_blanked",
-   "target": "TCP-CLIENT-COMP-003",
-   "file": "Drv\\TcpClient\\docs\\sdd.md",
+   "target": "SVC-CCSDS-SDLS-SA-ROUTER-003",
+   "file": "Svc\\Ccsds\\SdlsSaRouter\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
    "collateral": []
   },
   {
    "class": "method_blanked",
-   "target": "PQ-011",
+   "target": "SVC-COMRETRY-001",
+   "file": "Svc\\ComRetry\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "WASM-SEQ-007",
+   "file": "Svc\\WasmSequencer\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "SVC-DPCOMPRESSION-001",
+   "file": "Svc\\Subtopologies\\DpCompression\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "PQ-004",
    "file": "Os\\Generic\\docs\\sdd.md",
    "gonogo": true,
    "grep": false,
    "collateral": []
   },
   {
+   "class": "method_blanked",
+   "target": "SVC-COMQUEUE-004",
+   "file": "Svc\\ComQueue\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "HTH-006",
+   "file": "Svc\\Health\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "FPRIME-PRG-003",
+   "file": "Svc\\PassiveRateGroup\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "SVC-COMCCSDSSDLS-006",
+   "file": "Svc\\Subtopologies\\ComCcsdsSdls\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "ISF-RBF-001",
+   "file": "TestDeploymentsProject\\Ref\\SendBuffApp\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "SVC-DPCAT-013",
+   "file": "Svc\\DpCatalog\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "SVC-CCSDS-SDLS-FRAMER-007",
+   "file": "Svc\\Ccsds\\CcsdsSdlsFramer\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "SVC-COMQUEUE-011",
+   "file": "Svc\\ComQueue\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "WASM-SEQ-010",
+   "file": "Svc\\WasmSequencer\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "REF-SGN-001",
+   "file": "TestDeploymentsProject\\Ref\\SignalGen\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "FPRIME-BM-004",
+   "file": "Svc\\BufferManager\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "REF-SGN-002",
+   "file": "TestDeploymentsProject\\Ref\\SignalGen\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "method_blanked",
+   "target": "SVC-COMLOGGER-005",
+   "file": "Svc\\ComLogger\\docs\\sdd.md",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
    "class": "cross_component_cite",
-   "target": "PMQ-013",
-   "file": "Svc\\DpManager\\test\\ut\\DpManagerTestMain.cpp",
+   "target": "TPK-001",
+   "file": "Svc\\PassiveRateGroup\\test\\ut\\PassiveRateGroupTester.cpp",
    "gonogo": true,
    "grep": false,
    "collateral": []
   },
   {
    "class": "cross_component_cite",
-   "target": "TCP-CLIENT-COMP-002",
+   "target": "SVC-FPRIME_FRAMER-004",
+   "file": "Svc\\Ccsds\\AesGcmDecryptor\\test\\ut\\AesGcmDecryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "SVC-COMQUEUE-006",
+   "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "CFDP-010",
+   "file": "Svc\\PolyDb\\test\\ut\\PolyDbTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "SVC-DPCAT-022",
+   "file": "Svc\\CmdDispatcher\\test\\ut\\CommandDispatcherTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "PMQ-006",
+   "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "SVC-COMQUEUE-011",
+   "file": "Svc\\Ccsds\\ClearTextDecryptor\\test\\ut\\ClearTextDecryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "SVC-BUFFERLOGGER-004",
+   "file": "Svc\\Ccsds\\CcsdsSdlsFramer\\test\\ut\\CcsdsSdlsFramerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "DRV-ASYNC-BSB-ADAPTER-004",
+   "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "FPY-SEQ-016",
    "file": "Svc\\EventManager\\test\\ut\\EventManagerTester.cpp",
    "gonogo": true,
    "grep": false,
@@ -151,10 +767,242 @@
   },
   {
    "class": "cross_component_cite",
-   "target": "DRV-BSB-ADAPTER-001",
+   "target": "SVC-FRAME-ACCUMULATOR-004",
+   "file": "Svc\\Ccsds\\CcsdsSdlsDeframer\\test\\ut\\CcsdsSdlsDeframerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "TPK-005",
    "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "SVC-CCSDS-SPD-008",
+   "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "FPY-SEQ-004",
+   "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "SVC-COMLOGGER-001",
+   "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "BUFFER_REPEATER_01",
+   "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "DRV-ASYNC-BSB-ADAPTER-003",
+   "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "AF-001",
+   "file": "Svc\\TlmChan\\test\\ut\\TlmChanTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "SVC-DPCAT-002",
+   "file": "Svc\\PolyDb\\test\\ut\\PolyDbTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "cross_component_cite",
+   "target": "SVC-COMSTUB-002",
+   "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/ComAggregator uses port:Drv.GpioWrite",
+   "file": "Svc\\ComAggregator\\ComAggregator.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/FileManager uses port:Svc.SignalDone",
+   "file": "Svc\\FileManager\\FileManager.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/Ccsds/AosFramer uses port:Drv.I2cRequest",
+   "file": "Svc\\Ccsds\\AosFramer\\AosFramer.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/TimeConverter uses port:Svc.Ccsds.CcsdsSdlsEncryption",
+   "file": "Svc\\TimeConverter\\TimeConverter.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/OsTime uses port:Svc.ComLoggerStop",
+   "file": "Svc\\OsTime\\OsTime.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/EventManager uses port:Drv.I2cWriteRead",
+   "file": "Svc\\EventManager\\EventManager.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/PassiveConsoleTextLogger uses port:Drv.SpiReadWrite",
+   "file": "Svc\\PassiveConsoleTextLogger\\PassiveConsoleTextLogger.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/DpZLibCompressor uses port:Drv.ByteStreamData",
+   "file": "Svc\\DpZLibCompressor\\DpZLibCompressor.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/BufferAccumulator uses port:Svc.ComDataWithContext",
+   "file": "Svc\\BufferAccumulator\\BufferAccumulator.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/ActivePhaser uses port:Drv.DataBuffer",
+   "file": "Svc\\ActivePhaser\\ActivePhaser.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/DpCatalog uses port:Svc.TimeOffsetSend",
+   "file": "Svc\\DpCatalog\\DpCatalog.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/DpCompressProc uses port:Drv.ByteStreamReady",
+   "file": "Svc\\DpCompressProc\\DpCompressProc.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Drv/LinuxI2cDriver uses port:Svc.EnableSection",
+   "file": "Drv\\LinuxI2cDriver\\LinuxI2cDriver.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/FrameAccumulator uses port:Svc.Ccsds.ErrorNotify",
+   "file": "Svc\\FrameAccumulator\\FrameAccumulator.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/ComLogger uses port:Svc.ConfigureGroupRate",
+   "file": "Svc\\ComLogger\\ComLogger.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/ComRetry uses port:Drv.I2cCallback",
+   "file": "Svc\\ComRetry\\ComRetry.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/LinuxTimer uses port:Svc.ConvertTime",
+   "file": "Svc\\LinuxTimer\\LinuxTimer.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/StaticMemory uses port:Svc.Ping",
+   "file": "Svc\\StaticMemory\\StaticMemory.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/Ccsds/ApidManager uses port:Drv.I2cWriteRead",
+   "file": "Svc\\Ccsds\\ApidManager\\ApidManager.fpp",
+   "gonogo": true,
+   "grep": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/TimeConverter uses port:Svc.FileAnnounce",
+   "file": "Svc\\TimeConverter\\TimeConverter.fpp",
+   "gonogo": true,
+   "grep": true,
    "collateral": []
   }
  ]
