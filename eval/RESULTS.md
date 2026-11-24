@@ -11,7 +11,7 @@ computed in plain Python without Relate.
 | Answerable: macro F1 | 1.0 | 0.142 | 0.152 |
 | Answerable: exact set match | 1.0 | 0.027 | 0.054 |
 | Out-of-scope: correct abstention | 1.0 | 0.0 | 0.0 |
-| Median latency (ms) | 0.42 | 0.54 | 1.08 |
+| Median latency (ms) | 0.38 | 0.53 | 1.08 |
 
 <details><summary>F1 by category</summary>
 
@@ -35,7 +35,7 @@ computed in plain Python without Relate.
 | Answerable: macro F1 | 1.0 | 0.136 | 0.159 |
 | Answerable: exact set match | 1.0 | 0.027 | 0.054 |
 | Out-of-scope: correct abstention | 1.0 | 0.0 | 0.2 |
-| Median latency (ms) | 0.32 | 0.54 | 1.08 |
+| Median latency (ms) | 0.33 | 0.52 | 1.08 |
 
 <details><summary>F1 by category</summary>
 
@@ -59,7 +59,7 @@ computed in plain Python without Relate.
 | Answerable: macro F1 | 0.922 | 0.13 | 0.179 |
 | Answerable: exact set match | 0.892 | 0.027 | 0.054 |
 | Out-of-scope: correct abstention | 1.0 | 0.0 | 0.0 |
-| Median latency (ms) | 0.35 | 0.56 | 1.08 |
+| Median latency (ms) | 0.31 | 0.52 | 1.07 |
 
 <details><summary>F1 by category</summary>
 

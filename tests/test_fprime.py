@@ -147,3 +147,31 @@ def test_component_impact_matches_python_bfs(fp_data, fp_db):
         assert set(row["parts"]) == parts, part
         assert set(row["requirements"]) == reqs, part
         assert set(row["verifications"]) == vers, part
+
+
+# ------------------------------------------------------------------ agent on the F´ store
+def test_agent_routes_fprime_questions(fp_db):
+    from tracegraph.agent import Agent
+    ag = Agent(fp_db)
+    assert ag.kind == "fprime"
+    cases = {
+        "What is affected if Svc/RateGroupDriver changes?": "fp_component_impact",
+        "What breaks if Svc.ActiveRateGroup is modified?": "fp_component_impact",
+        "Which unit tests cite requirement IDs that no SDD defines?": "fp_unknown_citations",
+        "Are there duplicate requirement IDs?": "fp_duplicate_requirement_ids",
+        "Which unit-test requirements are not cited by any test?": "fp_unit_test_without_citation",
+        "How is HTH-003 verified?": "fp_requirement_evidence",
+        "What is rateGroupDriverComp connected to?": "fp_instance_neighbours",
+    }
+    for q, tmpl in cases.items():
+        a = ag.ask(q)
+        assert a.status == "answered" and a.template == tmpl, (q, a.template)
+        assert a.cypher and a.rows is not None
+
+
+def test_agent_fprime_abstains_on_unknown_ids(fp_db):
+    from tracegraph.agent import Agent
+    ag = Agent(fp_db)
+    for q in ["How is ABC-999 verified?", "What is affected if Svc.NoSuchThing changes?", "What is the launch date?"]:
+        a = ag.ask(q)
+        assert a.status == "unknown" and a.answer_ids == [], q

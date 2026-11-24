@@ -11,11 +11,15 @@ from __future__ import annotations
 import re
 from dataclasses import asdict, dataclass, field
 
+from tracegraph.db import dataset_kind
 from tracegraph.queries import T, answer_ids, run
 
+# identifiers that may appear in a question
 ID_RE = re.compile(r"\b(?:REQ|PART|RISK|DEC|VER|DOC|ANOM)-[A-Z0-9]+(?:-[A-Z0-9]+)*\b", re.IGNORECASE)
-PREFIX_LABEL = {"REQ": "Requirement", "PART": "Part", "RISK": "Risk", "DEC": "Decision",
-                "VER": "Verification", "DOC": "Document", "ANOM": "Anomaly"}
+GENERIC_REQ_RE = re.compile(r"\b[A-Z][A-Z0-9]*(?:[-_][A-Z0-9]+)*[-_]\d+[A-Za-z]?\b")  # ARG-001, SVC_CHRONO_TIME_002
+PATH_RE = re.compile(r"\b(?:Svc|Drv|Fw|Os|CFDP|Utils|TestDeploymentsProject)/[\w/]*\w")  # Svc/ActiveRateGroup
+TYPE_RE = re.compile(r"\b(?:Svc|Drv|Fw|Os|Ref|CFDP|Utils)\.\w+\b")  # Svc.ActiveRateGroup
+INSTANCE_RE = re.compile(r"(?:Ref:)?(\$?\b[a-z]\w*[A-Z]\w*|\b[A-Z]\w*\.\$?\w+)\b")  # rateGroup1Comp, CdhCore.cmdDisp
 RESOLVE_MIN_SCORE = 0.55  # cosine score (rebounded to [0,1]) needed to accept a name -> id resolution
 
 
@@ -65,6 +69,20 @@ GLOBAL_RULES: list[tuple[str, tuple[str, ...]]] = [
                               r"part\b.*\b(highest|largest|most|maximum)\b.*requirement")),
 ]
 
+# Rules that only make sense on the F´ store (checked first there)
+FP_RULES: list[tuple[str, tuple[str, ...]]] = [
+    ("fp_unknown_citations", (r"(cit|referenc)\w*.*(unknown|undefined|missing|not (exist|defined)|nonexist|no sdd|not in (any|the) sdd)",
+                              r"(unknown|undefined|dangling|broken|orphan(ed)?) (requirement )?(ids?|citations?|references?)",
+                              r"id drift")),
+    ("fp_duplicate_requirement_ids", (r"duplicat", r"(defined|used|appear\w*) (more than once|twice)")),
+    ("fp_unit_test_without_citation", (r"unit[- ]test\w*.*\b(no|not|without|never|lack\w*|missing)\b.*(cit|referenc|trac|link|evidence)",
+                                       r"\b(not|never|no)\b (\w+ )?(cited|referenced)", r"uncited",
+                                       r"without (a |any )?(test )?citation")),
+    ("fp_components_without_requirements", (r"components?\b.*\b(no|without|lack\w*|missing)\b.*requirement",
+                                            r"(deploy\w*|\bref\b).*\b(no|without)\b.*requirement")),
+    ("fp_component_coverage", (r"coverage", r"percent", r"per component", r"evidence (rate|ratio|level)")),
+]
+
 IMPACT = (r"impact", r"affect", r"blast", r"ripple", r"break", r"\bchang", r"re-?run", r"re-?verif", r"replac")
 TRACE = (r"trace", r"parent", r"derive", r"\bwhy\b", r"upstream", r"mission", r"ancestor", r"comes? from")
 
@@ -72,9 +90,44 @@ TRACE = (r"trace", r"parent", r"derive", r"\bwhy\b", r"upstream", r"mission", r"
 class Agent:
     def __init__(self, db):
         self.db = db
+        self.kind = dataset_kind(db)
         self._suppliers = sorted(
-            {r["s"] for r in (x.data() for x in db.execute("MATCH (p:Part) RETURN DISTINCT p.supplier AS s"))},
-            key=len, reverse=True)
+            {r["s"] for r in (x.data() for x in db.execute("MATCH (p:Part) RETURN DISTINCT p.supplier AS s"))
+             if r["s"]}, key=len, reverse=True)
+
+    def _entities(self, question: str) -> tuple[list[tuple[str, str]], list[str]]:
+        """Identifiers mentioned in the question: [(id, label)] that exist, and id-like tokens that do not."""
+        found: list[tuple[str, str]] = []
+        missing: list[str] = []
+
+        def add(eid: str, must_exist: bool = True) -> None:
+            if any(eid == f for f, _ in found):
+                return
+            label = self._exists(eid)
+            if label:
+                found.append((eid, label))
+            elif must_exist and eid not in missing:
+                missing.append(eid)
+
+        for m in ID_RE.findall(question):
+            add(m.upper())
+        for m in GENERIC_REQ_RE.findall(question):
+            add(m)
+        for m in PATH_RE.findall(question):
+            add(m.rstrip("/"))
+        for m in TYPE_RE.findall(question):
+            row = self.db.execute("MATCH (p:Part) WHERE $t IN p.types RETURN p.id AS id", {"t": m}).fetchone()
+            if row:
+                add(row["id"])
+            elif self._exists(f"Ref:{m}"):
+                add(f"Ref:{m}")
+            elif self.kind == "fprime" and m not in missing:
+                missing.append(m)
+        if self.kind == "fprime":
+            for m in INSTANCE_RE.findall(question):
+                if self._exists(f"Ref:{m}"):
+                    add(f"Ref:{m}")
+        return found, missing
 
     # ---------- entity handling ----------
     def _exists(self, eid: str) -> str | None:
@@ -97,19 +150,22 @@ class Agent:
     # ---------- main entry ----------
     def ask(self, question: str) -> Answer:
         q = question.lower()
-        ids = [m.upper() for m in ID_RE.findall(question)]
-
-        for eid in ids:
-            if self._exists(eid) is None:
-                return Answer(question, "unknown",
-                              f"I don't know: {eid} is not in the graph. Nearest entities are listed as suggestions only.",
-                              suggestions=self._suggest(question))
+        found, missing = self._entities(question)
+        if missing:
+            return Answer(question, "unknown",
+                          f"I don't know: {missing[0]} is not in the graph. Nearest entities are listed as suggestions only.",
+                          suggestions=self._suggest(question))
 
         # ---- entity-specific intents ----
-        if ids:
-            eid = ids[0]
-            label = PREFIX_LABEL[eid.split("-")[0]]
+        if found:
+            eid, label = found[0]
             return self._entity_intent(question, q, eid, label, resolved=[])
+
+        # ---- F´-only global intents ----
+        if self.kind == "fprime":
+            for intent, pats in FP_RULES:
+                if _has(q, *pats):
+                    return self._answer(question, intent)
 
         # ---- supplier ----
         for s in self._suppliers:
@@ -134,6 +190,17 @@ class Agent:
                       suggestions=self._suggest(question))
 
     def _entity_intent(self, question: str, q: str, eid: str, label: str, resolved: list) -> Answer:
+        if self.kind == "fprime":
+            if label == "Part":
+                if _has(q, *IMPACT, r"depend", r"downstream"):
+                    return self._answer(question, "fp_component_impact", resolved=resolved, id=eid)
+                if _has(q, r"requirement", r"test", r"cit", r"evidence", r"verif"):
+                    return self._answer(question, "fp_part_requirements", resolved=resolved, id=eid)
+            if label == "Instance":
+                return self._answer(question, "fp_instance_neighbours", resolved=resolved, id=eid)
+            if label == "Requirement" and _has(q, r"verif", r"test", r"cit", r"evidence", r"how", r"covered"):
+                return self._answer(question, "fp_requirement_evidence", resolved=resolved, id=eid)
+            return self._answer(question, "describe", resolved=resolved, id=eid)
         # "which/what risks ..." asks for risks even if it also says "affect"
         if label in ("Part", "Requirement") and (re.search(r"\b(which|what|list|any)\s+(\w+\s+)?risks?\b", q)
                                                  or re.search(r"\brisks\b", q)):
@@ -168,6 +235,28 @@ def _render(template: str, rows: list[dict], ids: list[str], params: dict) -> st
     if template == "closure_by_subsystem":
         parts = [f"{r['subsystem']} {r['closed']}/{r['total']} ({r['percent']}%)" for r in rows]
         return f"{title}: " + ", ".join(parts) + "."
+    if template == "fp_component_coverage":
+        total = sum(r["requirements"] for r in rows)
+        cited = sum(r["cited"] for r in rows)
+        zero = [r["component"] for r in rows if r["cited"] == 0]
+        pct = round(100.0 * cited / total, 1) if total else 0.0
+        return (f"{title}: {cited}/{total} requirements ({pct}%) are cited by a unit test via REQUIREMENT(); "
+                f"{len(zero)} of {len(rows)} components have no cited requirement. Per-component rows below.")
+    if template == "fp_requirement_evidence":
+        if not rows:
+            return f"{title}: no rows."
+        r = rows[0]
+        files = ", ".join(r["test_files"]) or "no unit test cites it with REQUIREMENT()"
+        return (f"{r['requirement']}: declared verification '{r['declared'] or 'none'}'; "
+                f"evidence: {files}. Source: {r['source']}.")
+    if template == "fp_component_impact":
+        if not rows:
+            return f"{title}: no rows."
+        r = rows[0]
+        return (f"{title} for {params['id']}: {len(r['instances'])} instance(s) in the Ref deployment, "
+                f"{len(r['downstream_instances'])} downstream instances within 2 port hops, "
+                f"{len(r['parts'])} other components, {len(r['requirements'])} requirements and "
+                f"{len(r['verifications'])} declared verifications to revisit (blast radius {r['blast_radius']}).")
     if template in ("part_impact", "requirement_impact"):
         if not rows:
             return f"{title}: no rows."

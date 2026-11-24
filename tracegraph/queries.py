@@ -237,6 +237,17 @@ _t("fp_instance_neighbours", "Port connections of one Ref deployment instance",
    "c.src_port AS src_port, c.dst_port AS dst_port, c.graph AS graph ORDER BY direction, id",
    params=("id",))
 
+_t("fp_requirement_evidence", "Declared verification and citing unit tests of one requirement",
+   "MATCH (r:Requirement {id: $id}) OPTIONAL MATCH (r)-[:VERIFIED_BY]->(v:Verification) "
+   "OPTIONAL MATCH (t:TestFile)-[:CITES]->(r) "
+   "RETURN r.id AS requirement, r.text AS text, r.methods_raw AS declared, collect(DISTINCT v.id) AS verifications, "
+   "collect(DISTINCT t.id) AS test_files, r.source AS source",
+   params=("id",), id_columns=("verifications", "test_files"))
+
+_t("fp_part_requirements", "Requirements of one component, with citing unit tests",
+   "MATCH (p:Part {id: $id})-[:SATISFIES]->(r:Requirement) OPTIONAL MATCH (t:TestFile)-[:CITES]->(r) "
+   "RETURN r.id AS id, r.methods AS methods, collect(t.id) AS cited_by ORDER BY id", params=("id",))
+
 _t("fp_part_by_type", "Component directory for an FPP type name",
    "MATCH (p:Part) WHERE $type IN p.types RETURN p.id AS id", params=("type",))
 
