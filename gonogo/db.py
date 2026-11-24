@@ -1,4 +1,4 @@
-"""Build and open the persistent Relate store (single-file mode: data/tracegraph.rl)."""
+"""Build and open the persistent Relate stores."""
 from __future__ import annotations
 
 import json
@@ -8,7 +8,7 @@ from pathlib import Path
 
 import relate
 
-from tracegraph.embed import DIM, embed
+from gonogo.embed import DIM, embed
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
@@ -83,7 +83,7 @@ def build(dataset: dict, path: Path = DB_PATH) -> dict:
 
 def connect(path: Path = DB_PATH, read_only: bool = True) -> relate.Connection:
     if not path.exists():
-        raise FileNotFoundError(f"{path} not found. Run: python -m tracegraph build")
+        raise FileNotFoundError(f"{path} not found. Run: python -m gonogo build")
     return relate.connect(str(path), read_only=read_only)
 
 

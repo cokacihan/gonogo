@@ -1,5 +1,5 @@
 """Agent behaviour: correct template, evidence attached, honest abstention."""
-from tracegraph.agent import Agent
+from gonogo.agent import Agent
 
 
 def test_answers_carry_cypher_evidence(db, truth):

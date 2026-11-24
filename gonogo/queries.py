@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from tracegraph.embed import DIM, embed
+from gonogo.embed import DIM, embed
 
 HIGH_RISK_SCORE = 12
 MAX_HOPS = 10

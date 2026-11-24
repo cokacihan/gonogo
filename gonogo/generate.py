@@ -298,7 +298,7 @@ def build_dataset(seed: int = SEED) -> dict:
 
 
 def write(out_dir: Path, seed: int = SEED) -> dict:
-    from tracegraph.truth import ground_truth  # local import to avoid a cycle
+    from gonogo.truth import ground_truth  # local import to avoid a cycle
 
     data = build_dataset(seed)
     out_dir.mkdir(parents=True, exist_ok=True)

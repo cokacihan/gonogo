@@ -1,7 +1,7 @@
 """Benchmark: graph agent vs. vector-only retrieval vs. full-text retrieval, on the synthetic set.
 
 All three systems query the SAME Relate store. Expected answers come from ground_truth.json,
-which is computed in plain Python (tracegraph/truth.py), not through Relate.
+which is computed in plain Python (gonogo/truth.py), not through Relate.
 
 Usage:  python -m eval.run_eval            (writes eval/results.json and eval/RESULTS.md)
 """
@@ -14,9 +14,9 @@ import time
 from pathlib import Path
 
 from eval.questions import question_sets
-from tracegraph.agent import Agent
-from tracegraph.db import DATA_DIR, DB_PATH, connect
-from tracegraph.queries import run
+from gonogo.agent import Agent
+from gonogo.db import DATA_DIR, DB_PATH, connect
+from gonogo.queries import run
 
 K = 10  # retrieval depth for the baselines
 OUT = Path(__file__).resolve().parent

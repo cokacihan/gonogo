@@ -11,8 +11,8 @@ from __future__ import annotations
 import re
 from dataclasses import asdict, dataclass, field
 
-from tracegraph.db import dataset_kind
-from tracegraph.queries import T, answer_ids, run
+from gonogo.db import dataset_kind
+from gonogo.queries import T, answer_ids, run
 
 # identifiers that may appear in a question
 ID_RE = re.compile(r"\b(?:REQ|PART|RISK|DEC|VER|DOC|ANOM)-[A-Z0-9]+(?:-[A-Z0-9]+)*\b", re.IGNORECASE)

@@ -1,7 +1,7 @@
 """Every Cypher template must agree with the independently computed ground truth."""
 import pytest
 
-from tracegraph.queries import answer_ids, run
+from gonogo.queries import answer_ids, run
 
 SIMPLE = [
     "unverified_requirements", "failed_requirements", "open_requirements", "analysis_only_requirements",

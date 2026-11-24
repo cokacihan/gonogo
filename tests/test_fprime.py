@@ -4,9 +4,9 @@ from collections import defaultdict
 
 import pytest
 
-from tracegraph import fprime
-from tracegraph.db import FPRIME_DATASET, build, connect
-from tracegraph.queries import answer_ids, run
+from gonogo import fprime
+from gonogo.db import FPRIME_DATASET, build, connect
+from gonogo.queries import answer_ids, run
 
 
 # ------------------------------------------------------------------ parser fixtures
@@ -82,7 +82,7 @@ def test_topology_import_and_alias_resolution(tmp_path):
 @pytest.fixture(scope="module")
 def fp_data():
     if not FPRIME_DATASET.exists():
-        pytest.skip("data/fprime_dataset.json missing (run: python -m tracegraph.fprime)")
+        pytest.skip("data/fprime_dataset.json missing (run: python -m gonogo.fprime)")
     return json.loads(FPRIME_DATASET.read_text(encoding="utf-8"))
 
 
@@ -151,7 +151,7 @@ def test_component_impact_matches_python_bfs(fp_data, fp_db):
 
 # ------------------------------------------------------------------ agent on the F´ store
 def test_agent_routes_fprime_questions(fp_db):
-    from tracegraph.agent import Agent
+    from gonogo.agent import Agent
     ag = Agent(fp_db)
     assert ag.kind == "fprime"
     cases = {
@@ -170,7 +170,7 @@ def test_agent_routes_fprime_questions(fp_db):
 
 
 def test_agent_fprime_abstains_on_unknown_ids(fp_db):
-    from tracegraph.agent import Agent
+    from gonogo.agent import Agent
     ag = Agent(fp_db)
     for q in ["How is ABC-999 verified?", "What is affected if Svc.NoSuchThing changes?", "What is the launch date?"]:
         a = ag.ask(q)

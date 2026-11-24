@@ -2,9 +2,9 @@ import json
 
 import pytest
 
-from tracegraph.db import DATA_DIR, DB_PATH, build, connect
-from tracegraph.generate import build_dataset
-from tracegraph.truth import ground_truth
+from gonogo.db import DATA_DIR, DB_PATH, build, connect
+from gonogo.generate import build_dataset
+from gonogo.truth import ground_truth
 
 
 @pytest.fixture(scope="session")
