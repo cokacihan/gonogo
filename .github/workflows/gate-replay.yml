@@ -35,7 +35,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python -m pip install relate-db
+      - run: python -m pip install -r requirements.txt
       - name: Gate on nasa/fprime PR #${{ matrix.pr }}
         run: |
           set +e

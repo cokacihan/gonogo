@@ -39,7 +39,7 @@ Python 3.12 or newer; no server, no API key.
 
 ```bash
 git clone https://github.com/cokacihan/tracegraph gonogo && cd gonogo
-python -m pip install relate-db
+python -m pip install -r requirements.txt
 python -m gonogo poll                                   # GO / NO-GO / INCOMPLETE per component (Ref deployment)
 python -m gonogo why HTH-001                            # one verdict, with reasons and evidence
 python -m gonogo impact --files Svc/Sched/Sched.fpp --filters   # unit tests to re-run, as gtest filters
@@ -70,7 +70,7 @@ python -m http.server 8000 -d web    # then open http://localhost:8000
 ```text
 HTH-001  INCOMPLETE   (Svc/Health, Svc/Health/docs/sdd.md#L13)
   The `Svc::Health` component shall ping each output port specified in the provided table.
-  declared methods: Unit Test   run: run:45468869538
+  declared methods: Unit Test   CI run 45468869538
   - CITED_UNDER_DIFFERENT_ID: a test of this component cites an undefined ID ending in this one
   tests citing a near-miss ID:
     Svc/Health::Test.NominalTlm
@@ -84,7 +84,7 @@ HTH-001  INCOMPLETE   (Svc/Health, Svc/Health/docs/sdd.md#L13)
 ```text
 TLC-001  GO   (Svc/TlmChan, Svc/TlmChan/docs/sdd.md#L16)
   The `Svc::TlmChan` component shall provide an interface to submit telemetry
-  declared methods: Unit Test   run: run:45468869538
+  declared methods: Unit Test   CI run 45468869538
   own tests:
     Svc/TlmChan::TlmChanTest.ProcGuardTest PASSED
       path: ProcGuardTest -> runProcGuard -> sendBuff -> REQUIREMENT("TLC-001")
@@ -321,7 +321,9 @@ Committed directory store `data/fprime/`: 1.13 MB. Same graph measured in both m
     [`gonogo/fprime.py`](gonogo/fprime.py).
   - [`data/fprime_test_results.json`](data/fprime_test_results.json): the CI run.
   - [`data/releases/`](data/releases): older F´ releases.
-  - [`data/fprime/`](data/fprime): the Relate store.
+  - [`data/fprime/`](data/fprime): the Relate store. Its small `.cypherlite.*` marker files are committed on purpose:
+    without them Relate does not recognise the directory as an existing store and refuses a read-only open.
+    `.gitattributes` marks the store as binary so git never rewrites line endings inside it.
 
 ## For agents: MCP
 

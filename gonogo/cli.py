@@ -40,6 +40,10 @@ _COLOR = sys.stdout.isatty() and os.environ.get("NO_COLOR") is None
 _C = {"GO": "\033[32m", "NO-GO": "\033[31m", "INCOMPLETE": "\033[33m", "dim": "\033[2m", "bold": "\033[1m", "end": "\033[0m"}
 
 
+def _run_label(run: str | None) -> str:
+    return f"CI run {run.removeprefix('run:')}" if run else "no CI run loaded"
+
+
 def c(text: str, key: str) -> str:
     return f"{_C[key]}{text}{_C['end']}" if _COLOR else text
 
@@ -77,7 +81,7 @@ def cmd_poll(args) -> int:
         return 0
     m = store.meta(conn)
     scope = "all components" if args.all else "components of the Ref deployment"
-    print(c(f"GoNoGo poll — F´ {str(m.get('source_commit'))[:10]}, run {run or 'none loaded'}, {scope}", "bold"))
+    print(c(f"GoNoGo poll — F´ {str(m.get('source_commit'))[:10]}, {_run_label(run)}, {scope}", "bold"))
     width = max(len(p["component"]) for p in table) if table else 10
     for p in table:
         bar = c("█" * p["GO"], "GO") + c("█" * p["NO-GO"], "NO-GO") + c("░" * p["INCOMPLETE"], "INCOMPLETE")
@@ -100,7 +104,7 @@ def cmd_why(args) -> int:
         return 2
     print(f"{c(row['id'], 'bold')}  {c(row['verdict'], row['verdict'])}   ({row['component']}, {row['source']})")
     print(f"  {row['text']}")
-    print(f"  declared methods: {', '.join(row['methods']) or 'none'}   run: {run or 'none loaded'}")
+    print(f"  declared methods: {', '.join(row['methods']) or 'none'}   {_run_label(run)}")
     for reason in row["reasons"]:
         print(f"  - {reason}: {REASON_TEXT[reason]}")
     chains = {p["test_case"]: p for p in evidence_paths(conn, row["id"], run)}
@@ -238,17 +242,21 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--store", default=str(store.STORE), help="Relate store (directory or .rl)")
     ap.add_argument("--accept-declared", action="store_true",
                     help="waive EVIDENCE_OUTSIDE_REPO when an own test case passed")
+    # the same flag is accepted after the subcommand too (gonogo poll --accept-declared)
+    flag = argparse.ArgumentParser(add_help=False)
+    flag.add_argument("--accept-declared", action="store_true", default=argparse.SUPPRESS,
+                      help="waive EVIDENCE_OUTSIDE_REPO when an own test case passed")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
     p = sub.add_parser("import-fprime"); p.set_defaults(fn=cmd_import)
     p.add_argument("--repo", required=True); p.add_argument("--out", default=str(store.DATASET))
     p = sub.add_parser("build"); p.set_defaults(fn=cmd_build)
     p.add_argument("--dataset", default=str(store.DATASET)); p.add_argument("--results", default=str(store.RESULTS))
-    p = sub.add_parser("poll"); p.set_defaults(fn=cmd_poll)
+    p = sub.add_parser("poll", parents=[flag]); p.set_defaults(fn=cmd_poll)
     p.add_argument("--all", action="store_true"); p.add_argument("--json", action="store_true")
-    p = sub.add_parser("why"); p.set_defaults(fn=cmd_why)
+    p = sub.add_parser("why", parents=[flag]); p.set_defaults(fn=cmd_why)
     p.add_argument("id"); p.add_argument("--cypher", action="store_true")
-    p = sub.add_parser("impact"); p.set_defaults(fn=cmd_impact)
+    p = sub.add_parser("impact", parents=[flag]); p.set_defaults(fn=cmd_impact)
     p.add_argument("--files", nargs="*", default=[]); p.add_argument("--component", nargs="*", default=[])
     p.add_argument("--port-type", nargs="*", default=[]); p.add_argument("--filters", action="store_true")
     p.add_argument("--json", action="store_true")
