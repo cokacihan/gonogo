@@ -22,7 +22,7 @@ from pathlib import Path
 from gonogo import db as store
 from gonogo.diff import metrics, snapshot
 from gonogo.queries import run as run_tpl
-from gonogo.verdict import current_run, deployment_parts, poll, verdicts
+from gonogo.verdict import case_citations, current_run, deployment_parts, poll, verdicts
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASES = [("v3.4.0", "2023-11-29"), ("v4.0.0", "2025-08-07"), ("v4.4.2", "2026-11-04")]
@@ -54,7 +54,8 @@ def compute(measure_modes: bool = False) -> dict:
     sha = ds["source"]["commit"]
     case_ids = {c["id"] for c in ds["nodes"]["TestCase"]}
     _, run_edges, unmapped = store.results_edges(res, case_ids)
-    cited_cases = {c["id"] for c in ds["nodes"]["TestCase"] if c["cited"]}
+    case_cites = case_citations(ds)
+    cited_cases = {c for c, rs in case_cites.items() if rs}
     ran = {e["src"] for e in run_edges}
     conn = store.connect()
     try:
@@ -79,8 +80,10 @@ def compute(measure_modes: bool = False) -> dict:
                     "instances": len(ds["nodes"]["Instance"]),
                     "connections": sum(e["type"] == "CONNECTS_TO" for e in ds["edges"]),
                     "relationships": len(ds["edges"]),
-                    "requirements_cited": len({r for c in ds["nodes"]["TestCase"] for r in c["cited"]}
-                                              & {r["id"] for r in ds["nodes"]["Requirement"]})},
+                    "requirements_cited": len({r for rs in case_cites.values() for r in rs}),
+                    "test_functions": len(ds["nodes"].get("TestFunction", [])),
+                    "calls": sum(e["type"] == "CALLS" for e in ds["edges"]),
+                    "max_citation_hops": ds["diagnostics"].get("max_citation_hops")},
         "ci_run": {"id": res["run"]["id"], "url": res["run"]["url"], "executables": len(res["executables"]),
                    "cases": len(res["cases"]), "passed": status["PASSED"], "skipped": status["SKIPPED"],
                    "failed": status["FAILED"], "mapped": len(run_edges), "unmapped": len(unmapped),
@@ -131,6 +134,9 @@ def blocks(s: dict, old_modes: dict | None = None) -> dict[str, str]:
         f"**{d['port_types']}** port types and the **{d['instances']}**-instance Ref deployment of "
         f"[NASA F´](https://github.com/nasa/fprime) (commit [`{sha[:10]}`](https://github.com/nasa/fprime/tree/{sha})) "
         f"in one Relate graph ({d['relationships']} relationships).\n"
+        f"- Test code as a call graph: {d['test_functions']} helper functions and {d['calls']} `CALLS` edges. "
+        f"Evidence is a graph path from a test case to the `REQUIREMENT()` it relies on, up to "
+        f"{d['max_citation_hops']} calls deep in F´.\n"
         f"- F´'s own unit tests, **run in our CI** ([run {ci['id']}]({ci['url']})): {ci['cases']} test cases, "
         f"{ci['passed']} passed, {ci['skipped']} skipped, {ci['failed']} failed. All {ci['citing_cases_ran']} of the "
         f"{ci['citing_cases']} test cases that cite a requirement ran.\n"

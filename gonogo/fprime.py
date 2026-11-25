@@ -215,33 +215,33 @@ def _code_lines(text: str):
         yield raw, code.split("//", 1)[0]
 
 
-def test_cases(comp_dir: Path, repo: Path) -> list[dict]:
-    """gtest cases of a component with the requirements they cite, following calls through the test sources.
-
-    REQUIREMENT("ID") usually sits in a helper (TEST -> tester.runNominal() -> helper() -> REQUIREMENT), so
-    a per-component call graph of the test sources is built and each case's citations are its closure.
-    Same-named functions in one component's tests are merged, which can over-approximate.
+def test_code(comp_dir: Path, repo: Path) -> dict:
+    """Test sources of one component as a call graph: gtest cases, functions, calls between them, and the
+    REQUIREMENT("ID") citations written in each body. No closure is computed here: the graph does that
+    (TestCase)-[:CALLS*0..N]->(x)-[:CITES]->(Requirement). Same-named functions in one component's tests are
+    merged into one node, which can over-approximate the calls.
     """
     test_dir = comp_dir / "test"
     if not test_dir.is_dir():
-        return []
-    funcs: dict[str, dict] = defaultdict(lambda: {"calls": set(), "cites": set()})
+        return {"functions": {}, "cases": []}
+    funcs: dict[str, dict] = defaultdict(lambda: {"calls": set(), "cites": set(), "files": set()})
     cases: list[dict] = []
     for f in sorted(p for p in test_dir.rglob("*") if p.suffix in (".cpp", ".hpp", ".cc", ".h") and p.is_file()):
-        depth, cur, start, opened = 0, None, 0, False
+        depth, cur, start, opened, own = 0, None, 0, False, None
         for raw, code in _code_lines(f.read_text(encoding="utf-8", errors="replace")):
             if cur is None:
                 if (g := GTEST.match(code)):
                     cur = {"suite": g.group(1), "name": g.group(2), "file": _rel(f, repo), "calls": set(), "cites": set()}
                     cases.append(cur)
+                    own = None
                 elif (m := FUNC_DEF.match(code)) and m.group(1) not in NOT_FUNCS:
-                    cur = funcs[m.group(1)]
-                    cur.setdefault("name_", m.group(1))
+                    own = m.group(1)
+                    cur = funcs[own]
+                    cur["files"].add(_rel(f, repo))
                 if cur is not None:
                     start, opened = depth, False
             if cur is not None:
                 cur["cites"].update(REQ_MACRO.findall(raw))
-                own = cur.get("name_")
                 cur["calls"].update(c for c in CALL_RE.findall(code) if c != own and c not in NOT_FUNCS and not c.isupper())
             depth += code.count("{") - code.count("}")
             if cur is not None:
@@ -249,19 +249,33 @@ def test_cases(comp_dir: Path, repo: Path) -> list[dict]:
                     opened = True
                 if (opened and depth <= start) or (not opened and code.rstrip().endswith(";")):
                     cur = None
-    out = []
-    for c in cases:
-        seen, stack, cited = set(), list(c["calls"]), set(c["cites"])
-        while stack:
-            fn = stack.pop()
-            if fn in seen or fn not in funcs:
-                continue
+    known = set(funcs)
+    functions = {n: {"calls": sorted(c for c in v["calls"] if c in known), "cites": sorted(v["cites"]),
+                     "files": sorted(v["files"])} for n, v in funcs.items()}
+    return {"functions": functions,
+            "cases": [{"suite": c["suite"], "name": c["name"], "file": c["file"],
+                       "calls": sorted(x for x in c["calls"] if x in known), "cites": sorted(c["cites"])} for c in cases]}
+
+
+def citation_hops(functions: dict, case: dict) -> dict[str, int]:
+    """Fewest CALLS hops from a test case to each requirement ID it cites (0 = cited in the TEST body itself)."""
+    best = {r: 0 for r in case["cites"]}
+    frontier, seen, hops = set(case["calls"]), set(), 1
+    while frontier:
+        nxt = set()
+        for fn in frontier - seen:
             seen.add(fn)
-            cited |= funcs[fn]["cites"]
-            stack += list(funcs[fn]["calls"])
-        out.append({"suite": c["suite"], "name": c["name"], "file": c["file"], "calls": sorted(c["calls"]),
-                    "cited": sorted(cited)})
-    return out
+            for r in functions[fn]["cites"]:
+                best.setdefault(r, hops)
+            nxt |= set(functions[fn]["calls"])
+        frontier, hops = nxt - seen, hops + 1
+    return best
+
+
+def test_cases(comp_dir: Path, repo: Path) -> list[dict]:
+    """Convenience view for tests: each case with the IDs it cites through the call graph."""
+    code = test_code(comp_dir, repo)
+    return [dict(c, cited=sorted(citation_hops(code["functions"], c))) for c in code["cases"]]
 
 
 # ---------------------------------------------------------------- ports
@@ -465,6 +479,7 @@ def build_dataset(repo: Path) -> dict:
     edges: list[dict] = []
     req_seen: dict[str, str] = {}
     duplicates: list[dict] = []
+    max_hops = 0  # longest shortest CALLS chain from a test case to a REQUIREMENT() it relies on
 
     for d in part_dirs:
         comp_dir = repo / d
@@ -497,17 +512,22 @@ def build_dataset(repo: Path) -> dict:
                     nodes["Verification"].append({"id": vid, "method": m, "status": "DECLARED",
                                                   "text": f"{m} verification of {rid} declared in SDD"})
                     edges.append({"src": rid, "type": "VERIFIED_BY", "dst": vid})
-        func_cites: dict[str, set[str]] = defaultdict(set)  # tester method -> cited requirement ids
         for tf in test_citations(repo / d, repo):
             nodes["TestFile"].append({"id": tf["path"], "text": f"Unit test source {tf['path']}",
                                       "cited_requirements": sorted(tf["cites"])})
             edges.append({"src": tf["path"], "type": "TESTS", "dst": d})
             for rid, funcs in tf["cites"].items():
                 edges.append({"src": tf["path"], "type": "CITES", "dst": rid, "functions": funcs})
-                for fn in funcs:
-                    func_cites[fn].add(rid)
+        # test code as a call graph: TestCase -CALLS-> TestFunction -CALLS-> ... ; CITES only where the macro is written
+        code = test_code(repo / d, repo)
+        fn_id = {name: f"{d}::fn:{name}" for name in code["functions"]}
+        for name, fn in sorted(code["functions"].items()):
+            nodes["TestFunction"].append({"id": fn_id[name], "name": name, "component": d, "files": fn["files"],
+                                          "raw_cites": fn["cites"], "text": f"Test helper {_words(name)} of {d}"})
+            edges.append({"src": fn_id[name], "type": "TESTS", "dst": d})
+            edges += [{"src": fn_id[name], "type": "CALLS", "dst": fn_id[c]} for c in fn["calls"]]
         seen_cases: set[str] = set()
-        for tc in test_cases(repo / d, repo):
+        for tc in code["cases"]:
             cid = f"{d}::{tc['suite']}.{tc['name']}"
             if cid in seen_cases:  # same gtest name in two test programs of one component
                 cid = f"{cid}@{tc['file']}"
@@ -515,27 +535,31 @@ def build_dataset(repo: Path) -> dict:
             while cid in seen_cases:  # same name twice in one file (e.g. under #ifdef branches)
                 cid, n = f"{cid}#{n}", n + 1
             seen_cases.add(cid)
-            cited = tc["cited"]
+            max_hops = max([max_hops, *citation_hops(code["functions"], tc).values()])
             nodes["TestCase"].append({"id": cid, "suite": tc["suite"], "name": tc["name"], "file": tc["file"],
-                                      "gtest_filter": f"{tc['suite']}.{tc['name']}", "calls": tc["calls"],
-                                      "cited": cited, "text": f"Unit test case {tc['suite']}.{tc['name']} of {d}"})
+                                      "component": d, "gtest_filter": f"{tc['suite']}.{tc['name']}",
+                                      "raw_cites": tc["cites"], "text": f"Unit test case {tc['suite']}.{tc['name']} of {d}"})
             edges.append({"src": cid, "type": "TESTS", "dst": d})
+            edges += [{"src": cid, "type": "CALLS", "dst": fn_id[c]} for c in tc["calls"]]
 
     req_ids = {r["id"] for r in nodes["Requirement"]}
-    for tc in nodes["TestCase"]:
-        tc["unknown_citations"] = [r for r in tc["cited"] if r not in req_ids]
-        edges += [{"src": tc["id"], "type": "CITES", "dst": r} for r in tc["cited"] if r in req_ids]
-    dangling = [e for e in edges if e["type"] == "CITES" and e["dst"] not in req_ids]
+    for x in nodes["TestCase"] + nodes["TestFunction"]:
+        raw = x.pop("raw_cites")
+        x["unknown_citations"] = [r for r in raw if r not in req_ids]
+        edges += [{"src": x["id"], "type": "CITES", "dst": r} for r in raw if r in req_ids]
+    file_ids = {tf["id"] for tf in nodes["TestFile"]}
+    dangling = [e for e in edges if e["type"] == "CITES" and e["src"] in file_ids and e["dst"] not in req_ids]
     unknown_by_file: dict[str, list[str]] = defaultdict(list)
     for e in dangling:
         unknown_by_file[e["src"]].append(e["dst"])
     for tf in nodes["TestFile"]:
         tf["unknown_citations"] = sorted(unknown_by_file.get(tf["id"], []))
     edges = [e for e in edges if not (e["type"] == "CITES" and e["dst"] not in req_ids)]
-    # evidence: a Unit Test verification is evidenced by a test file citing that requirement
-    for e in [x for x in edges if x["type"] == "CITES"]:
+    # file-level evidence: a Unit Test verification is evidenced by a test file citing that requirement
+    ver_ids = {v["id"] for v in nodes["Verification"]}
+    for e in [x for x in edges if x["type"] == "CITES" and x["src"] in file_ids]:
         vid = f"VER:{e['dst']}:UNIT_TEST"
-        if any(v["id"] == vid for v in nodes["Verification"]):
+        if vid in ver_ids:
             edges.append({"src": vid, "type": "EVIDENCED_BY", "dst": e["src"]})
 
     port_defs, ports_by_dir = port_model(repo, types)
@@ -569,6 +593,7 @@ def build_dataset(repo: Path) -> dict:
         "nodes": dict(nodes),
         "edges": edges,
         "diagnostics": {"duplicate_requirement_ids": duplicates, "dangling_citations": dangling,
+                        "max_citation_hops": max_hops,
                         "unresolved_connections": topo["unresolved"], "subtopologies": topo["subtopologies"],
                         "instance_types_without_component": sorted({t for t in topo["instances"].values()
                                                                     if types.get(t) not in part_ids})},

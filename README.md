@@ -12,8 +12,9 @@ and **INCOMPLETE**, with a reason, whenever it cannot know.
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
 <!-- gonogo:headline -->
-- **561** requirements, **2309** unit-test cases, **124** components, **72** port types and the **49**-instance Ref deployment of [NASA F´](https://github.com/nasa/fprime) (commit [`6fff089e8e`](https://github.com/nasa/fprime/tree/6fff089e8e2035307105cad4b28631eea1552ff6)) in one Relate graph (6165 relationships).
-- F´'s own unit tests, **run in our CI** ([run 45468869538](https://github.com/cokacihan/tracegraph/actions/runs/45468869538)): 2665 test cases, 2649 passed, 16 skipped, 0 failed. All 402 of the 402 test cases that cite a requirement ran.
+- **561** requirements, **2309** unit-test cases, **124** components, **72** port types and the **49**-instance Ref deployment of [NASA F´](https://github.com/nasa/fprime) (commit [`6fff089e8e`](https://github.com/nasa/fprime/tree/6fff089e8e2035307105cad4b28631eea1552ff6)) in one Relate graph (13153 relationships).
+- Test code as a call graph: 2230 helper functions and 5318 `CALLS` edges. Evidence is a graph path from a test case to the `REQUIREMENT()` it relies on, up to 4 calls deep in F´.
+- F´'s own unit tests, **run in our CI** ([run 45468869538](https://github.com/cokacihan/tracegraph/actions/runs/45468869538)): 2665 test cases, 2649 passed, 16 skipped, 0 failed. All 393 of the 393 test cases that cite a requirement ran.
 - Ref deployment poll: **57 GO**, **0 NO-GO**, **170 INCOMPLETE** of 227 requirements in 34 components. Fully GO: `Svc/BufferManager`, `Svc/CmdSequencer`, `Svc/DpManager`.
 - 10 test citations of undefined IDs, 6 duplicated requirement IDs and 12 cross-component citations, found from repository text (see [Findings](#findings)).
 <!-- /gonogo:headline -->
@@ -73,6 +74,7 @@ HTH-001  INCOMPLETE   (Svc/Health, Svc/Health/docs/sdd.md#L13)
   - CITED_UNDER_DIFFERENT_ID: a test of this component cites an undefined ID ending in this one
   tests citing a near-miss ID:
     Svc/Health::Test.NominalTlm
+      path: NominalTlm -> nominalTlm -> REQUIREMENT("ISF-HTH-001")
 ```
 <!-- /gonogo:why_hth -->
 
@@ -85,9 +87,13 @@ TLC-001  GO   (Svc/TlmChan, Svc/TlmChan/docs/sdd.md#L16)
   declared methods: Unit Test   run: run:45468869538
   own tests:
     Svc/TlmChan::TlmChanTest.ProcGuardTest PASSED
+      path: ProcGuardTest -> runProcGuard -> sendBuff -> REQUIREMENT("TLC-001")
     Svc/TlmChan::TlmChanTest.UpdatedFlagClearGuarded PASSED
+      path: UpdatedFlagClearGuarded -> runUpdatedFlagClearGuarded -> sendBuff -> REQUIREMENT("TLC-001")
     Svc/TlmChan::TlmChanTest.MultiChannelTest PASSED
+      path: MultiChannelTest -> runMultiChannel -> sendBuff -> REQUIREMENT("TLC-001")
     Svc/TlmChan::TlmChanTest.NominalChannelTest PASSED
+      path: NominalChannelTest -> runNominalChannel -> sendBuff -> REQUIREMENT("TLC-001")
 ```
 <!-- /gonogo:why_tlc -->
 
@@ -98,7 +104,7 @@ One meaning everywhere, decided by a single Cypher query
 
 | Verdict | Meaning |
 |---|---|
-| **GO** | Every test case of the requirement's own component that cites it with `REQUIREMENT("ID")` **passed** in the loaded CI run, and nothing else blocks it. |
+| **GO** | Every test case of the requirement's own component that cites it with `REQUIREMENT("ID")`, directly or through any chain of helper calls, **passed** in the loaded CI run, and nothing else blocks it. |
 | **NO-GO** | A citing test case of the own component **failed**. Only real failures are NO-GO. |
 | **INCOMPLETE** | The graph cannot conclude. Each case carries reason codes. |
 
@@ -143,7 +149,7 @@ executable, and converts them with [`gonogo/testresults.py`](gonogo/testresults.
 [`data/fprime_test_results.json`](data/fprime_test_results.json).
 
 <!-- gonogo:ci -->
-Run [45468869538](https://github.com/cokacihan/tracegraph/actions/runs/45468869538) built F´ `6fff089e8e` with the official `nasa/fprime-actions` steps and ran 136 unit-test executables: 2665 test cases, 2649 passed, 16 skipped, 0 failed. 2066 results map to test cases in the graph; 599 belong to library directories without a component (e.g. `CFDP/Checksum`) or to parameterised cases GoNoGo does not model. All 402 of 402 requirement-citing test cases ran.
+Run [45468869538](https://github.com/cokacihan/tracegraph/actions/runs/45468869538) built F´ `6fff089e8e` with the official `nasa/fprime-actions` steps and ran 136 unit-test executables: 2665 test cases, 2649 passed, 16 skipped, 0 failed. 2066 results map to test cases in the graph; 599 belong to library directories without a component (e.g. `CFDP/Checksum`) or to parameterised cases GoNoGo does not model. All 393 of 393 requirement-citing test cases ran.
 <!-- /gonogo:ci -->
 
 ## Change impact
@@ -268,7 +274,7 @@ process. The table below covers four real F´ snapshots (generated from [`data/r
   snapshot when one file is handier.
 
 <!-- gonogo:modes -->
-Committed directory store `data/fprime/`: 2.37 MB. Same graph measured in both modes: directory 2.37 MB, single `.rl` file 58.36 MB.
+Committed directory store `data/fprime/`: 1.13 MB. Same graph measured in both modes: directory 1.13 MB, single `.rl` file 20.64 MB.
 <!-- /gonogo:modes -->
 
 - **What the graph models.**
@@ -278,21 +284,31 @@ Committed directory store `data/fprime/`: 2.37 MB. Same graph measured in both m
     Part -- SATISFIES --> Requirement
     Requirement -- VERIFIED_BY --> Verification
     Requirement -- DOCUMENTED_IN --> Document
+    TestCase -- CALLS --> TestFunction
+    TestFunction -- CALLS --> TestFunction
+    TestFunction -- CITES --> Requirement
     TestCase -- CITES --> Requirement
     TestCase -- TESTS --> Part
     TestCase -- "RAN_IN (status)" --> TestRun
-    TestFile -- CITES --> Requirement
     Part -- USES_PORT --> PortType
     Instance -- INSTANCE_OF --> Part
     Instance -- CONNECTS_TO --> Instance
   ```
 
-  A `Part` is a component directory (e.g. `Svc/Health`). A `TestCase` is a gtest case. Its citations are collected by
-  following calls through the component's test sources (`TEST` → `tester.run()` → helper → `REQUIREMENT`). An
-  `Instance` and its `CONNECTS_TO` edges are the Ref deployment, with subtopology imports and port aliases resolved.
+  - **Part:** a component directory (e.g. `Svc/Health`).
+  - **Test code:** stored as a call graph. A gtest `TestCase` calls helper `TestFunction`s, which call further
+    helpers. A `CITES` edge sits exactly where `REQUIREMENT("ID")` is written.
+  - **Evidence:** whether a test case is evidence for a requirement is not precomputed. Cypher decides it with a
+    variable-length path, `EXISTS { MATCH (tc)-[:CALLS*0..8]->(cite_site) }`, and `why` prints the shortest chain.
+    Example: `ProcGuardTest -> runProcGuard -> sendBuff -> REQUIREMENT("TLC-001")`.
+  - **Instance:** an `Instance` and its `CONNECTS_TO` edges are the Ref deployment, with subtopology imports and port
+    aliases resolved.
 - **Relate features used.**
-  - The embedded Python engine (`relate-db`), with Cypher including `CALL {}` subqueries, `EXISTS {}`, list
-    comprehensions and map projections.
+  - The embedded Python engine (`relate-db`), with Cypher including `CALL {}` subqueries and `EXISTS {}`.
+  - Variable-length paths (`CALLS*0..8`) and `shortestPath()` over the test call graph. We test for existence instead
+    of enumerating every path. Enumerating paths through the diamond-shaped helper graphs ran into Relate's 256 MB
+    value guard, which is a useful lesson the engine taught us.
+  - List comprehensions and map projections.
   - Per-label range indexes. They were added after Relate's own `MissingIndex` notification suggested them.
   - A vector index and the `SEARCH` clause over a lexical embedding (hashed character trigrams, not a neural model),
     used for fuzzy name resolution ("the command dispatcher" → `Svc/CmdDispatcher`).

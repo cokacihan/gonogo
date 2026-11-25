@@ -22,7 +22,8 @@ from pathlib import Path
 
 from gonogo import db as store
 from gonogo.impact import impact as compute_impact
-from gonogo.verdict import VERDICTS_CYPHER, current_run, deployment_parts, poll, verdicts
+from gonogo.verdict import (VERDICTS_CYPHER, current_run, deployment_parts, drift_path, evidence_paths, poll,
+                            verdicts)
 
 REASON_TEXT = {
     "FAILED_TEST": "a citing test case of this component FAILED in the run",
@@ -102,12 +103,18 @@ def cmd_why(args) -> int:
     print(f"  declared methods: {', '.join(row['methods']) or 'none'}   run: {run or 'none loaded'}")
     for reason in row["reasons"]:
         print(f"  - {reason}: {REASON_TEXT[reason]}")
+    chains = {p["test_case"]: p for p in evidence_paths(conn, row["id"], run)}
     for label, key in (("own tests", "own_tests"), ("tests of other components", "other_tests"),
                        ("tests citing a near-miss ID", "drift_tests")):
         if row[key]:
             print(f"  {label}:")
             for t in row[key]:
                 print(f"    {t}")
+                ev = chains.get(t.rsplit(" ", 1)[0])
+                if ev:  # the graph path that makes this test case evidence: TEST -> helpers -> REQUIREMENT()
+                    print(c(f"      path: {' -> '.join(ev['chain'])} -> REQUIREMENT(\"{row['id'].split('@')[0]}\")", "dim"))
+                elif key == "drift_tests" and (dp := drift_path(conn, t, row["id"])):
+                    print(c(f"      path: {' -> '.join(dp['chain'])} -> REQUIREMENT(\"{dp['cited']}\")", "dim"))
     if args.cypher:
         print(c("\n  receipt (Cypher):", "dim"))
         print(c(VERDICTS_CYPHER.strip(), "dim"))

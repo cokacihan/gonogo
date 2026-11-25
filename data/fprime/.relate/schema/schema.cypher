@@ -8,5 +8,6 @@ CREATE RANGE INDEX `porttype_id` FOR (n:`PortType`) ON (n.`id`);
 CREATE RANGE INDEX `requirement_id` FOR (n:`Requirement`) ON (n.`id`);
 CREATE RANGE INDEX `testcase_id` FOR (n:`TestCase`) ON (n.`id`);
 CREATE RANGE INDEX `testfile_id` FOR (n:`TestFile`) ON (n.`id`);
+CREATE RANGE INDEX `testfunction_id` FOR (n:`TestFunction`) ON (n.`id`);
 CREATE RANGE INDEX `testrun_id` FOR (n:`TestRun`) ON (n.`id`);
 CREATE RANGE INDEX `verification_id` FOR (n:`Verification`) ON (n.`id`);

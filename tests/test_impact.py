@@ -10,9 +10,10 @@ def _python_rerun(fp_data, components, port_types):
         if e["type"] == "USES_PORT":
             users[e["dst"]].add(e["src"])
     affected = set(components) | {u for p in port_types for u in users[p]}
+    case_ids = {c["id"] for c in fp_data["nodes"]["TestCase"]}
     cases = defaultdict(int)
     for e in fp_data["edges"]:
-        if e["type"] == "TESTS" and "::" in e["src"] and e["dst"] in affected:
+        if e["type"] == "TESTS" and e["src"] in case_ids and e["dst"] in affected:
             cases[e["dst"]] += 1
     reqs = {e["dst"] for e in fp_data["edges"] if e["type"] == "SATISFIES" and e["src"] in affected}
     return affected, sum(cases.values()), reqs

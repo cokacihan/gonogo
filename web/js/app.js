@@ -1,5 +1,5 @@
 import init, { RelateDb } from "../vendor/relate-wasm/relate.js";
-import { classifyFiles, deploymentParts, impact, loadBundle, poll, run, verdicts } from "./graph.js";
+import { classifyFiles, deploymentParts, impact, loadBundle, poll, rows, run, verdicts } from "./graph.js";
 
 const $ = (sel) => document.querySelector(sel);
 const S = { scope: "ref", selected: null };
@@ -100,10 +100,11 @@ function select(component) {
     <p class="summary">${p.GO} of ${p.requirements} requirements GO, ${p["NO-GO"]} NO-GO, ${p.INCOMPLETE} incomplete.
     Source: <a href="${FPRIME}/tree/${esc(S.sha)}/${esc(component)}">${esc(component)} on GitHub</a>.</p>
     <ul class="reqs">${reqs.map((r, i) => reqItem(r, i)).join("")}</ul>`;
-  el.querySelectorAll(".req-toggle").forEach((b) => b.addEventListener("click", () => {
+  el.querySelectorAll(".req-toggle").forEach((b, i) => b.addEventListener("click", () => {
     const open = b.getAttribute("aria-expanded") === "true";
     b.setAttribute("aria-expanded", String(!open));
     document.getElementById(b.getAttribute("aria-controls")).hidden = open;
+    if (!open && !b.dataset.paths) { b.dataset.paths = "1"; fillPaths(reqs[i], i); }
   }));
   el.querySelectorAll("[data-load-query]").forEach((b) => b.addEventListener("click", () => {
     loadQuery(b.dataset.loadQuery);
@@ -112,14 +113,32 @@ function select(component) {
   if (window.matchMedia("(max-width: 1099px)").matches) el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function testList(items, cls) {
+function testList(items, cls, chains = {}) {
   if (!items.length) return "none";
   return `<ul>${items.map((t) => {
     const i = t.lastIndexOf(" ");
     const [id, st] = i > 0 ? [t.slice(0, i), t.slice(i + 1)] : [t, ""];
     const stCls = st === "PASSED" ? "passed" : st === "FAILED" ? "failed" : "other";
-    return `<li><code>${esc(id.split("::")[1] || id)}</code> <span class="${cls || stCls}">${esc(st.toLowerCase().replace("_", " "))}</span></li>`;
+    const chain = chains[id.trim()];
+    return `<li><code>${esc(id.split("::")[1] || id)}</code> <span class="${cls || stCls}">${esc(st.toLowerCase().replace("_", " "))}</span>
+      ${chain ? `<br><span class="chain">${chain}</span>` : ""}</li>`;
   }).join("")}</ul>`;
+}
+
+// The evidence for one requirement as graph paths: TEST -> helper calls -> REQUIREMENT("ID"), asked on demand.
+function fillPaths(r, i) {
+  const ref = r.id.split("@")[0];
+  const fmtChain = (names, cited) => names.map(esc).join(" → ") + ` → <code>REQUIREMENT("${esc(cited)}")</code>`;
+  const chains = {};
+  for (const p of rows(S.db, S.queries.evidence_paths, { id: r.id, run: S.runId })) chains[p.test_case] = fmtChain(p.chain, ref);
+  for (const t of r.drift_tests) {
+    const d = rows(S.db, S.queries.drift_path, { test_case: t, ref })[0];
+    if (d) chains[t] = fmtChain(d.chain, d.cited);
+  }
+  const put = (sel, html) => { const n = document.getElementById(sel); if (n) n.innerHTML = html; };
+  put(`own-${i}`, testList(r.own_tests, null, chains));
+  if (r.other_tests.length) put(`other-${i}`, testList(r.other_tests, null, chains));
+  if (r.drift_tests.length) put(`drift-${i}`, testList(r.drift_tests.map((t) => t + " "), "other", chains));
 }
 
 function reqItem(r, i) {
@@ -128,9 +147,10 @@ function reqItem(r, i) {
     ? `<ul>${r.reasons.map((x) => `<li><span class="tag">${esc(x)}</span>${esc(S.queries.reason_text[x] || "")}</li>`).join("")}</ul>`
     : "every citing test case of this component passed";
   const q = `MATCH (p:Part)-[:SATISFIES]->(r:Requirement {id: '${r.id.replace(/'/g, "\\'")}'})\n` +
-    "OPTIONAL MATCH (tc:TestCase)-[:CITES]->(r)\nOPTIONAL MATCH (tc)-[:TESTS]->(owner:Part)\n" +
-    "OPTIONAL MATCH (tc)-[x:RAN_IN]->(run:TestRun)\n" +
-    "RETURN r.id AS requirement, owner.id AS test_component, tc.gtest_filter AS test_case, x.status AS status";
+    "MATCH (r)<-[:CITES]-(site)-[:TESTS]->(owner:Part)\nMATCH (tc:TestCase)-[:TESTS]->(owner)\n" +
+    "MATCH path = shortestPath((tc)-[:CALLS*0..8]->(site))\nOPTIONAL MATCH (tc)-[x:RAN_IN]->(:TestRun)\n" +
+    "RETURN owner.id AS test_component, tc.gtest_filter AS test_case, x.status AS status,\n" +
+    "       [n IN nodes(path) | n.name] AS call_chain";
   return `<li>
     <button type="button" class="req-toggle" aria-expanded="false" aria-controls="req-${i}">
       <span class="dot ${esc(r.verdict)}" role="img" aria-label="${esc(r.verdict)}"></span>
@@ -142,9 +162,9 @@ function reqItem(r, i) {
         <dt>Verdict</dt><dd><strong>${esc(r.verdict)}</strong></dd>
         <dt>Why</dt><dd>${reasons}</dd>
         <dt>Declared method</dt><dd>${esc(r.methods.join(", ") || "none")}</dd>
-        <dt>Tests of this component</dt><dd>${testList(r.own_tests)}</dd>
-        ${r.other_tests.length ? `<dt>Tests of other components</dt><dd>${testList(r.other_tests)}</dd>` : ""}
-        ${r.drift_tests.length ? `<dt>Tests citing a near-miss ID</dt><dd>${testList(r.drift_tests.map((t) => t + " "), "other")}</dd>` : ""}
+        <dt>Tests of this component</dt><dd id="own-${i}">${testList(r.own_tests)}</dd>
+        ${r.other_tests.length ? `<dt>Tests of other components</dt><dd id="other-${i}">${testList(r.other_tests)}</dd>` : ""}
+        ${r.drift_tests.length ? `<dt>Tests citing a near-miss ID</dt><dd id="drift-${i}">${testList(r.drift_tests.map((t) => t + " "), "other")}</dd>` : ""}
         <dt>Defined in</dt><dd><a href="${FPRIME}/blob/${esc(S.sha)}/${esc(path)}#L${esc(line)}">${esc(path)}, line ${esc(line)}</a></dd>
       </dl>
       <details class="receipt"><summary>Receipt: the Cypher that decided this verdict</summary>
@@ -152,7 +172,7 @@ function reqItem(r, i) {
         <p class="meta">Parameters: run = ${esc(S.runId)}, accept_declared = false. The same query runs in the
         Python CLI (<code>python -m gonogo why ${esc(r.id)}</code>).</p>
       </details>
-      <p><button type="button" class="quiet" data-load-query="${esc(q)}">Trace its tests in the query box</button></p>
+      <p><button type="button" class="quiet" data-load-query="${esc(q)}">Trace the call paths in the query box</button></p>
     </div>
   </li>`;
 }
@@ -236,16 +256,18 @@ function renderReleases() {
 
 // ---------------------------------------------------------------- query box
 const EXAMPLES = [
+  ["Call chains from TlmChan test cases to REQUIREMENT(\"TLC-001\")",
+    "MATCH (r:Requirement {id: 'TLC-001'})<-[:CITES]-(site)-[:TESTS]->(p:Part)\nMATCH (tc:TestCase)-[:TESTS]->(p)\nMATCH path = shortestPath((tc)-[:CALLS*0..8]->(site))\nRETURN tc.gtest_filter AS test_case, [n IN nodes(path) | n.name] AS call_chain, length(path) AS calls"],
   ["Requirements of Svc/Health and the test cases citing them",
-    "MATCH (p:Part {id: 'Svc/Health'})-[:SATISFIES]->(r:Requirement)\nOPTIONAL MATCH (tc:TestCase)-[:TESTS]->(p) WHERE (tc)-[:CITES]->(r)\nRETURN r.id AS requirement, collect(tc.gtest_filter) AS citing_test_cases\nORDER BY requirement"],
-  ["Test cases that cite IDs no SDD defines",
-    "MATCH (tc:TestCase) WHERE size(tc.unknown_citations) > 0\nRETURN tc.id AS test_case, tc.unknown_citations AS undefined_ids ORDER BY test_case"],
+    "MATCH (p:Part {id: 'Svc/Health'})-[:SATISFIES]->(r:Requirement)\nOPTIONAL MATCH (r)<-[:CITES]-(site)-[:TESTS]->(p)\nOPTIONAL MATCH (tc:TestCase)-[:TESTS]->(p)\n  WHERE site IS NOT NULL AND EXISTS { MATCH (tc)-[:CALLS*0..8]->(site) }\nRETURN r.id AS requirement, collect(DISTINCT tc.gtest_filter) AS citing_test_cases ORDER BY requirement"],
+  ["Test code that cites IDs no SDD defines",
+    "MATCH (site)-[:TESTS]->(p:Part)\nWHERE (site:TestCase OR site:TestFunction) AND size(site.unknown_citations) > 0\nRETURN p.id AS component, site.name AS written_in, site.unknown_citations AS undefined_ids ORDER BY component"],
   ["Components using the Svc.Sched port type",
     "MATCH (p:Part)-[u:USES_PORT]->(:PortType {id: 'port:Svc.Sched'})\nRETURN p.id AS component, u.port AS port, u.direction AS direction ORDER BY component"],
   ["Requirements cited by tests of another component",
-    "MATCH (tc:TestCase)-[:CITES]->(r:Requirement)<-[:SATISFIES]-(owner:Part), (tc)-[:TESTS]->(by:Part)\nWHERE owner <> by\nRETURN r.id AS requirement, owner.id AS owner, by.id AS cited_by, count(tc) AS test_cases ORDER BY requirement"],
-  ["Slowest requirement-citing test cases in the CI run",
-    "MATCH (tc:TestCase)-[x:RAN_IN]->(:TestRun)\nWHERE (tc)-[:CITES]->(:Requirement)\nRETURN tc.id AS test_case, x.status AS status, x.time_s AS seconds ORDER BY seconds DESC LIMIT 10"],
+    "MATCH (owner:Part)-[:SATISFIES]->(r:Requirement)<-[:CITES]-(site)-[:TESTS]->(by:Part)\nWHERE owner <> by\nMATCH (tc:TestCase)-[:TESTS]->(by) WHERE EXISTS { MATCH (tc)-[:CALLS*0..8]->(site) }\nRETURN r.id AS requirement, owner.id AS owner, by.id AS cited_by, count(DISTINCT tc) AS test_cases ORDER BY requirement"],
+  ["Deepest call chains behind a REQUIREMENT() in the CI run",
+    "MATCH (r:Requirement)<-[:CITES]-(site)-[:TESTS]->(p:Part)\nMATCH (tc:TestCase)-[:TESTS]->(p)\nMATCH path = shortestPath((tc)-[:CALLS*0..8]->(site))\nMATCH (tc)-[x:RAN_IN]->(:TestRun)\nRETURN r.id AS requirement, tc.gtest_filter AS test_case, x.status AS status, length(path) AS calls\nORDER BY calls DESC, requirement LIMIT 10"],
   ["Who the rate group driver feeds in the Ref deployment",
     "MATCH (:Instance {id: 'Ref:rateGroupDriverComp'})-[c:CONNECTS_TO]->(o:Instance)-[:INSTANCE_OF]->(p:Part)\nRETURN o.name AS instance, p.id AS component, c.src_port + ' -> ' + c.dst_port AS ports"],
   ["The verdict query itself", null],

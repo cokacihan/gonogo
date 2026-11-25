@@ -22,9 +22,11 @@ STORE = DATA_DIR / "fprime"                       # committed Relate store (dire
 DATASET = DATA_DIR / "fprime_dataset.json"        # output of gonogo.fprime (repository text -> graph)
 RESULTS = DATA_DIR / "fprime_test_results.json"   # output of the CI unit-test run (gonogo.testresults)
 
-LABELS = ["Part", "Requirement", "Verification", "Document", "TestFile", "TestCase", "PortType", "Instance"]
+LABELS = ["Part", "Requirement", "Verification", "Document", "TestFile", "TestCase", "TestFunction", "PortType",
+          "Instance"]
+EMBED_LABELS = {"Part", "Requirement", "PortType", "Instance", "Document"}
 REL_TYPES = ["SATISFIES", "DOCUMENTED_IN", "VERIFIED_BY", "CITES", "EVIDENCED_BY", "TESTS", "USES_PORT",
-             "INSTANCE_OF", "CONNECTS_TO", "RAN_IN"]
+             "INSTANCE_OF", "CONNECTS_TO", "RAN_IN", "CALLS"]
 
 
 def _remove_store(path: Path) -> None:
@@ -74,10 +76,16 @@ def build(dataset: dict, path: Path = STORE, results: dict | None = None) -> dic
         for label in LABELS + ["TestRun"]:  # per-label id indexes (Relate's planner hint for MATCH (:Label {id: ...}))
             db.execute(f"CREATE INDEX {label.lower()}_id IF NOT EXISTS FOR (n:{label}) ON (n.id)")
         for label in LABELS + ["TestRun"]:
-            rows = [dict(n, embedding=embed(n["text"])) for n in nodes_by_label.get(label, [])]
-            if rows:  # label names come from the fixed whitelist above, never from input
+            rows = nodes_by_label.get(label, [])
+            if not rows:
+                continue
+            # label names come from the fixed whitelist above, never from input
+            if label in EMBED_LABELS:  # only named things people ask about get a vector (name resolution)
                 db.execute(f"UNWIND $rows AS r CREATE (n:Entity:{label}) "
-                           "SET n = r, n.embedding = vector(r.embedding, $dim, FLOAT32)", {"rows": rows, "dim": DIM})
+                           "SET n = r, n.embedding = vector(r.embedding, $dim, FLOAT32)",
+                           {"rows": [dict(n, embedding=embed(n["text"])) for n in rows], "dim": DIM})
+            else:
+                db.execute(f"UNWIND $rows AS r CREATE (n:Entity:{label}) SET n = r", {"rows": rows})
         by_type: dict[str, list[dict]] = defaultdict(list)
         for e in edges:
             props = {k: v for k, v in e.items() if k not in ("src", "type", "dst")}

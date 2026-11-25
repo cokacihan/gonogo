@@ -18,12 +18,14 @@ from pathlib import Path
 from gonogo import db as store
 from gonogo.impact import impact
 from gonogo.queries import run
-from gonogo.verdict import verdicts
+from gonogo.verdict import CITE_HOPS, verdicts
 
-STATE_CYPHER = """
+STATE_CYPHER = f"""
 MATCH (p:Part)-[:SATISFIES]->(r:Requirement)
-OPTIONAL MATCH (tc:TestCase)-[:TESTS]->(p) WHERE (tc)-[:CITES]->(r)
-RETURN r.id AS id, p.id AS component, r.text AS text, r.methods AS methods, count(tc) AS own_cites
+OPTIONAL MATCH (r)<-[:CITES]-(cite_site)-[:TESTS]->(p)
+OPTIONAL MATCH (tc:TestCase)-[:TESTS]->(p)
+  WHERE cite_site IS NOT NULL AND EXISTS {{ MATCH (tc)-[:CALLS*0..{CITE_HOPS}]->(cite_site) }}
+RETURN r.id AS id, p.id AS component, r.text AS text, r.methods AS methods, count(DISTINCT tc) AS own_cites
 """
 
 
@@ -91,16 +93,16 @@ def diff(base: dict, head: dict) -> dict:
 
 
 def check(base_db, head_db, changed_files: list[str] | None = None) -> tuple[dict, str, int]:
-    d = diff(snapshot(base_db), snapshot(head_db))
+    base_s, head_s = snapshot(base_db), snapshot(head_db)
+    d = diff(base_s, head_s)
     blocking = []
     for k, v in d["findings"].items():
         blocking += [f"new finding ({k}): {x}" for x in v["new"]]
     blocking += [f"lost every own citing test case: {i}" for i in d["citations"]["lost"]]
     # an uncited new requirement blocks only where the component already cites requirements (practice regression);
     # components that never use REQUIREMENT() get a warning instead, so the gate is not noisy on F´'s current practice
-    base_s = snapshot(base_db)
     citing_comps = {r["component"] for r in base_s["reqs"].values() if r["own_cites"] > 0}
-    head_reqs = snapshot(head_db)["reqs"]
+    head_reqs = head_s["reqs"]
     warnings = []
     for i in d["requirements"]["added_uncited"]:
         if head_reqs[i]["component"] in citing_comps:

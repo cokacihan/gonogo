@@ -178,3 +178,9 @@ td code, .meta { font: 0.85rem var(--code); }
   .req-toggle .req-text { grid-column: 2; }
   .req-body dl { grid-template-columns: 1fr; }
 }
+.chain { font: 0.8rem/1.4 var(--code); color: var(--ink-soft); overflow-wrap: anywhere; }
+.chain code { font: inherit; color: var(--ink); }
+.req-body dd, .req-body dt { min-width: 0; }
+.req-body dd { overflow-wrap: anywhere; }
+.req-body code { overflow-wrap: anywhere; word-break: break-word; }
+.detail { overflow-x: hidden; }

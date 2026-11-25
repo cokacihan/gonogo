@@ -23,3 +23,10 @@ const im = impact(db, queries, cls.components, cls.port_types, vs);
 console.log(JSON.stringify({ cls, testCases: im.testCases, components: im.rerun.length, ms: Math.round(performance.now() - t) }));
 const hth = vs.find((r) => r.id === "HTH-001");
 console.log(JSON.stringify({ id: hth.id, verdict: hth.verdict, reasons: hth.reasons }));
+// call-graph evidence paths (variable-length + shortestPath) in WASM
+const { rows } = await import("../../web/js/graph.js");
+t = performance.now();
+const ev = rows(db, queries.evidence_paths, { id: "TLC-001", run: bundle.meta.run.id });
+console.log(`evidence paths: ${ev.length} in ${(performance.now() - t).toFixed(0)} ms`, JSON.stringify(ev[0]));
+const dr = rows(db, queries.drift_path, { test_case: "Svc/Health::Test.NominalTlm", ref: "HTH-001" });
+console.log("drift", JSON.stringify(dr));

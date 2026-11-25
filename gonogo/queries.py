@@ -8,6 +8,10 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from gonogo.embed import DIM, embed
+from gonogo.verdict import CITE_HOPS
+
+# a test case cites r when a CALLS path leads from it to the place where REQUIREMENT("ID") is written
+REACHES = "EXISTS { MATCH (tc)-[:CALLS*0..%d]->(cite_site) }" % CITE_HOPS
 
 
 @dataclass(frozen=True)
@@ -40,8 +44,9 @@ _t("fp_duplicate_requirement_ids", "Requirement IDs defined more than once",
    "UNWIND rs AS r RETURN ref AS id, r.component AS component, r.source AS source ORDER BY id, source")
 
 _t("fp_cross_component_citations", "Requirements cited by unit tests of another component",
-   "MATCH (tc:TestCase)-[:CITES]->(r:Requirement)<-[:SATISFIES]-(p:Part), (tc)-[:TESTS]->(q:Part) WHERE p <> q "
-   "RETURN r.id AS id, p.id AS owner, q.id AS cited_by, count(tc) AS test_cases ORDER BY id, cited_by")
+   "MATCH (p:Part)-[:SATISFIES]->(r:Requirement)<-[:CITES]-(cite_site)-[:TESTS]->(q:Part) WHERE p <> q "
+   f"MATCH (tc:TestCase)-[:TESTS]->(q) WHERE {REACHES} "
+   "RETURN r.id AS id, p.id AS owner, q.id AS cited_by, count(DISTINCT tc) AS test_cases ORDER BY id, cited_by")
 
 _t("unverified_requirements", "Requirements whose SDD row names no verification method",
    "MATCH (p:Part)-[:SATISFIES]->(r:Requirement) WHERE NOT (r)-[:VERIFIED_BY]->() "
@@ -54,15 +59,17 @@ _t("fp_components_without_requirements", "Components in the Ref deployment whose
 # ------------------------------------------------------------------ entity lookups
 _t("fp_requirement_evidence", "Test cases citing one requirement",
    "MATCH (p:Part)-[:SATISFIES]->(r:Requirement {id: $id}) "
-   "OPTIONAL MATCH (tc:TestCase)-[:CITES]->(r) OPTIONAL MATCH (tc)-[:TESTS]->(q:Part) "
+   "OPTIONAL MATCH (r)<-[:CITES]-(cite_site)-[:TESTS]->(q:Part) "
+   f"OPTIONAL MATCH (tc:TestCase)-[:TESTS]->(q) WHERE {REACHES} "
    "RETURN r.id AS requirement, p.id AS component, r.text AS text, r.methods_raw AS declared, r.source AS source, "
    "collect(tc.id) AS test_cases, collect(DISTINCT q.id) AS tested_by_components",
    params=("id",), id_columns=("test_cases",))
 
 _t("fp_part_requirements", "Requirements of one component and the test cases citing them",
    "MATCH (p:Part {id: $id})-[:SATISFIES]->(r:Requirement) "
-   "OPTIONAL MATCH (tc:TestCase)-[:TESTS]->(p) WHERE (tc)-[:CITES]->(r) "
-   "RETURN r.id AS id, r.methods AS methods, collect(tc.gtest_filter) AS cited_by ORDER BY id", params=("id",))
+   "OPTIONAL MATCH (r)<-[:CITES]-(cite_site)-[:TESTS]->(p) "
+   f"OPTIONAL MATCH (tc:TestCase)-[:TESTS]->(p) WHERE cite_site IS NOT NULL AND {REACHES} "
+   "RETURN r.id AS id, r.methods AS methods, collect(DISTINCT tc.gtest_filter) AS cited_by ORDER BY id", params=("id",))
 
 _t("fp_port_type_users", "Components using one port type",
    "MATCH (p:Part)-[u:USES_PORT]->(t:PortType {id: $id}) "

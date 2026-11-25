@@ -114,10 +114,26 @@ def test_counts_round_trip(fp_data, db_norun):
 
 
 def test_case_level_citations_cover_file_level(fp_data):
+    from gonogo.verdict import case_citations
     reqs = {r["id"] for r in fp_data["nodes"]["Requirement"]}
-    by_case = {r for c in fp_data["nodes"]["TestCase"] for r in c["cited"] if r in reqs}
+    by_case = {r for rs in case_citations(fp_data).values() for r in rs}
     by_file = {r for f in fp_data["nodes"]["TestFile"] for r in f["cited_requirements"] if r in reqs}
     assert by_file <= by_case
+
+
+def test_call_chains_fit_the_query_bound(fp_data):
+    from gonogo.verdict import CITE_HOPS
+    assert 0 < fp_data["diagnostics"]["max_citation_hops"] <= CITE_HOPS
+    assert fp_data["nodes"]["TestFunction"] and any(e["type"] == "CALLS" for e in fp_data["edges"])
+
+
+def test_evidence_path_is_a_graph_path(db):
+    from gonogo.verdict import current_run, drift_path, evidence_paths
+    paths = {p["test_case"]: p for p in evidence_paths(db, "TLC-001", current_run(db))}
+    p = paths["Svc/TlmChan::TlmChanTest.NominalChannelTest"]
+    assert p["chain"][0] == "NominalChannelTest" and p["chain"][-1] == "sendBuff" and p["calls"] == len(p["chain"]) - 1
+    d = drift_path(db, "Svc/Health::Test.NominalTlm", "HTH-001")
+    assert d["cited"] == "ISF-HTH-001" and d["chain"][0] == "NominalTlm"
 
 
 def test_unknown_citations_and_duplicates(fp_data, db_norun):
@@ -128,9 +144,10 @@ def test_unknown_citations_and_duplicates(fp_data, db_norun):
 
 
 def test_cross_component_citations(fp_data, db_norun):
+    from gonogo.verdict import case_citations
     owner = {e["dst"]: e["src"] for e in _edges(fp_data, "SATISFIES")}
     case_comp = {e["src"]: e["dst"] for e in _edges(fp_data, "TESTS") if "::" in e["src"]}
-    exp = {e["dst"] for e in _edges(fp_data, "CITES") if "::" in e["src"] and case_comp[e["src"]] != owner[e["dst"]]}
+    exp = {r for c, rs in case_citations(fp_data).items() for r in rs if case_comp[c] != owner[r]}
     assert answer_ids("fp_cross_component_citations", run(db_norun, "fp_cross_component_citations")[0]) == exp
 
 

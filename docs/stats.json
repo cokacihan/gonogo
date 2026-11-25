@@ -7,8 +7,11 @@
   "port_types": 72,
   "instances": 49,
   "connections": 93,
-  "relationships": 6165,
-  "requirements_cited": 154
+  "relationships": 13153,
+  "requirements_cited": 154,
+  "test_functions": 2230,
+  "calls": 5318,
+  "max_citation_hops": 4
  },
  "ci_run": {
   "id": "45468869538",
@@ -20,8 +23,8 @@
   "failed": 0,
   "mapped": 2066,
   "unmapped": 599,
-  "citing_cases": 402,
-  "citing_cases_ran": 402
+  "citing_cases": 393,
+  "citing_cases_ran": 393
  },
  "poll_ref": {
   "requirements": 227,
@@ -211,7 +214,7 @@
    }
   ]
  },
- "store_dir_bytes": 2372243,
+ "store_dir_bytes": 1128567,
  "releases": [
   {
    "tag": "v3.4.0",
@@ -325,7 +328,7 @@
   ]
  },
  "modes": {
-  "directory_bytes": 2372243,
-  "single_file_bytes": 58359808
+  "directory_bytes": 1128567,
+  "single_file_bytes": 20635648
  }
 }

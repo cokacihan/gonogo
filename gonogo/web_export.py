@@ -20,7 +20,7 @@ from pathlib import Path
 from gonogo import db as store
 from gonogo.impact import INTEGRATION_CYPHER, TESTS_TO_RERUN_CYPHER
 from gonogo.queries import T
-from gonogo.verdict import TEST_METHODS, VERDICTS_CYPHER
+from gonogo.verdict import DRIFT_PATH_CYPHER, EVIDENCE_PATHS_CYPHER, TEST_METHODS, VERDICTS_CYPHER
 
 ROOT = Path(__file__).resolve().parents[1]
 DROP = {"embedding", "calls"}
@@ -46,7 +46,8 @@ def bundle(dataset: dict, results: dict | None) -> dict:
 def queries() -> dict:
     from gonogo.cli import REASON_TEXT
     return {"reason_text": REASON_TEXT, "verdicts": VERDICTS_CYPHER.strip(), "tests_to_rerun": TESTS_TO_RERUN_CYPHER.strip(),
-            "integration": INTEGRATION_CYPHER.strip(), "test_methods": sorted(TEST_METHODS),
+            "integration": INTEGRATION_CYPHER.strip(),
+            "evidence_paths": EVIDENCE_PATHS_CYPHER.strip(), "drift_path": DRIFT_PATH_CYPHER.strip(), "test_methods": sorted(TEST_METHODS),
             "templates": {name: {"title": t.title, "cypher": t.cypher, "params": list(t.params)}
                           for name, t in T.items() if not name.startswith("vector")}}
 
