@@ -3,42 +3,62 @@
  "per_class": 20,
  "fprime_commit": "6fff089e8e2035307105cad4b28631eea1552ff6",
  "baseline_unchanged_check": true,
- "seconds": 1065.9,
+ "seconds": 1327.5,
  "summary": {
   "citation_deleted": {
    "mutations": 20,
    "gonogo_detected": 20,
    "grep_detected": 20,
+   "grep_scoped_detected": 20,
    "with_collateral": 0
   },
   "citation_id_drift": {
    "mutations": 20,
    "gonogo_detected": 20,
    "grep_detected": 20,
+   "grep_scoped_detected": 20,
+   "with_collateral": 0
+  },
+  "citation_orphaned": {
+   "mutations": 20,
+   "gonogo_detected": 20,
+   "grep_detected": 0,
+   "grep_scoped_detected": 0,
+   "with_collateral": 0
+  },
+  "citing_test_deleted": {
+   "mutations": 7,
+   "gonogo_detected": 7,
+   "grep_detected": 0,
+   "grep_scoped_detected": 0,
    "with_collateral": 0
   },
   "cross_component_cite": {
    "mutations": 20,
    "gonogo_detected": 20,
    "grep_detected": 0,
+   "grep_scoped_detected": 20,
    "with_collateral": 0
   },
   "duplicate_id": {
    "mutations": 20,
    "gonogo_detected": 20,
    "grep_detected": 20,
+   "grep_scoped_detected": 20,
    "with_collateral": 1
   },
   "method_blanked": {
    "mutations": 20,
    "gonogo_detected": 20,
    "grep_detected": 12,
+   "grep_scoped_detected": 12,
    "with_collateral": 0
   },
   "port_type_use_added": {
    "mutations": 20,
    "gonogo_detected": 20,
    "grep_detected": 20,
+   "grep_scoped_detected": 20,
    "with_collateral": 0
   }
  },
@@ -49,6 +69,7 @@
    "file": "Svc\\PassiveRateGroup\\test\\ut\\PassiveRateGroupTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -57,6 +78,7 @@
    "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -65,6 +87,7 @@
    "file": "Svc\\DpWriter\\test\\ut\\DpWriterTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -73,6 +96,7 @@
    "file": "Svc\\ChronoTime\\test\\ut\\ChronoTimeTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -81,6 +105,7 @@
    "file": "Svc\\PassiveRateGroup\\test\\ut\\PassiveRateGroupTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -89,6 +114,7 @@
    "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -97,6 +123,7 @@
    "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -105,6 +132,7 @@
    "file": "Svc\\DpWriter\\test\\ut\\DpWriterTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -113,6 +141,7 @@
    "file": "Svc\\Ccsds\\SdlsFileKeyManager\\test\\ut\\SdlsFileKeyManagerTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -121,6 +150,7 @@
    "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -129,6 +159,7 @@
    "file": "Svc\\EventManager\\test\\ut\\EventManagerTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -137,6 +168,7 @@
    "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -145,6 +177,7 @@
    "file": "Svc\\CmdDispatcher\\test\\ut\\CommandDispatcherTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -153,6 +186,7 @@
    "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -161,6 +195,7 @@
    "file": "Svc\\CmdSequencer\\test\\ut\\ImmediateBase.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -169,6 +204,7 @@
    "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -177,6 +213,7 @@
    "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -185,6 +222,7 @@
    "file": "Svc\\TlmChan\\test\\ut\\TlmChanTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -193,6 +231,7 @@
    "file": "Svc\\TlmChan\\test\\ut\\TlmChanTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -201,6 +240,7 @@
    "file": "Svc\\Ccsds\\SdlsFileKeyManager\\test\\ut\\SdlsFileKeyManagerTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -209,6 +249,7 @@
    "file": "Svc\\DpWriter\\test\\ut\\DpWriterTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -217,6 +258,7 @@
    "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -225,6 +267,7 @@
    "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -233,6 +276,7 @@
    "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -241,6 +285,7 @@
    "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -249,6 +294,7 @@
    "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -257,6 +303,7 @@
    "file": "Svc\\Ccsds\\ClearTextDecryptor\\test\\ut\\ClearTextDecryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -265,6 +312,7 @@
    "file": "Svc\\Ccsds\\ClearTextDecryptor\\test\\ut\\ClearTextDecryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -273,6 +321,7 @@
    "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -281,6 +330,7 @@
    "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -289,6 +339,7 @@
    "file": "Svc\\CmdDispatcher\\test\\ut\\CommandDispatcherTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -297,6 +348,7 @@
    "file": "Svc\\RateGroupDriver\\test\\ut\\RateGroupDriverImplTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -305,6 +357,7 @@
    "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -313,6 +366,7 @@
    "file": "Svc\\CmdSequencer\\test\\ut\\ImmediateBase.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -321,6 +375,7 @@
    "file": "Svc\\CmdSplitter\\test\\ut\\CmdSplitterTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -329,6 +384,7 @@
    "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -337,6 +393,7 @@
    "file": "Svc\\DpWriter\\test\\ut\\DpWriterTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -345,6 +402,7 @@
    "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -353,6 +411,7 @@
    "file": "Svc\\ChronoTime\\test\\ut\\ChronoTimeTester.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -361,6 +420,7 @@
    "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -369,6 +429,7 @@
    "file": "Svc\\TimeConverter\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -377,6 +438,7 @@
    "file": "Svc\\DpCompressProc\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -385,6 +447,7 @@
    "file": "Drv\\LinuxGpioDriver\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -393,6 +456,7 @@
    "file": "Svc\\FileUplink\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -401,6 +465,7 @@
    "file": "Svc\\FileDownlink\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -409,6 +474,7 @@
    "file": "Svc\\PassiveRateGroup\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -417,6 +483,7 @@
    "file": "Svc\\Health\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -425,6 +492,7 @@
    "file": "Svc\\ActivePhaser\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -433,6 +501,7 @@
    "file": "Svc\\FpySequencer\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -441,6 +510,7 @@
    "file": "Svc\\Subtopologies\\DpCompression\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -449,6 +519,7 @@
    "file": "Svc\\RateGroupDriver\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -457,6 +528,7 @@
    "file": "Svc\\BufferLogger\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -465,6 +537,7 @@
    "file": "Svc\\Version\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -473,6 +546,7 @@
    "file": "Svc\\StaticMemory\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -481,6 +555,7 @@
    "file": "Svc\\PrmDb\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -489,6 +564,7 @@
    "file": "Svc\\FprimeRouter\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -497,6 +573,7 @@
    "file": "Svc\\ComLogger\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": [
     "SVC-COMLOGGER-002@Svc/ComLoggerDp"
    ]
@@ -507,6 +584,7 @@
    "file": "Svc\\GenericHub\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -515,6 +593,7 @@
    "file": "Svc\\PosixTime\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -523,6 +602,7 @@
    "file": "TestDeploymentsProject\\Ref\\RecvBuffApp\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -531,6 +611,7 @@
    "file": "Svc\\Subtopologies\\FileHandling\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -539,6 +620,7 @@
    "file": "Svc\\Ccsds\\ClearTextDecryptor\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -547,6 +629,7 @@
    "file": "Svc\\Ccsds\\SdlsSaRouter\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -555,6 +638,7 @@
    "file": "Svc\\ComRetry\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -563,6 +647,7 @@
    "file": "Svc\\WasmSequencer\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -571,6 +656,7 @@
    "file": "Svc\\Subtopologies\\DpCompression\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -579,6 +665,7 @@
    "file": "Os\\Generic\\docs\\sdd.md",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
@@ -587,6 +674,7 @@
    "file": "Svc\\ComQueue\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -595,6 +683,7 @@
    "file": "Svc\\Health\\docs\\sdd.md",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
@@ -603,6 +692,7 @@
    "file": "Svc\\PassiveRateGroup\\docs\\sdd.md",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
@@ -611,6 +701,7 @@
    "file": "Svc\\Subtopologies\\ComCcsdsSdls\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -619,6 +710,7 @@
    "file": "TestDeploymentsProject\\Ref\\SendBuffApp\\docs\\sdd.md",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
@@ -627,6 +719,7 @@
    "file": "Svc\\DpCatalog\\docs\\sdd.md",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
@@ -635,6 +728,7 @@
    "file": "Svc\\Ccsds\\CcsdsSdlsFramer\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -643,6 +737,7 @@
    "file": "Svc\\ComQueue\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -651,6 +746,7 @@
    "file": "Svc\\WasmSequencer\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -659,6 +755,7 @@
    "file": "TestDeploymentsProject\\Ref\\SignalGen\\docs\\sdd.md",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
@@ -667,6 +764,7 @@
    "file": "Svc\\BufferManager\\docs\\sdd.md",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
@@ -675,6 +773,7 @@
    "file": "TestDeploymentsProject\\Ref\\SignalGen\\docs\\sdd.md",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
@@ -683,6 +782,7 @@
    "file": "Svc\\ComLogger\\docs\\sdd.md",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -691,6 +791,7 @@
    "file": "Svc\\PassiveRateGroup\\test\\ut\\PassiveRateGroupTester.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -699,6 +800,7 @@
    "file": "Svc\\Ccsds\\AesGcmDecryptor\\test\\ut\\AesGcmDecryptorTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -707,6 +809,7 @@
    "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -715,6 +818,7 @@
    "file": "Svc\\PolyDb\\test\\ut\\PolyDbTester.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -723,6 +827,7 @@
    "file": "Svc\\CmdDispatcher\\test\\ut\\CommandDispatcherTester.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -731,6 +836,7 @@
    "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -739,6 +845,7 @@
    "file": "Svc\\Ccsds\\ClearTextDecryptor\\test\\ut\\ClearTextDecryptorTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -747,6 +854,7 @@
    "file": "Svc\\Ccsds\\CcsdsSdlsFramer\\test\\ut\\CcsdsSdlsFramerTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -755,6 +863,7 @@
    "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -763,6 +872,7 @@
    "file": "Svc\\EventManager\\test\\ut\\EventManagerTester.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -771,6 +881,7 @@
    "file": "Svc\\Ccsds\\CcsdsSdlsDeframer\\test\\ut\\CcsdsSdlsDeframerTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -779,6 +890,7 @@
    "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -787,6 +899,7 @@
    "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -795,6 +908,7 @@
    "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -803,6 +917,7 @@
    "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -811,6 +926,7 @@
    "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -819,6 +935,7 @@
    "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -827,6 +944,7 @@
    "file": "Svc\\TlmChan\\test\\ut\\TlmChanTester.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -835,6 +953,7 @@
    "file": "Svc\\PolyDb\\test\\ut\\PolyDbTester.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -843,118 +962,250 @@
    "file": "Svc\\WasmSequencer\\test\\ut\\WasmSequencerTestMain.cpp",
    "gonogo": true,
    "grep": false,
+   "grep_scoped": true,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/ComAggregator uses port:Drv.GpioWrite",
-   "file": "Svc\\ComAggregator\\ComAggregator.fpp",
+   "class": "citation_orphaned",
+   "target": "SVC-CCSDS-AES-DECRYPTOR-006",
+   "file": "Svc\\Ccsds\\AesGcmDecryptor\\test\\ut\\AesGcmDecryptorTestMain.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/FileManager uses port:Svc.SignalDone",
-   "file": "Svc\\FileManager\\FileManager.fpp",
+   "class": "citation_orphaned",
+   "target": "FPRIME-BM-005",
+   "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTester.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/Ccsds/AosFramer uses port:Drv.I2cRequest",
-   "file": "Svc\\Ccsds\\AosFramer\\AosFramer.fpp",
+   "class": "citation_orphaned",
+   "target": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-004",
+   "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/TimeConverter uses port:Svc.Ccsds.CcsdsSdlsEncryption",
-   "file": "Svc\\TimeConverter\\TimeConverter.fpp",
+   "class": "citation_orphaned",
+   "target": "ISF-CMDS-005",
+   "file": "Svc\\CmdSequencer\\test\\ut\\CmdSequencerTester.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/OsTime uses port:Svc.ComLoggerStop",
-   "file": "Svc\\OsTime\\OsTime.fpp",
+   "class": "citation_orphaned",
+   "target": "ISF-CMDS-001",
+   "file": "Svc\\CmdSequencer\\test\\ut\\InvalidFiles.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/EventManager uses port:Drv.I2cWriteRead",
-   "file": "Svc\\EventManager\\EventManager.fpp",
+   "class": "citation_orphaned",
+   "target": "SVC-CCSDS-AES-ENCRYPTOR-003",
+   "file": "Svc\\Ccsds\\AesGcmEncryptor\\test\\ut\\AesGcmEncryptorTestMain.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/PassiveConsoleTextLogger uses port:Drv.SpiReadWrite",
-   "file": "Svc\\PassiveConsoleTextLogger\\PassiveConsoleTextLogger.fpp",
+   "class": "citation_orphaned",
+   "target": "SVC-DPWRITER-008",
+   "file": "Svc\\DpWriter\\test\\ut\\DpWriterTestMain.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/DpZLibCompressor uses port:Drv.ByteStreamData",
-   "file": "Svc\\DpZLibCompressor\\DpZLibCompressor.fpp",
+   "class": "citation_orphaned",
+   "target": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-003",
+   "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/BufferAccumulator uses port:Svc.ComDataWithContext",
-   "file": "Svc\\BufferAccumulator\\BufferAccumulator.fpp",
+   "class": "citation_orphaned",
+   "target": "SVC-CCSDS-CLEARTEXT-DECRYPTOR-005",
+   "file": "Svc\\Ccsds\\ClearTextDecryptor\\test\\ut\\ClearTextDecryptorTestMain.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/ActivePhaser uses port:Drv.DataBuffer",
-   "file": "Svc\\ActivePhaser\\ActivePhaser.fpp",
+   "class": "citation_orphaned",
+   "target": "ISF-CMDS-004",
+   "file": "Svc\\CmdSequencer\\test\\ut\\CmdSequencerTester.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/DpCatalog uses port:Svc.TimeOffsetSend",
-   "file": "Svc\\DpCatalog\\DpCatalog.fpp",
+   "class": "citation_orphaned",
+   "target": "REQ-TIMECONVERTER-013",
+   "file": "Svc\\TimeConverter\\test\\ut\\TimeConverterTestMain.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/DpCompressProc uses port:Drv.ByteStreamReady",
-   "file": "Svc\\DpCompressProc\\DpCompressProc.fpp",
+   "class": "citation_orphaned",
+   "target": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-002",
+   "file": "Svc\\Ccsds\\ClearTextEncryptor\\test\\ut\\ClearTextEncryptorTestMain.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Drv/LinuxI2cDriver uses port:Svc.EnableSection",
-   "file": "Drv\\LinuxI2cDriver\\LinuxI2cDriver.fpp",
+   "class": "citation_orphaned",
+   "target": "FPRIME-BM-007",
+   "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTester.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
-   "class": "port_type_use_added",
-   "target": "Svc/FrameAccumulator uses port:Svc.Ccsds.ErrorNotify",
-   "file": "Svc\\FrameAccumulator\\FrameAccumulator.fpp",
+   "class": "citation_orphaned",
+   "target": "PDB-004",
+   "file": "Svc\\PolyDb\\test\\ut\\PolyDbTester.cpp",
    "gonogo": true,
-   "grep": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citation_orphaned",
+   "target": "AL-002",
+   "file": "Svc\\EventManager\\test\\ut\\EventManagerTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citation_orphaned",
+   "target": "FPRIME-BM-001",
+   "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citation_orphaned",
+   "target": "SVC-CMD-SPLITTER-003",
+   "file": "Svc\\CmdSplitter\\test\\ut\\CmdSplitterTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citation_orphaned",
+   "target": "CD-002",
+   "file": "Svc\\CmdDispatcher\\test\\ut\\CommandDispatcherTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citation_orphaned",
+   "target": "ARG-003",
+   "file": "Svc\\ActiveRateGroup\\test\\ut\\ActiveRateGroupTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citation_orphaned",
+   "target": "TLC-004",
+   "file": "Svc\\TlmChan\\test\\ut\\TlmChanTester.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citing_test_deleted",
+   "target": "FPRIME-BM-006",
+   "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citing_test_deleted",
+   "target": "FPRIME-PRG-005",
+   "file": "Svc\\PassiveRateGroup\\test\\ut\\PassiveRateGroupTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citing_test_deleted",
+   "target": "ISF-CMDS-001",
+   "file": "Svc\\CmdSequencer\\test\\ut\\CmdSequencerMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citing_test_deleted",
+   "target": "AL-002",
+   "file": "Svc\\EventManager\\test\\ut\\EventManagerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citing_test_deleted",
+   "target": "FPRIME-BM-007",
+   "file": "Svc\\BufferManager\\test\\ut\\BufferManagerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citing_test_deleted",
+   "target": "AL-003",
+   "file": "Svc\\EventManager\\test\\ut\\EventManagerTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
+   "collateral": []
+  },
+  {
+   "class": "citing_test_deleted",
+   "target": "FPRIME-PRG-004",
+   "file": "Svc\\PassiveRateGroup\\test\\ut\\PassiveRateGroupTestMain.cpp",
+   "gonogo": true,
+   "grep": false,
+   "grep_scoped": false,
    "collateral": []
   },
   {
@@ -963,6 +1214,7 @@
    "file": "Svc\\ComLogger\\ComLogger.fpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -971,6 +1223,7 @@
    "file": "Svc\\ComRetry\\ComRetry.fpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -979,6 +1232,7 @@
    "file": "Svc\\LinuxTimer\\LinuxTimer.fpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -987,6 +1241,7 @@
    "file": "Svc\\StaticMemory\\StaticMemory.fpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -995,6 +1250,7 @@
    "file": "Svc\\Ccsds\\ApidManager\\ApidManager.fpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
    "collateral": []
   },
   {
@@ -1003,6 +1259,133 @@
    "file": "Svc\\TimeConverter\\TimeConverter.fpp",
    "gonogo": true,
    "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/Ccsds/ClearTextEncryptor uses port:Svc.CompressChunk",
+   "file": "Svc\\Ccsds\\ClearTextEncryptor\\ClearTextEncryptor.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/WasmSequencer uses port:Svc.Ccsds.SdlsKey",
+   "file": "Svc\\WasmSequencer\\WasmSequencer.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/FprimeRouter uses port:Svc.Ping",
+   "file": "Svc\\FprimeRouter\\FprimeRouter.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/Ccsds/SpacePacketDeframer uses port:Svc.TimeOffsetSend",
+   "file": "Svc\\Ccsds\\SpacePacketDeframer\\SpacePacketDeframer.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Drv/Udp uses port:Svc.FileDispatch",
+   "file": "Drv\\Udp\\Udp.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/FileDispatcher uses port:Drv.ByteStreamSend",
+   "file": "Svc\\FileDispatcher\\FileDispatcher.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/Ccsds/ClearTextDecryptor uses port:Svc.Sched",
+   "file": "Svc\\Ccsds\\ClearTextDecryptor\\ClearTextDecryptor.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/Ccsds/CcsdsSdlsDeframer uses port:Drv.ByteStreamSend",
+   "file": "Svc\\Ccsds\\CcsdsSdlsDeframer\\CcsdsSdlsDeframer.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "TestDeploymentsProject/Ref/PingReceiver uses port:Svc.FileAnnounce",
+   "file": "TestDeploymentsProject\\Ref\\PingReceiver\\PingReceiver.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Drv/TcpClient uses port:Svc.ConfigureGroupRate",
+   "file": "Drv\\TcpClient\\TcpClient.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "TestDeploymentsProject/Ref/PingReceiver uses port:Drv.SpiReadWrite",
+   "file": "TestDeploymentsProject\\Ref\\PingReceiver\\PingReceiver.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/GenericHub uses port:Svc.TimeOffsetSend",
+   "file": "Svc\\GenericHub\\GenericHub.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "TestDeploymentsProject/Ref/TypeDemo uses port:Drv.ByteStreamReady",
+   "file": "TestDeploymentsProject\\Ref\\TypeDemo\\TypeDemo.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
+   "collateral": []
+  },
+  {
+   "class": "port_type_use_added",
+   "target": "Svc/BufferRepeater uses port:Svc.Sched",
+   "file": "Svc\\BufferRepeater\\BufferRepeater.fpp",
+   "gonogo": true,
+   "grep": true,
+   "grep_scoped": true,
    "collateral": []
   }
  ]

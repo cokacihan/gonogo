@@ -12,6 +12,10 @@ Defect classes
   method_blanked         the verification-method cell of one SDD row is emptied
   cross_component_cite   REQUIREMENT("Y") for an uncited requirement Y of component D is added to tests of C != D
   port_type_use_added    `output port gonogoMutOut: T` is added to component C, which did not use T
+  citation_orphaned      the only REQUIREMENT("X") line moves into a new helper that no TEST calls (dead test code)
+  citing_test_deleted    the only TEST that reaches a REQUIREMENT("X") written in a helper is deleted; the helper stays
+The last two keep the macro in the test sources, so text search still sees "X is cited"; only the call graph shows that
+no test case reaches it any more.
 
 Baseline: what a careful engineer gets from grep over the same tree (emulated in Python so it runs anywhere):
   ids      = grep -rhoE '^\\|? *[A-Z][A-Z0-9_-]*[0-9]+ *\\|' */docs/sdd.md
@@ -19,6 +23,8 @@ Baseline: what a careful engineer gets from grep over the same tree (emulated in
   uncited  = ids - cited ; dangling = cited - ids ; dup = ids | sort | uniq -d
   empty    = SDD table rows whose last cell is empty
   users(T) = grep -lE '(input|output) port \\w+: *(\\[.*\\] *)?(Svc\\.)?T\\b' --include=*.fpp
+Scoped baseline: the same greps run per component directory (IDs of C's SDD against citations in C's tests), which is
+what a careful engineer who knows F´'s layout would do; it catches cross-component citations.
 
 Usage: python -m eval.mutation_eval [--per-class 20] [--seed 2026]
 Writes eval/mutation_results.json and eval/MUTATION_RESULTS.md.
@@ -102,6 +108,23 @@ def grep_view(repo: Path) -> dict:
     return {"uncited": s - cited, "dangling": cited - s, "dup": dup, "empty": empty_rows}
 
 
+def grep_view_scoped(repo: Path) -> dict:
+    """Per component directory: IDs defined in C/docs/sdd.md that no test under C/test/ cites."""
+    uncited = set()
+    for f in repo.rglob("sdd.md"):
+        if f.parent.name != "docs":
+            continue
+        comp = f.parent.parent
+        ids = {m.group(1) for ln in f.read_text(encoding="utf-8", errors="replace").splitlines() if (m := ROW_ID.match(ln))}
+        cited = set()
+        if (comp / "test").is_dir():
+            for t in (comp / "test").rglob("*"):
+                if t.suffix in (".cpp", ".hpp", ".h", ".cc") and t.is_file():
+                    cited |= set(CITE.findall(t.read_text(encoding="utf-8", errors="replace")))
+        uncited |= ids - cited
+    return {"uncited": uncited}
+
+
 def grep_port_users(repo: Path, port_type: str) -> set[str]:
     short = port_type.removeprefix("port:").split(".")[-1]
     pat = re.compile(rf"(input|output)\s+port\s+\w+\s*:\s*(\[[^\]]*\]\s*)?([\w.]*\.)?{re.escape(short)}\b")
@@ -160,6 +183,31 @@ def targets(repo: Path, base: dict, rng: random.Random, n: int) -> list[dict]:
         host = rng.choice([h for h in hosts if owner[h] != owner[y]])
         f, i = sites[host][0]
         out.append({"cls": "cross_component_cite", "req": y, "host": host, "file": f, "line": i})
+    # citation_orphaned: a standalone `REQUIREMENT("X");` line, cited once, moves into an uncalled helper
+    standalone = [r for r in once if sites[r][0][0].read_text(encoding="utf-8", errors="replace").splitlines()
+                  [sites[r][0][1]].strip() == f'REQUIREMENT("{r}");']
+    for rid in rng.sample(standalone, min(n, len(standalone))):
+        f, i = sites[rid][0]
+        out.append({"cls": "citation_orphaned", "req": rid, "file": f, "line": i})
+    # citing_test_deleted: the only own TEST case citing X reaches it through a helper and cites nothing else
+    case_nodes = {c["id"]: c for c in ds["nodes"]["TestCase"]}
+    reqs_of_case = defaultdict(set)
+    for rid, r in rows.items():
+        for t in r.get("own_tests", []):
+            reqs_of_case[t.rsplit(" ", 1)[0]].add(rid)
+    deletable = []
+    for rid in once:
+        own = [t.rsplit(" ", 1)[0] for t in rows[rid].get("own_tests", [])]
+        if len(own) != 1 or reqs_of_case[own[0]] != {rid} or own[0] not in case_nodes:
+            continue
+        case = case_nodes[own[0]]
+        f, i = sites[rid][0]
+        span = _block_span(repo / case["file"], case["line"])
+        if span and not (f == repo / case["file"] and span[0] <= i <= span[1]):  # the macro is outside that TEST
+            deletable.append((rid, case, span))
+    for rid, case, span in rng.sample(deletable, min(n, len(deletable))):
+        out.append({"cls": "citing_test_deleted", "req": rid, "case": case["id"], "file": repo / case["file"],
+                    "span": span})
     types = fprime.component_types(repo)
     used = defaultdict(set)
     for e in ds["edges"]:
@@ -174,6 +222,19 @@ def targets(repo: Path, base: dict, rng: random.Random, n: int) -> list[dict]:
         if fpp:
             out.append({"cls": "port_type_use_added", "comp": c, "port": t, "file": fpp})
     return out
+
+
+def _block_span(f: Path, line: int) -> tuple[int, int] | None:
+    """0-based first and last line of the brace block that starts at 1-based `line` (a TEST(...) { ... })."""
+    lines = f.read_text(encoding="utf-8", errors="replace").split("\n")
+    depth, opened = 0, False
+    for k in range(line - 1, len(lines)):
+        code = re.sub(r'"(?:\\.|[^"\\])*"', '""', lines[k]).split("//", 1)[0]
+        depth += code.count("{") - code.count("}")
+        opened = opened or "{" in code
+        if opened and depth <= 0:
+            return line - 1, k
+    return None
 
 
 # ---------------------------------------------------------------- apply / check
@@ -195,6 +256,12 @@ def apply(t: dict) -> str:
     elif cls == "cross_component_cite":
         indent = re.match(r"\s*", lines[t["line"]]).group(0)
         lines.insert(t["line"] + 1, f'{indent}REQUIREMENT("{t["req"]}");')
+    elif cls == "citation_orphaned":
+        lines[t["line"]] = ""
+        lines += ["", "void gonogoMutUnusedHelper() {", f'    REQUIREMENT("{t["req"]}");', "}", ""]
+    elif cls == "citing_test_deleted":
+        first, last = t["span"]
+        lines = lines[:first] + lines[last + 1:]
     elif cls == "port_type_use_added":
         name = t["port"].removeprefix("port:")
         for i, ln in enumerate(lines):
@@ -205,15 +272,18 @@ def apply(t: dict) -> str:
     return original
 
 
-def check(t: dict, after: dict, grep: dict, repo: Path, store: Path) -> tuple[bool, bool]:
+def check(t: dict, after: dict, grep: dict, scoped: dict, repo: Path, store: Path) -> tuple[bool, bool, bool]:
     cls, rows = t["cls"], after["rows"]
     r = rows.get(t.get("req"), {})
+    gs = None
     if cls == "citation_id_drift":
         ours = r.get("verdict") == "INCOMPLETE" and "CITED_UNDER_DIFFERENT_ID" in r["reasons"] and f"ISF-{t['req']}" in after["unknown"]
         g = t["req"] in grep["uncited"] and f"ISF-{t['req']}" in grep["dangling"]
-    elif cls == "citation_deleted":
-        ours = r.get("verdict") == "INCOMPLETE" and "NO_CITING_TEST" in r["reasons"]
-        g = t["req"] in grep["uncited"]
+    elif cls in ("citation_deleted", "citation_orphaned", "citing_test_deleted"):
+        # the own evidence is gone: no test cites it, or only another component's tests still do (PDB-004 is also
+        # cited by Svc/PrmDb's tests). The first full run expected NO_CITING_TEST only and counted that one as missed.
+        ours = r.get("verdict") == "INCOMPLETE" and bool({"NO_CITING_TEST", "CITED_BY_OTHER_COMPONENT"} & set(r["reasons"]))
+        g = t["req"] in grep["uncited"]  # orphaned / deleted TEST: the macro is still in the test sources
     elif cls == "duplicate_id":
         ours = t["req"] in after["dups"] and "AMBIGUOUS_ID" in r.get("reasons", [])
         g = t["req"] in grep["dup"]
@@ -225,8 +295,14 @@ def check(t: dict, after: dict, grep: dict, repo: Path, store: Path) -> tuple[bo
         g = t["req"] in grep["uncited"]   # grep sees "cited" and cannot tell which component cites it
     else:  # port_type_use_added
         ours = t["comp"] in impact_components(store, t["port"])
-        g = t["comp"] in grep_port_users(repo, t["port"])
-    return ours, g
+        g = gs = t["comp"] in grep_port_users(repo, t["port"])
+    if gs is None:  # the per-component greps; for drift, duplicates and blanked methods they see what grep sees
+        if cls in ("citation_id_drift", "citation_deleted", "cross_component_cite", "citation_orphaned",
+                   "citing_test_deleted"):
+            gs = t["req"] in scoped["uncited"] and (cls != "citation_id_drift" or f"ISF-{t['req']}" in grep["dangling"])
+        else:
+            gs = g
+    return ours, g, gs
 
 
 def collateral(t: dict, base: dict, after: dict) -> list[str]:
@@ -267,19 +343,22 @@ def main() -> dict:
         original = apply(t)
         try:
             after = pipeline(repo, store)
-            ours, g = check(t, after, grep_view(repo), repo, store)
+            ours, g, gs = check(t, after, grep_view(repo), grep_view_scoped(repo), repo, store)
             coll = collateral(t, base, after) if t["cls"] != "port_type_use_added" else []
         finally:
             t["file"].write_text(original, encoding="utf-8")
         results.append({"class": t["cls"], "target": t.get("req") or f"{t['comp']} uses {t['port']}",
-                        "file": str(t["file"].relative_to(repo)), "gonogo": ours, "grep": g, "collateral": coll})
-        print(f"{t['cls']:<22} {results[-1]['target']:<40} gonogo={ours!s:<5} grep={g!s:<5} collateral={len(coll)}")
+                        "file": str(t["file"].relative_to(repo)), "gonogo": ours, "grep": g, "grep_scoped": gs,
+                        "collateral": coll})
+        print(f"{t['cls']:<22} {results[-1]['target']:<40} gonogo={ours!s:<5} grep={g!s:<5} scoped={gs!s:<5} "
+              f"collateral={len(coll)}")
     shutil.rmtree(work, ignore_errors=True)
     summary = {}
     for cls in sorted({r["class"] for r in results}):
         rs = [r for r in results if r["class"] == cls]
         summary[cls] = {"mutations": len(rs), "gonogo_detected": sum(r["gonogo"] for r in rs),
                         "grep_detected": sum(r["grep"] for r in rs),
+                        "grep_scoped_detected": sum(r["grep_scoped"] for r in rs),
                         "with_collateral": sum(bool(r["collateral"]) for r in rs)}
     res = {"seed": a.seed, "per_class": a.per_class, "fprime_commit": fprime._git_sha(SRC), "baseline_unchanged_check":
            base_grep is not None, "seconds": round(time.time() - t0, 1), "summary": summary, "mutations": results}
@@ -292,12 +371,15 @@ def render(res: dict) -> str:
     lines = ["# Mutation evaluation on real F´ sources (generated by `python -m eval.mutation_eval`; do not edit)", "",
              f"F´ commit `{res['fprime_commit']}`, seed {res['seed']}, up to {res['per_class']} mutations per class, "
              f"{res['seconds']} s. Every mutation re-runs the full pipeline (text -> dataset -> Relate -> Cypher).", "",
-             "| Defect class | Mutations | GoNoGo detected | grep baseline detected | Mutations with collateral changes |",
-             "|---|---|---|---|---|"]
+             "| Defect class | Mutations | GoNoGo detected | grep (whole tree) | grep (per component) | "
+             "Mutations with collateral changes |",
+             "|---|---|---|---|---|---|"]
     for cls, s in res["summary"].items():
-        lines.append(f"| {cls} | {s['mutations']} | {s['gonogo_detected']} | {s['grep_detected']} | {s['with_collateral']} |")
+        lines.append(f"| {cls} | {s['mutations']} | {s['gonogo_detected']} | {s['grep_detected']} | "
+                     f"{s['grep_scoped_detected']} | {s['with_collateral']} |")
     lines += ["", "Collateral = a requirement other than the planted one whose verdict or reasons changed.",
-              "The grep baseline is global (not scoped per component); see the module docstring for the exact commands."]
+              "grep (whole tree) runs over all test sources at once; grep (per component) runs the same commands per "
+              "component directory. See the module docstring for the exact commands."]
     return "\n".join(lines) + "\n"
 
 

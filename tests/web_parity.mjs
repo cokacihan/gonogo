@@ -18,7 +18,7 @@ const table = poll(rows, deploymentParts(db));
 
 const IMPACT_INPUTS = [
   ["Svc/Health/Health.cpp"], ["Svc/Sched/Sched.fpp"], ["Utils/Types/CircularBuffer.hpp"],
-  ["Svc/DpCompressProc/DpCompressProc.fpp"], ["default/config/ComCfg.fpp"], ["README.md"],
+  ["Svc/DpCompressProc/DpCompressProc.fpp"], ["default/config/ComCfg.fpp"], ["README.md"], ["Svc/FpySequencer/docs/sdd.md", "Svc/Health/Health.cpp"],
 ];
 const impacts = IMPACT_INPUTS.map((files) => {
   const cls = classifyFiles(db, files);

@@ -94,3 +94,9 @@ def test_fpp_configuration_reaches_every_component(db, fp_data):
     assert res["input"]["unmatched"] == [] and res["input"]["config_files"] == ["default/config/ComCfg.fpp"]
     assert {r["component"] for r in res["rerun"]} == {p["id"] for p in fp_data["nodes"]["Part"]}
     assert res["test_cases"] == len(fp_data["nodes"]["TestCase"])
+
+
+def test_documentation_changes_no_unit_tests(db):
+    res = impact(db, files=["Svc/FpySequencer/docs/sdd.md"])
+    assert res["rerun"] == [] and res["input"]["doc_files"] == ["Svc/FpySequencer/docs/sdd.md"]
+    assert impact(db, files=["README.md"])["input"]["unmatched"] == ["README.md"]  # outside any unit: not mapped

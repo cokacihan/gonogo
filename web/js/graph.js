@@ -90,7 +90,8 @@ export function classifyFiles(db, files) {
   partRows.filter((r) => !r.component).forEach((r) => libs.add(r.id));
   const units = [...parts, ...libs];
   const defs = rows(db, "MATCH (t:PortType) WHERE t.defined_in IS NOT NULL RETURN t.id AS id, t.defined_in AS file");
-  const comps = new Set(), ripple = new Set(), ports = new Set(), topology = [], unmatched = [], config = [];
+  const comps = new Set(), ripple = new Set(), ports = new Set(), topology = [], unmatched = [], config = [],
+    docs = [];
   for (let f of files) {
     f = f.trim().replace(/\\/g, "/").replace(/^\.\//, "");
     if (!f) continue;
@@ -100,7 +101,8 @@ export function classifyFiles(db, files) {
     if (portHits.length) hit = true;
     if (f.startsWith("default/config/") && /\.fppi?$/.test(f)) { config.push(f); hit = true; }
     const owner = units.filter((u) => f === u || f.startsWith(u + "/")).sort((a, b) => b.length - a.length)[0];
-    if (owner) {
+    if (owner && f.endsWith(".md")) { docs.push(f); hit = true; } // documentation compiles into nothing
+    else if (owner) {
       if (parts.has(owner)) comps.add(owner);
       if (libs.has(owner) || /\.(hpp|h|hh|fpp|fppi)$/.test(f)) ripple.add(owner);
       hit = true;
@@ -108,8 +110,8 @@ export function classifyFiles(db, files) {
     if (/(topology|instances)\.fpp$/.test(f) || f.includes("/Top/") || f.includes("Subtopologies/")) { topology.push(f); hit = true; }
     if (!hit) unmatched.push(f);
   }
-  return { components: [...comps].sort(), ripple: [...ripple].sort(), port_types: [...ports].sort(), config, topology,
-    unmatched };
+  return { components: [...comps].sort(), ripple: [...ripple].sort(), port_types: [...ports].sort(), config, docs,
+    topology, unmatched };
 }
 
 export function impact(db, queries, components, portTypes, verdictRows, ripple = [], everywhere = false) {

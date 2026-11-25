@@ -213,9 +213,12 @@ function renderImpact() {
   const files = $("#files").value.split(/\r?\n/);
   const cls = classifyFiles(S.db, files);
   const out = $("#impact-out");
+  const docsNote = cls.docs.length ? `<p class="meta">Documentation changed, no unit tests to re-run (the CI gate
+    re-checks the requirements it defines): ${cls.docs.map((f) => `<code>${esc(f)}</code>`).join(", ")}</p>` : "";
   if (!cls.components.length && !cls.port_types.length && !cls.ripple.length && !cls.config.length) {
-    out.innerHTML = `<p class="error">None of these paths is inside an F´ component or library, or defines a port type.
-      Use paths from the repository root, such as <code>Svc/Health/Health.cpp</code>.</p>` +
+    out.innerHTML = (cls.docs.length ? docsNote : `<p class="error">None of these paths is inside an F´ component or
+      library, or defines a port type. Use paths from the repository root, such as
+      <code>Svc/Health/Health.cpp</code>.</p>`) +
       (cls.topology.length ? `<p>Topology files changed: ${cls.topology.map((f) => `<code>${esc(f)}</code>`).join(", ")}.
       Review the deployment connections; no unit tests change.</p>` : "");
     return;
@@ -238,6 +241,7 @@ function renderImpact() {
   out.innerHTML = `<p><span class="big">${fmt(res.testCases)}</span> unit-test cases to re-run in ${res.rerun.length}
     component${res.rerun.length === 1 ? "" : "s"}. ${fmt(res.requirements.length)} requirements depend on them;
     ${fmt(res.goPending.length)} are GO today and stay pending until the re-run.</p>
+    ${docsNote}
     ${cls.unmatched.length ? `<p class="meta">Not mapped: ${cls.unmatched.map(esc).join(", ")}</p>` : ""}
     ${table}
     ${res.integration.length ? `<h3>Integration review</h3><p>${res.integration.length} deployment connections touch the

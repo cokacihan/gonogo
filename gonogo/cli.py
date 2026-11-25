@@ -189,6 +189,9 @@ def cmd_impact(args) -> int:
                 f"{', '.join(res['assumed_interface_change'])} (pass --files for an exact set)", "dim"))
     if res["ripple"]:
         print(c(f"  changes that reach every includer: {', '.join(res['ripple'])}", "dim"))
+    if res["input"]["doc_files"]:
+        print(c(f"  documentation changed, no unit tests (the CI gate re-checks the requirements): "
+                f"{', '.join(res['input']['doc_files'])}", "dim"))
     if res["input"]["config_files"]:
         print(c(f"  FPP configuration changed, visible to every FPP model: {', '.join(res['input']['config_files'])}",
                 "dim"))

@@ -10,6 +10,8 @@ Rules (F´ unit tests run per component against an autocoded harness):
   * a changed port type definition         -> re-run the unit tests of every component that uses the port type;
   * a changed FPP configuration file (default/config/*.fpp: constants, sizes, configuration types) is visible to
     every FPP model                         -> re-run the unit tests of every component;
+  * a changed Markdown file inside a unit (the SDD, a README) changes no code: no unit tests; the CI gate re-checks
+    the requirements it defines;
   * deployment connections of affected components are listed for integration review only: a topology change
     does not change which unit tests break.
 A component's own .cpp file stays local: its interface did not change. A component named without files is
@@ -22,6 +24,7 @@ INCLUDE_HOPS = 12
 HEADER_SUFFIXES = (".hpp", ".h", ".hh")
 FPP_SUFFIXES = (".fpp", ".fppi")  # autocoded into headers: an interface change
 CONFIG_DIR = "default/config"
+DOC_SUFFIXES = (".md",)  # SDDs and READMEs: no code, so no unit tests to re-run
 
 # shortestPath (breadth-first, one path) rather than EXISTS over a variable-length pattern: the include graph is
 # dense (Fw is included by most units), and proving that NO path exists by enumerating paths is exponential.
@@ -70,7 +73,7 @@ def classify_files(db, files: list[str]) -> dict:
     by_file: dict[str, list[str]] = {}
     for d in port_defs:
         by_file.setdefault(d["file"], []).append(d["id"])
-    comps, ripple, ports, topology, unmatched, config = set(), set(), set(), [], [], []
+    comps, ripple, ports, topology, unmatched, config, docs = set(), set(), set(), [], [], [], []
     for f in files:
         f = f.strip().replace("\\", "/").removeprefix("./")
         if not f:
@@ -83,7 +86,10 @@ def classify_files(db, files: list[str]) -> dict:
             config.append(f)
             hit = True
         owner = max((u for u in parts | libs if f == u or f.startswith(u + "/")), key=len, default=None)
-        if owner:  # also for a port-type file: the directory that holds it changed too (the safe side)
+        if owner and f.endswith(DOC_SUFFIXES):  # documentation compiles into nothing
+            docs.append(f)
+            hit = True
+        elif owner:  # also for a port-type file: the directory that holds it changed too (the safe side)
             if owner in parts:
                 comps.add(owner)
             if owner in libs or f.endswith(HEADER_SUFFIXES + FPP_SUFFIXES):
@@ -95,7 +101,7 @@ def classify_files(db, files: list[str]) -> dict:
         if not hit:
             unmatched.append(f)
     return {"components": sorted(comps), "ripple": sorted(ripple), "port_types": sorted(ports),
-            "config_files": config, "topology_files": topology, "unmatched": unmatched}
+            "config_files": config, "doc_files": docs, "topology_files": topology, "unmatched": unmatched}
 
 
 def reason(row: dict) -> str:

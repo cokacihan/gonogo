@@ -1,0 +1,126 @@
+"""A held-out test of `gonogo suggest`: rank on an old release, score against citations written later.
+
+eval/suggest_eval.py hides today's citations and asks `suggest` to find them again, on the same code. This script asks
+the forward question instead. On the graph of an older F´ release, take every requirement that its own component's
+tests do not cite yet, and that F´ developers did cite by the dataset commit (devel). Every older release in
+data/releases/ is used, so that no release is picked after seeing its result. `suggest` ranks that release's test code
+of the component; the answers are the places where the macro was later written, if that test body or helper already
+existed in the release. Citations placed in test code written later cannot be found in the old code; they are counted
+separately, not dropped.
+
+Ties count at their expected position under a random order (see eval/suggest_eval.py), and the random row is the
+exact expectation for the same candidates.
+
+  python -m eval.suggest_heldout   -> eval/SUGGEST_HELDOUT.md, eval/suggest_heldout.json
+"""
+from __future__ import annotations
+
+import json
+import tempfile
+from pathlib import Path
+
+from eval.suggest_eval import KS, random_hit, random_mrr, summarise, tie_aware
+from gonogo import db as store
+from gonogo.suggest import query_terms, rank_sites
+
+ROOT = Path(__file__).resolve().parents[1]
+RELEASES = sorted((ROOT / "data" / "releases").glob("fprime-*.json"))
+OUT = Path(__file__).resolve().parent
+
+OWN_SITES = """
+MATCH (p:Part)-[:SATISFIES]->(r:Requirement)
+OPTIONAL MATCH (r)<-[:CITES]-(s)-[:TESTS]->(p) WHERE s:TestCase OR s:TestFunction
+RETURN r.id AS id, p.id AS component, r.text AS text, collect(DISTINCT s.id) AS sites
+"""
+CANDIDATES = """
+MATCH (s)-[:TESTS]->(:Part {id: $component}) WHERE s:TestCase OR s:TestFunction RETURN collect(s.id) AS ids
+"""
+
+
+def own_sites(db) -> dict[str, dict]:
+    return {r["id"]: r for r in (x.data() for x in db.execute(OWN_SITES))}
+
+
+def main() -> dict:
+    new_db = store.connect()
+    new = own_sites(new_db)
+    new_db.close()
+    findable, unreachable, results, rand, per_release = [], [], [], [], []
+    for release in RELEASES:
+        f0, u0 = len(findable), len(unreachable)
+        score(release, new, findable, unreachable, results, rand)
+        per_release.append({"release": release.stem.removeprefix("fprime-"), "findable": len(findable) - f0,
+                            "cited_in_new_test_code": len(unreachable) - u0})
+    res = {"new": new_db_commit(), "releases": per_release, "later_cited": len(findable) + len(unreachable),
+           "findable": len(findable), "cited_in_new_test_code": len(unreachable),
+           "suggest": summarise(results) if results else None, "random": summarise(rand) if rand else None,
+           "requirements": findable, "unreachable": unreachable}
+    (OUT / "suggest_heldout.json").write_text(json.dumps(res, indent=1), encoding="utf-8")
+    (OUT / "SUGGEST_HELDOUT.md").write_text(markdown(res), encoding="utf-8", newline="\n")
+    return res
+
+
+def score(release: Path, new: dict, findable: list, unreachable: list, results: list, rand: list) -> None:
+    old_ds = json.loads(release.read_text(encoding="utf-8"))
+    path = Path(tempfile.mkdtemp(prefix="gonogo_heldout_")) / "store"
+    store.build(old_ds, path)
+    old_db = store.connect(path)
+    old = own_sites(old_db)
+    tag = release.stem.removeprefix("fprime-")
+    for rid, o in sorted(old.items()):
+        n = new.get(rid)
+        if o["sites"] or not n or not n["sites"] or n["component"] != o["component"]:
+            continue  # cited already in v4.4.2, or not cited (or moved) by the dataset commit
+        candidates = set(old_db.execute(CANDIDATES, {"component": o["component"]}).fetchone()["ids"])
+        answers = set(n["sites"]) & candidates
+        entry = {"release": tag, "id": rid, "component": o["component"], "later_cited_at": n["sites"],
+                 "candidates": len(candidates)}
+        if not answers:
+            unreachable.append(entry)
+            continue
+        terms = query_terms(o["text"] or "", o["component"])
+        ranked = [(s["site"], (s["score"],)) for s in rank_sites(old_db, rid, terms, 1000)] if terms else []
+        r = tie_aware(ranked, answers)
+        results.append(r)
+        rand.append({**{f"hit@{k}": random_hit(len(candidates), len(answers), k) for k in KS},
+                     "rr": random_mrr(len(candidates), len(answers))})
+        findable.append({**entry, "answers": sorted(answers), "hit@1": r["hit@1"], "hit@3": r["hit@3"]})
+    old_db.close()
+
+
+def new_db_commit() -> str:
+    db = store.connect()
+    try:
+        return store.meta(db).get("source_commit")
+    finally:
+        db.close()
+
+
+def markdown(res: dict) -> str:
+    per = "; ".join(f"{r['release']}: {r['findable'] + r['cited_in_new_test_code']}" for r in res["releases"])
+    lines = ["# `gonogo suggest`, held out in time (generated by `python -m eval.suggest_heldout`)", "",
+             f"Requirements that an older F´ release left uncited by their own component's tests and that developers "
+             f"cited by the dataset commit (`{str(res['new'])[:10]}`): {res['later_cited']} ({per}). In "
+             f"{res['cited_in_new_test_code']} of them the citation went into test code written after that release, which "
+             f"no ranking of the old code can find. The other {res['findable']} are scored below: `suggest` ranks the "
+             f"old release's test code, and the answer is the test body or helper where the macro was later written.", ""]
+    if res["suggest"]:
+        lines += ["| Ranking | hit@1 | hit@3 | hit@5 | MRR |", "|---|---:|---:|---:|---:|"]
+        for name in ("suggest", "random"):
+            m = res[name]
+            lines.append(f"| {name} | " + " | ".join(f"{m[f'hit@{k}']:.2f}" for k in KS) + f" | {m['mrr']:.2f} |")
+        lines += ["", "| Release | Requirement | Component | Later cited at | hit@1 | hit@3 |",
+                  "|---|---|---|---|---:|---:|"]
+        for r in res["requirements"]:
+            at = ", ".join(f"`{a.split('::', 1)[1]}`" for a in r["answers"])
+            lines.append(f"| {r['release']} | `{r['id']}` | `{r['component']}` | {at} | {r['hit@1']:.2f} | "
+                         f"{r['hit@3']:.2f} |")
+    lines += ["", f"With {res['findable']} scorable requirements this is far too small a sample to estimate "
+              "accuracy: F´ rarely adds a citation to an existing requirement later. Read it as an anecdote next to "
+              "the same-code measurement in [SUGGEST_RESULTS.md](SUGGEST_RESULTS.md).", ""]
+    return "\n".join(lines)
+
+
+if __name__ == "__main__":
+    r = main()
+    print(json.dumps({k: v for k, v in r.items() if k not in ("requirements", "unreachable")}, indent=1))

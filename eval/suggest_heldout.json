@@ -1,0 +1,150 @@
+{
+ "new": "6fff089e8e2035307105cad4b28631eea1552ff6",
+ "releases": [
+  {
+   "release": "v3.4.0",
+   "findable": 4,
+   "cited_in_new_test_code": 4
+  },
+  {
+   "release": "v4.0.0",
+   "findable": 0,
+   "cited_in_new_test_code": 2
+  },
+  {
+   "release": "v4.4.2",
+   "findable": 0,
+   "cited_in_new_test_code": 0
+  }
+ ],
+ "later_cited": 10,
+ "findable": 4,
+ "cited_in_new_test_code": 6,
+ "suggest": {
+  "hit@1": 0.0,
+  "hit@3": 0.5,
+  "hit@5": 0.75,
+  "mrr": 0.28318424534972436
+ },
+ "random": {
+  "hit@1": 0.008130081300813052,
+  "hit@3": 0.024390243902439046,
+  "hit@5": 0.04065040650406504,
+  "mrr": 0.043849264656712204
+ },
+ "requirements": [
+  {
+   "release": "v3.4.0",
+   "id": "ISF-CMDS-003",
+   "component": "Svc/CmdSequencer",
+   "later_cited_at": [
+    "Svc/CmdSequencer::fn:parameterizedAutoByCommand"
+   ],
+   "candidates": 123,
+   "answers": [
+    "Svc/CmdSequencer::fn:parameterizedAutoByCommand"
+   ],
+   "hit@1": 0.0,
+   "hit@3": 0.0
+  },
+  {
+   "release": "v3.4.0",
+   "id": "ISF-CMDS-004",
+   "component": "Svc/CmdSequencer",
+   "later_cited_at": [
+    "Svc/CmdSequencer::fn:parameterizedFailedCommands"
+   ],
+   "candidates": 123,
+   "answers": [
+    "Svc/CmdSequencer::fn:parameterizedFailedCommands"
+   ],
+   "hit@1": 0.0,
+   "hit@3": 0.0
+  },
+  {
+   "release": "v3.4.0",
+   "id": "ISF-CMDS-005",
+   "component": "Svc/CmdSequencer",
+   "later_cited_at": [
+    "Svc/CmdSequencer::fn:parameterizedCancel"
+   ],
+   "candidates": 123,
+   "answers": [
+    "Svc/CmdSequencer::fn:parameterizedCancel"
+   ],
+   "hit@1": 0.0,
+   "hit@3": 1.0
+  },
+  {
+   "release": "v3.4.0",
+   "id": "ISF-CMDS-006",
+   "component": "Svc/CmdSequencer",
+   "later_cited_at": [
+    "Svc/CmdSequencer::fn:parameterizedSequenceTimeout"
+   ],
+   "candidates": 123,
+   "answers": [
+    "Svc/CmdSequencer::fn:parameterizedSequenceTimeout"
+   ],
+   "hit@1": 0.0,
+   "hit@3": 1.0
+  }
+ ],
+ "unreachable": [
+  {
+   "release": "v3.4.0",
+   "id": "FPRIME-BM-001",
+   "component": "Svc/BufferManager",
+   "later_cited_at": [
+    "Svc/BufferManager::fn:testSetup"
+   ],
+   "candidates": 11
+  },
+  {
+   "release": "v3.4.0",
+   "id": "FPRIME-BM-005",
+   "component": "Svc/BufferManager",
+   "later_cited_at": [
+    "Svc/BufferManager::fn:testSetup"
+   ],
+   "candidates": 11
+  },
+  {
+   "release": "v3.4.0",
+   "id": "ISF-CMDS-001",
+   "component": "Svc/CmdSequencer",
+   "later_cited_at": [
+    "Svc/CmdSequencer::fn:DataAfterRecords"
+   ],
+   "candidates": 123
+  },
+  {
+   "release": "v3.4.0",
+   "id": "ISF-CMDS-002",
+   "component": "Svc/CmdSequencer",
+   "later_cited_at": [
+    "Svc/CmdSequencer::fn:BadCRC",
+    "Svc/CmdSequencer::BufferAllocation.RejectsFileLargerThanGrant"
+   ],
+   "candidates": 123
+  },
+  {
+   "release": "v4.0.0",
+   "id": "SVC-DPWRITER-001",
+   "component": "Svc/DpWriter",
+   "later_cited_at": [
+    "Svc/DpWriter::BufferSendIn.RoutingPorts"
+   ],
+   "candidates": 76
+  },
+  {
+   "release": "v4.0.0",
+   "id": "SVC-DPWRITER-005",
+   "component": "Svc/DpWriter",
+   "later_cited_at": [
+    "Svc/DpWriter::BufferSendIn.RoutingPorts"
+   ],
+   "candidates": 76
+  }
+ ]
+}

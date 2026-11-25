@@ -1,8 +1,10 @@
-# Publishes the browser explorer (web/) to GitHub Pages. Manual trigger: Pages needs the repository to be public
-# on a free plan, so this runs only when asked.
+# Publishes the browser explorer (web/) to GitHub Pages on every push to main, so the live demo always shows the
+# committed graph and CI results.
 name: Explorer on GitHub Pages
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -16,6 +18,8 @@ concurrency:
 
 jobs:
   deploy:
+    # GitHub Pages needs a public repository on a free plan: skip quietly while the repository is private
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
