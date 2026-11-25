@@ -48,6 +48,26 @@ async function main() {
   setupScope();
   setupImpact();
   setupQuery();
+  openDeepLink();
+}
+
+// ?c=Svc/Health&r=HTH-001 opens a component and one requirement (links in the README and the demo use it)
+function openDeepLink() {
+  const q = new URLSearchParams(location.search);
+  const c = q.get("c") || (q.get("r") && S.byId.get(q.get("r"))?.component);
+  if (!c || !S.table.some((p) => p.component === c)) return;
+  if (!S.table.find((p) => p.component === c).inDeployment) {
+    document.querySelector('.scope button[data-scope="all"]')?.click();
+  }
+  select(c);
+  const r = q.get("r");
+  const toggle = r && [...document.querySelectorAll("#detail .req-toggle")].find((b) => b.dataset.id === r);
+  if (toggle) {
+    toggle.click();
+    toggle.scrollIntoView({ block: "center" });
+  } else {
+    $("#detail").scrollIntoView({ block: "start" });
+  }
 }
 
 // ---------------------------------------------------------------- board
@@ -152,7 +172,7 @@ function reqItem(r, i) {
     "RETURN owner.id AS test_component, tc.gtest_filter AS test_case, x.status AS status,\n" +
     "       [n IN nodes(path) | n.name] AS call_chain";
   return `<li>
-    <button type="button" class="req-toggle" aria-expanded="false" aria-controls="req-${i}">
+    <button type="button" class="req-toggle" aria-expanded="false" aria-controls="req-${i}" data-id="${esc(r.id.split("@")[0])}">
       <span class="dot ${esc(r.verdict)}" role="img" aria-label="${esc(r.verdict)}"></span>
       <span class="req-id">${esc(r.id.split("@")[0])}</span>
       <span class="req-text">${md(r.text)}</span>
