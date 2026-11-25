@@ -23,6 +23,13 @@ Findings that GoNoGo reports on F´ (for example requirement IDs cited by tests 
 produced automatically from repository text and may include parser false positives. They are not statements about the
 quality or correctness of F´. GoNoGo is not affiliated with NASA, JPL or the F´ project.
 
+## Fonts and CI actions
+- The explorer (`web/index.html`) loads Atkinson Hyperlegible and Barlow Semi Condensed from Google Fonts
+  (fonts.googleapis.com) when it opens; both are published under the SIL Open Font License 1.1. Nothing else in the
+  explorer contacts a third party.
+- The "F´ unit-test evidence" workflow runs F´'s own GitHub Actions steps (`nasa/fprime-actions`) to build and run the
+  F´ unit tests; GoNoGo does not redistribute them.
+
 ## Relate
 GoNoGo uses [Relate](https://github.com/relatedb/relate) (`relate-db` on PyPI; `@relate/relate-wasm` on npm, a copy of
 which is vendored in `web/vendor/relate-wasm/` together with its `NOTICE.txt`), Apache License 2.0.

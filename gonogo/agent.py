@@ -251,8 +251,10 @@ class Agent:
         if row is None:
             return Answer(question, "answered", f"{eid} has no SDD requirements, so GoNoGo has nothing to judge.",
                           "component_verdict", VERDICTS_CYPHER.strip(), {"run": self.run}, [], [eid], resolved)
+        open_ = [r for r in self.rows if r["component"] == eid and r["verdict"] != "GO"]
+        listed = "; ".join(f"{r['id'].split('@')[0]} {r['verdict']} ({', '.join(r['reasons'])})" for r in open_[:12])
         text = (f"{eid} is {row['verdict']}: {row['GO']} of {row['requirements']} requirements GO, {row['NO-GO']} NO-GO, "
-                f"{row['INCOMPLETE']} incomplete" + (f" ({', '.join(row['top_reasons'])})" if row["top_reasons"] else "")
+                f"{row['INCOMPLETE']} incomplete" + (f". Not GO: {listed}{' …' if len(open_) > 12 else ''}" if open_ else "")
                 + ". This is a traceability verdict from repository text and CI results, not flight readiness.")
         return Answer(question, "answered", text, "component_verdict", VERDICTS_CYPHER.strip(),
                       {"run": self.run, "accept_declared": False}, [row], [eid], resolved)

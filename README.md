@@ -53,6 +53,7 @@ Python 3.12 or newer; no server, no API key.
 
 ```bash
 git clone https://github.com/cokacihan/tracegraph gonogo && cd gonogo
+python -m venv .venv && . .venv/bin/activate                # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
 python -m gonogo poll                                   # GO / NO-GO / INCOMPLETE per component (Ref deployment)
 python -m gonogo why HTH-001                            # one verdict, with reasons and evidence
@@ -184,6 +185,8 @@ If a test already cites a near-miss ID (`ISF-HTH-003` for `HTH-003`), the answer
 `--patch` prints a diff for `git apply` that writes the line, and the include it needs. A suggestion is a candidate for
 a reviewer, never evidence: the verdict only turns GO after the line is written and the test passes in CI.
 
+Real output at the pinned commit `6fff089e8e`:
+
 <!-- gonogo:suggest_tlc -->
 ```text
 TLC-006  (Svc/TlmChan)
@@ -207,7 +210,9 @@ TLC-006  (Svc/TlmChan)
 ```
 <!-- /gonogo:suggest_tlc -->
 
-**How good are the suggestions?** Every requirement that F´'s tests cite today is a test question with a known answer:
+**How good are the suggestions?** Every requirement that F´'s tests cite today is a test question with a known answer.
+(Cited is not the same as GO: a cited requirement stays INCOMPLETE when, for example, it also declares an Inspection
+that leaves no record in the repository.)
 
 <!-- gonogo:suggest_eval -->
 150 requirements in 25 components are cited today by test code of their own component. For each, `suggest` ranked that component's test code without reading the citations (median 37 test bodies and helpers, 13 test cases per requirement), and we looked up where F´ developers actually wrote the macro:
@@ -325,9 +330,12 @@ correctness, and some may turn out to be deliberate conventions. We have not fil
 
 [`eval/mutation_eval.py`](eval/mutation_eval.py) copies the F´ checkout and plants one defect at a time in the real
 files. After each mutation it re-runs the whole pipeline (text → dataset → Relate → Cypher), checks whether the defect
-is reported, and checks whether anything else changed. The expected effect is known by construction, so no question was
-written by the author of the rules. The baseline is what a careful engineer gets from `grep` over the same tree; the
-exact commands are in the module docstring.
+is reported, and checks whether anything else changed. The expected effect is known by construction. Read it for what
+it is: the six defect classes mirror GoNoGo's own rules and every run assumes the tests pass, so it shows that the
+pipeline catches on real files what it claims to catch, without side effects; it does not show that GoNoGo finds kinds of
+defects nobody designed it for. The baseline is what a careful engineer gets from `grep` over the same tree, run over
+the whole tree as one would by hand (exact commands in the module docstring); it has no notion of which component owns a
+test, which is why it scores 0 on `cross_component_cite`.
 
 <!-- gonogo:mutation -->
 | Planted defect (real F´ sources) | Mutations | GoNoGo detected | grep baseline detected | With collateral |
@@ -471,7 +479,8 @@ graphs. [`gate-replay.yml`](.github/workflows/gate-replay.yml) re-checks these o
 | [#5291](https://github.com/nasa/fprime/pull/5291) Reject invalid PVN in SpacePacketDeframer | **PASS** | new requirement without an own citing test case (component does not use REQUIREMENT()): SVC-CCSDS-SPD-010 | `SVC-CCSDS-SPD-010`: NO_CITING_TEST |
 <!-- /gonogo:replays -->
 
-**Closing the loop on #5170.** [`eval/closed_loop.py`](eval/closed_loop.py) imports the merged PR head, asks `suggest`
+**Closing the loop on #5170.** Line numbers below are at the PR's merge commit `bf71d97`, not at the pinned commit
+used elsewhere. [`eval/closed_loop.py`](eval/closed_loop.py) imports the merged PR head, asks `suggest`
 where the two missing lines go, applies them, imports again and re-runs the same gate (generated):
 
 <!-- gonogo:closed_loop -->
@@ -485,7 +494,9 @@ With these 2 lines ([patch](data/replay/pr5170-suggested.patch)) the same gate a
 
 `ProcGuardTest` is the test the PR added for the per-run cap (its `TEST_CASE` reads "processing limit (per epoch)"),
 and `checkGuardEvent` asserts the `TlmChanEpochProcessingCapReached` WARNING_HI event that TLC-006 asks for. The replay
-workflow applies the committed patch to a fresh nasa/fprime checkout and expects the action to say PASS.
+workflow applies the committed patch to a fresh nasa/fprime checkout and expects the action to say PASS. To be clear
+about what this shows: the gate passes once any own test cites the two IDs; what `suggest` adds is where the lines go,
+and how often that place is right is the measurement above.
 
 ### Use it on your F´ repository
 

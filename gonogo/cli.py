@@ -264,8 +264,10 @@ def cmd_diff(args) -> int:
             print(f"  {k:<34} {d['base'][k]!s:>8} -> {d['head'][k]!s:<8}")
     r = d["requirements"]
     print(f"\n  requirements added {len(r['added'])}, removed {len(r['removed'])}, text changed {len(r['text_changed'])}, "
-          f"methods changed {len(r['methods_changed'])}; citations gained {len(d['citations']['gained'])}, "
-          f"lost {len(d['citations']['lost'])}")
+          f"methods changed {len(r['methods_changed'])}")
+    print(f"  requirements in both: own citation gained {len(d['citations']['gained'])}, "
+          f"lost {len(d['citations']['lost'])}; added requirements already cited by an own test: "
+          f"{len(r['added']) - len(r['added_uncited'])} of {len(r['added'])}")
     print(f"  components added {len(d['components']['added'])}, removed {len(d['components']['removed'])}; "
           f"port uses added {len(d['ports']['uses_added'])}, removed {len(d['ports']['uses_removed'])}")
     for k, v in d["findings"].items():

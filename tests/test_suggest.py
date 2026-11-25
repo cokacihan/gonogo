@@ -97,3 +97,12 @@ def test_eval_breaks_ties_at_random_not_by_id():
     for k in KS:
         assert abs(got[f"hit@{k}"] - sum(f <= k for f in firsts) / len(firsts)) < 1e-12
     assert abs(got["rr"] - sum(1 / f for f in firsts) / len(firsts)) < 1e-12
+
+
+def test_component_answer_names_the_requirements_that_are_not_go():
+    from gonogo.agent import Agent
+    from gonogo.db import connect
+    real = connect()  # the committed store with the real CI run (the db fixture uses a synthetic run)
+    text = Agent(real).ask("Which requirements of Svc/TlmChan are not verified?").text
+    real.close()
+    assert "TLC-005" in text and "TLC-006" in text and "TLC-001" not in text
