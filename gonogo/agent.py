@@ -20,10 +20,34 @@ REQ_RE = re.compile(r"\b[A-Z][A-Z0-9]*(?:[-_][A-Z0-9]+)*[-_]\d+[A-Za-z]?\b")
 PATH_RE = re.compile(r"\b(?:Svc|Drv|Fw|Os|CFDP|Utils|TestDeploymentsProject)/[\w/]*\w")
 TYPE_RE = re.compile(r"\b(?:Svc|Drv|Fw|Os|Ref|CFDP|Utils)(?:\.\w+)+\b")
 INSTANCE_RE = re.compile(r"(?:Ref:)?(\$?\b[a-z]\w*[A-Z]\w*|\b[A-Z]\w*\.\$?[a-z]\w*)\b")
-RESOLVE_MIN_SCORE = 0.55
-
 IMPACT = (r"impact", r"affect", r"break", r"\bchang", r"modif", r"\bedit", r"re-?run", r"retest", r"touch")
-VERDICT_WORDS = (r"\bwhy\b", r"\bgo\b", r"no-go", r"verdict", r"status", r"ready", r"verif", r"tested", r"evidence", r"pass")
+VERDICT_WORDS = (r"\bwhy\b", r"\bgo\b", r"no-go", r"verdict", r"status", r"ready", r"verif", r"tested", r"evidence",
+                 r"\bpass", r"\bfly\b")
+
+# words that never name a component; what remains of a question is the mention we try to resolve
+STOP = set("""what which who whom whose when where why how is are was were be been being do does did done should would
+could can will shall may might must i me my we our you your it its it's this that these those the a an of to in on at for
+from by with about into after before if then than and or not no yes please tell show list give find need want if
+change changes changed changing modify modified modifying edit edits edited editing break breaks broken breaking impact
+impacts impacted affect affects affected re rerun run runs retest touch touched test tests tested testing case cases
+requirement requirements component components part parts port ports type types ready fly flight go no-go status verdict
+verified verify evidence pass passes passed one ones thing things something anything any all every some
+sends send sent uses use used does handle handles""".split())
+
+# F´ abbreviations, so "command dispatcher" meets Svc/CmdDispatcher and "telemetry" meets Svc/TlmChan
+ABBREV = {"cmd": "command", "tlm": "telemetry", "seq": "sequencer", "prm": "parameter", "mgr": "manager",
+          "buff": "buffer", "buf": "buffer", "drv": "driver", "chan": "channel", "disp": "dispatcher",
+          "com": "communication", "dp": "product", "rg": "rate", "posix": "time"}
+
+
+def _words(text: str) -> set[str]:
+    spaced = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", text)
+    return {w for w in re.findall(r"[a-z][a-z0-9]+", spaced.lower())}
+
+
+def _close(a: str, b: str) -> bool:
+    """Whole-word match, or a shared stem of at least 5 letters (dispatch / dispatcher)."""
+    return a == b or (min(len(a), len(b)) >= 5 and (a.startswith(b) or b.startswith(a)))
 
 
 @dataclass
@@ -54,6 +78,8 @@ GLOBAL_RULES: list[tuple[str, tuple[str, ...]]] = [
     ("fp_cross_component_citations", (r"(another|other|wrong|different) component",)),
     ("fp_components_without_requirements", (r"components?\b.*\b(no|without|lack\w*|missing)\b.*requirement",)),
     ("unverified_requirements", (r"(no|without|missing|lack\w*) (verification )?method",)),
+    ("components_go", (r"components?\b.*\b(fully|entirely|completely|all)\b.*\bgo\b", r"fully go",
+                       r"which components? (are|is) go\b")),
     ("verdict:NO-GO", (r"no-go", r"\bfail")),
     ("verdict:NO_CITING_TEST", (r"(not|never|no) (\w+ )?(cited|referenced)", r"uncited", r"no (citing )?tests?\b")),
     ("verdict:GO", (r"\bare go\b", r"\bgo requirements\b", r"which .* \bgo\b")),
@@ -103,12 +129,34 @@ class Agent:
             add(f"Ref:{m}")
         return found, missing
 
-    def _resolve(self, question: str, label: str) -> dict | None:
-        rows, _, _ = run(self.db, "vector_search_label", q=question, label=label, k=1)
-        if rows and rows[0]["score"] >= RESOLVE_MIN_SCORE:
-            return {"mention": question, "id": rows[0]["id"], "score": round(rows[0]["score"], 3),
-                    "via": "Relate vector similarity (lexical)"}
-        return None
+    def _resolve(self, question: str, label: str) -> dict:
+        """Resolve a component or port type named in words. Only the mention counts (question and action words are
+        dropped), and a candidate must share a whole word with it, so "the weather" resolves to nothing.
+        Returns {"hit": ...} or {"ambiguous": [...]} or {}."""
+        mention = sorted(w for w in _words(question) - STOP if len(w) >= 3)
+        if not mention:
+            return {}
+        if label == "Part":
+            cands = [(r["id"], r["id"].split("/")[-1] + " " + " ".join(r["types"] or [])) for r in (x.data() for x in
+                     self.db.execute("MATCH (p:Part) RETURN p.id AS id, p.types AS types"))]
+        else:
+            cands = [(r["id"], r["id"].split(".")[-1]) for r in (x.data() for x in
+                     self.db.execute("MATCH (t:PortType) RETURN t.id AS id"))]
+        scored = []
+        for cid, text in cands:
+            cw = _words(text)
+            cw |= {ABBREV[w] for w in cw if w in ABBREV}
+            hits = sum(any(_close(m, w) for w in cw) for m in mention)
+            if hits:
+                scored.append((hits, -len(cw), cid))
+        if not scored:
+            return {}
+        scored.sort(reverse=True)
+        best = [c for h, _, c in scored if h == scored[0][0]]
+        if len(best) > 1:
+            return {"ambiguous": best[:8], "mention": " ".join(mention)}
+        return {"hit": {"mention": " ".join(mention), "id": best[0], "matched_words": scored[0][0],
+                        "via": "whole-word match on component names (with F´ abbreviations)"}}
 
     def _suggest(self, question: str, k: int = 5) -> list[dict]:
         rows, _, _ = run(self.db, "vector_search", q=question, k=k)
@@ -173,16 +221,43 @@ class Agent:
             if _has(q, *pats):
                 if intent == "poll":
                     return self._poll(question)
+                if intent == "components_go":
+                    return self._fully_go(question)
                 if intent.startswith("verdict:"):
                     return self._verdict_filter(question, intent.split(":", 1)[1])
                 return self._template(question, intent)
-        if _has(q, *IMPACT, r"requirement", r"test", r"component"):
+        if _has(q, *IMPACT, *VERDICT_WORDS, r"requirement", r"test", r"component"):
             for label in (("PortType",) if "port" in q else ()) + ("Part",):
-                hit = self._resolve(question, label)
-                if hit:
-                    return self._about(question, q, hit["id"], label, [hit])
+                res = self._resolve(question, label)
+                if "hit" in res:
+                    return self._about(question, q, res["hit"]["id"], label, [res["hit"]])
+                if "ambiguous" in res:
+                    return Answer(question, "unknown",
+                                  f"I don't know which {'port type' if label == 'PortType' else 'component'} "
+                                  f"\"{res['mention']}\" means: {', '.join(res['ambiguous'])}. Name one of them.",
+                                  suggestions=[{"id": c, "label": label, "score": None} for c in res["ambiguous"]])
         return Answer(question, "unknown", "I don't know: this question is not covered by the traceability graph. "
                       "Nearest entities are listed as suggestions only.", suggestions=self._suggest(question))
+
+    def _component_verdict(self, question: str, eid: str, resolved: list) -> Answer:
+        row = next((p for p in poll(self.rows, deployment_parts(self.db)) if p["component"] == eid), None)
+        if row is None:
+            return Answer(question, "answered", f"{eid} has no SDD requirements, so GoNoGo has nothing to judge.",
+                          "component_verdict", VERDICTS_CYPHER.strip(), {"run": self.run}, [], [eid], resolved)
+        text = (f"{eid} is {row['verdict']}: {row['GO']} of {row['requirements']} requirements GO, {row['NO-GO']} NO-GO, "
+                f"{row['INCOMPLETE']} incomplete" + (f" ({', '.join(row['top_reasons'])})" if row["top_reasons"] else "")
+                + ". This is a traceability verdict from repository text and CI results, not flight readiness.")
+        return Answer(question, "answered", text, "component_verdict", VERDICTS_CYPHER.strip(),
+                      {"run": self.run, "accept_declared": False}, [row], [eid], resolved)
+
+    def _fully_go(self, question: str) -> Answer:
+        table = poll(self.rows, deployment_parts(self.db))
+        go = [p["component"] for p in table if p["verdict"] == "GO"]
+        dep = [c for c in go if any(p["component"] == c and p["in_deployment"] for p in table)]
+        text = (f"{len(go)} of {len(table)} components with requirements are fully GO"
+                + (f": {', '.join(go)}" if go else "") + f". In the Ref deployment: {', '.join(dep) or 'none'}.")
+        return Answer(question, "answered", text, "components_go", VERDICTS_CYPHER.strip(), {"run": self.run},
+                      [p for p in table if p["verdict"] == "GO"], go)
 
     def _about(self, question: str, q: str, eid: str, label: str, resolved: list) -> Answer:
         if label == "Requirement":
@@ -191,6 +266,8 @@ class Agent:
         if label == "Part":
             if _has(q, *IMPACT):
                 return self._impact(question, components=[eid], resolved=resolved)
+            if _has(q, *VERDICT_WORDS):
+                return self._component_verdict(question, eid, resolved)
             return self._template(question, "fp_part_requirements", resolved, id=eid)
         if label == "PortType":
             if _has(q, *IMPACT):

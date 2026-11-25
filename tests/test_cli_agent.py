@@ -55,9 +55,23 @@ def test_agent_routes_and_abstains(db):
         a = ag.ask(q)
         assert a.status == "answered" and a.template == tmpl, (q, a.template, a.text)
         assert a.cypher
-    for q in ["How is ABC-999 verified?", "What is the launch date?", "What breaks if Svc.NoSuchThing changes?"]:
+    for q in ["How is ABC-999 verified?", "What is the launch date?", "What breaks if Svc.NoSuchThing changes?",
+              "What breaks if I change the weather?", "What breaks if I change the pizza oven?", "Is the moon GO?",
+              "What should I re-run if I change it?"]:
         a = ag.ask(q)
-        assert a.status == "unknown" and a.answer_ids == [], q
+        assert a.status == "unknown" and a.answer_ids == [], (q, a.text)
+
+
+def test_agent_resolves_names_by_whole_words_and_asks_when_ambiguous(db):
+    ag = Agent(db)
+    a = ag.ask("What is the impact of changing the command dispatcher?")
+    assert a.template == "impact" and a.answer_ids == ["Svc/CmdDispatcher"]
+    a = ag.ask("What breaks if I change the component that sends telemetry?")
+    assert a.status == "unknown" and "Svc/TlmChan" in a.text and "Svc/TlmPacketizer" in a.text
+    a = ag.ask("Is the health component ready to fly?")
+    assert a.template == "component_verdict" and a.answer_ids == ["Svc/Health"] and "not flight readiness" in a.text
+    a = ag.ask("Which components are fully GO?")
+    assert a.template == "components_go" and all("::" not in x and "/" in x for x in a.answer_ids)
 
 
 def test_results_map_subdirectory_executables_to_component():

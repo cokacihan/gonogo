@@ -310,8 +310,10 @@ Committed directory store `data/fprime/`: 1.13 MB. Same graph measured in both m
     value guard, which is a useful lesson the engine taught us.
   - List comprehensions and map projections.
   - Per-label range indexes. They were added after Relate's own `MissingIndex` notification suggested them.
-  - A vector index and the `SEARCH` clause over a lexical embedding (hashed character trigrams, not a neural model),
-    used for fuzzy name resolution ("the command dispatcher" → `Svc/CmdDispatcher`).
+  - A vector index and the `SEARCH` clause over a lexical embedding (hashed character trigrams, not a neural model).
+    It lists the nearest entities when GoNoGo abstains.
+  - Names in questions are resolved by whole-word matching with F´ abbreviations ("the command dispatcher" →
+    `Svc/CmdDispatcher`). The lexical vectors also matched nonsense ("the weather"), so they no longer decide anything.
   - A full-text index.
   - Read-only opens.
   - Two stores in one process for `diff` and `check`.
