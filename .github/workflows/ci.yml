@@ -20,6 +20,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python: ["3.12", "3.14"]
+        exclude:  # hosted macOS arm64 runners are scarce (jobs were cancelled unstarted); one Python there is enough
+          - os: macos-latest
+            python: "3.14"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
