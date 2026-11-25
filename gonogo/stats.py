@@ -236,23 +236,49 @@ def blocks(s: dict, old_modes: dict | None = None) -> dict[str, str]:
     return b
 
 
-def write_readme(readme: Path, b: dict[str, str]) -> list[str]:
-    text = readme.read_text(encoding="utf-8")
+def apply_blocks(text: str, b: dict[str, str]) -> tuple[str, list[str]]:
     done = []
     for name, body in b.items():
         pat = re.compile(rf"(<!-- gonogo:{name} -->)(.*?)(<!-- /gonogo:{name} -->)", re.S)
         if pat.search(text):
             text = pat.sub(lambda m: f"{m.group(1)}\n{body}\n{m.group(3)}", text)
             done.append(name)
+    return text, done
+
+
+def write_readme(readme: Path, b: dict[str, str]) -> list[str]:
+    text, done = apply_blocks(readme.read_text(encoding="utf-8"), b)
     readme.write_text(text, encoding="utf-8")
     return done
+
+
+def stale_blocks(readme: Path, b: dict[str, str], skip: set[str]) -> list[str]:
+    """Blocks whose generated content differs from what the README holds now."""
+    current = readme.read_text(encoding="utf-8")
+    out = []
+    for name, body in b.items():
+        if name in skip:
+            continue
+        new, done = apply_blocks(current, {name: body})
+        if done and new != current:
+            out.append(name)
+    return out
 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--readme")
     ap.add_argument("--measure-modes", action="store_true")
+    ap.add_argument("--check", action="store_true",
+                    help="exit 1 if any generated README block is out of date (store sizes are not compared)")
     a = ap.parse_args(argv)
+    if a.check:
+        old = json.loads((ROOT / "docs" / "stats.json").read_text(encoding="utf-8"))
+        s = compute(False)
+        s["modes"] = old.get("modes")
+        stale = stale_blocks(Path(a.readme or ROOT / "README.md"), blocks(s), skip={"modes"})
+        print("README is up to date" if not stale else f"stale README blocks: {', '.join(stale)}")
+        return 1 if stale else 0
     out_json = ROOT / "docs" / "stats.json"
     old = json.loads(out_json.read_text(encoding="utf-8")) if out_json.exists() else {}
     s = compute(a.measure_modes)

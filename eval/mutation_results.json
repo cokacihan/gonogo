@@ -3,7 +3,7 @@
  "per_class": 20,
  "fprime_commit": "6fff089e8e2035307105cad4b28631eea1552ff6",
  "baseline_unchanged_check": true,
- "seconds": 615.4,
+ "seconds": 958.7,
  "summary": {
   "citation_deleted": {
    "mutations": 20,

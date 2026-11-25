@@ -1,4 +1,4 @@
-from gonogo.stats import write_readme
+from gonogo.stats import stale_blocks, write_readme
 
 
 def test_generated_blocks_are_replaced_wholesale(tmp_path):
@@ -9,3 +9,11 @@ def test_generated_blocks_are_replaced_wholesale(tmp_path):
     text = readme.read_text(encoding="utf-8")
     assert done == ["x", "y"]
     assert "old" not in text and "<!-- gonogo:x -->\nnew\n<!-- /gonogo:x -->" in text and "| t |" in text
+
+
+def test_stale_blocks_are_detected(tmp_path):
+    readme = tmp_path / "README.md"
+    readme.write_text("<!-- gonogo:x -->\nsame\n<!-- /gonogo:x -->\n<!-- gonogo:y -->\nold\n<!-- /gonogo:y -->\n",
+                      encoding="utf-8")
+    assert stale_blocks(readme, {"x": "same", "y": "new"}, skip=set()) == ["y"]
+    assert stale_blocks(readme, {"x": "same", "y": "new"}, skip={"y"}) == []

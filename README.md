@@ -238,7 +238,7 @@ exact commands are in the module docstring.
 | `method_blanked` | 20 | 20 | 12 | 0 |
 | `port_type_use_added` | 20 | 20 | 20 | 0 |
 
-Totals: GoNoGo 120/120, grep 92/120; seed 2026, 615.4 s, every mutation re-runs text → dataset → Relate → Cypher.
+Totals: GoNoGo 120/120, grep 92/120; seed 2026, 958.7 s, every mutation re-runs text → dataset → Relate → Cypher.
 Collateral case: `duplicate_id` on `SVC-COMLOGGER-003` also changed `SVC-COMLOGGER-002@Svc/ComLoggerDp`.
 <!-- /gonogo:mutation -->
 
