@@ -77,3 +77,17 @@ jobs:
         run: |
           echo "action result: ${{ steps.gate.outputs.result }}"
           [ "${{ steps.gate.outputs.result }}" = "FAIL" ]
+      # close the loop: the two REQUIREMENT() lines `gonogo suggest` proposes (eval/closed_loop.py wrote the patch)
+      - name: Apply the suggested patch to the PR head
+        run: git -C fprime apply ../gonogo/data/replay/pr5170-suggested.patch && git -C fprime diff --stat
+      - name: Run the gate action again on the patched head
+        id: gate2
+        uses: ./gonogo
+        with:
+          path: fprime
+          base: d83379994130f5cc46b3a5a135bf9b8838295110
+          fail-on-fail: "false"
+      - name: Expect PASS with the two suggested lines
+        run: |
+          echo "action result: ${{ steps.gate2.outputs.result }}"
+          [ "${{ steps.gate2.outputs.result }}" = "PASS" ]

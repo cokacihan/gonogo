@@ -7,6 +7,8 @@ CREATE RANGE INDEX `library_id` FOR (n:`Library`) ON (n.`id`);
 CREATE RANGE INDEX `part_id` FOR (n:`Part`) ON (n.`id`);
 CREATE RANGE INDEX `porttype_id` FOR (n:`PortType`) ON (n.`id`);
 CREATE RANGE INDEX `requirement_id` FOR (n:`Requirement`) ON (n.`id`);
+CREATE FULLTEXT INDEX `test_code_vocab` FOR (n:`TestCase`|`TestFunction`) ON EACH [n.`vocab`] OPTIONS {indexConfig: {`fulltext.analyzer`: 'standard-no-stop-words',`fulltext.eventually_consistent`: false}};
+CREATE FULLTEXT INDEX `test_vocab` FOR (n:`TestCase`|`TestFunction`) ON EACH [n.`vocab`, n.`vocab_doc`] OPTIONS {indexConfig: {`fulltext.analyzer`: 'standard-no-stop-words',`fulltext.eventually_consistent`: false}};
 CREATE RANGE INDEX `testcase_id` FOR (n:`TestCase`) ON (n.`id`);
 CREATE RANGE INDEX `testfile_id` FOR (n:`TestFile`) ON (n.`id`);
 CREATE RANGE INDEX `testfunction_id` FOR (n:`TestFunction`) ON (n.`id`);

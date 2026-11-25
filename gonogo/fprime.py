@@ -20,6 +20,8 @@ import subprocess
 from collections import defaultdict
 from pathlib import Path
 
+from gonogo.vocab import code_words, text_words
+
 ROOTS = ["Svc", "Drv", "Fw", "Os", "CFDP", "Utils", "TestDeploymentsProject/Ref"]
 REF_TOP = "TestDeploymentsProject/Ref/Top"
 LEGACY_REF = "Ref"  # releases before 4.x keep the Ref deployment at the repository root
@@ -193,6 +195,7 @@ def test_citations(comp_dir: Path, repo: Path) -> list[dict]:
 
 
 CALL_RE = re.compile(r"\b([A-Za-z_]\w*)\s*\(")
+DOC_MACRO = re.compile(r"\b(?:TEST_CASE|COMMENT)\s*\(")  # F´ test-description macros (STest / gtest helpers)
 _STRING = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
 
 
@@ -224,24 +227,30 @@ def test_code(comp_dir: Path, repo: Path) -> dict:
     test_dir = comp_dir / "test"
     if not test_dir.is_dir():
         return {"functions": {}, "cases": []}
-    funcs: dict[str, dict] = defaultdict(lambda: {"calls": set(), "cites": set(), "files": set()})
+    funcs: dict[str, dict] = defaultdict(lambda: {"calls": set(), "cites": set(), "files": set(), "at": set(),
+                                                  "words": set(), "doc": set()})
     cases: list[dict] = []
     for f in sorted(p for p in test_dir.rglob("*") if p.suffix in (".cpp", ".hpp", ".cc", ".h") and p.is_file()):
         depth, cur, start, opened, own = 0, None, 0, False, None
-        for raw, code in _code_lines(f.read_text(encoding="utf-8", errors="replace")):
+        for lineno, (raw, code) in enumerate(_code_lines(f.read_text(encoding="utf-8", errors="replace")), 1):
             if cur is None:
                 if (g := GTEST.match(code)):
-                    cur = {"suite": g.group(1), "name": g.group(2), "file": _rel(f, repo), "calls": set(), "cites": set()}
+                    cur = {"suite": g.group(1), "name": g.group(2), "file": _rel(f, repo), "line": lineno,
+                           "calls": set(), "cites": set(), "words": set(), "doc": set()}
                     cases.append(cur)
                     own = None
                 elif (m := FUNC_DEF.match(code)) and m.group(1) not in NOT_FUNCS:
                     own = m.group(1)
                     cur = funcs[own]
                     cur["files"].add(_rel(f, repo))
+                    cur["at"].add(f"{_rel(f, repo)}:{lineno}")
                 if cur is not None:
                     start, opened = depth, False
             if cur is not None:
                 cur["cites"].update(REQ_MACRO.findall(raw))
+                cur["words"] |= code_words(code)  # comments and strings are already gone: REQUIREMENT("ID") adds no word
+                if (dm := DOC_MACRO.search(raw)):  # F´ test descriptions: TEST_CASE(107.3.1, "..."), COMMENT("...")
+                    cur["doc"].update(w for s in _STRING.findall(raw[dm.end():]) for w in text_words(s[1:-1]))
                 cur["calls"].update(c for c in CALL_RE.findall(code) if c != own and c not in NOT_FUNCS and not c.isupper())
             depth += code.count("{") - code.count("}")
             if cur is not None:
@@ -251,10 +260,12 @@ def test_code(comp_dir: Path, repo: Path) -> dict:
                     cur = None
     known = set(funcs)
     functions = {n: {"calls": sorted(c for c in v["calls"] if c in known), "cites": sorted(v["cites"]),
-                     "files": sorted(v["files"])} for n, v in funcs.items()}
+                     "files": sorted(v["files"]), "at": sorted(v["at"]), "words": sorted(v["words"]), "doc": sorted(v["doc"])}
+                 for n, v in funcs.items()}
     return {"functions": functions,
-            "cases": [{"suite": c["suite"], "name": c["name"], "file": c["file"],
-                       "calls": sorted(x for x in c["calls"] if x in known), "cites": sorted(c["cites"])} for c in cases]}
+            "cases": [{"suite": c["suite"], "name": c["name"], "file": c["file"], "line": c["line"],
+                       "calls": sorted(x for x in c["calls"] if x in known), "cites": sorted(c["cites"]),
+                       "words": sorted(c["words"]), "doc": sorted(c["doc"])} for c in cases]}
 
 
 def citation_hops(functions: dict, case: dict) -> dict[str, int]:
@@ -617,6 +628,7 @@ def build_dataset(repo: Path) -> dict:
         fn_id = {name: f"{d}::fn:{name}" for name in code["functions"]}
         for name, fn in sorted(code["functions"].items()):
             nodes["TestFunction"].append({"id": fn_id[name], "name": name, "component": d, "files": fn["files"],
+                                          "at": fn["at"], "vocab": " ".join(fn["words"]), "vocab_doc": " ".join(fn["doc"]),
                                           "raw_cites": fn["cites"], "text": f"Test helper {_words(name)} of {d}"})
             edges.append({"src": fn_id[name], "type": "TESTS", "dst": d})
             edges += [{"src": fn_id[name], "type": "CALLS", "dst": fn_id[c]} for c in fn["calls"]]
@@ -631,6 +643,7 @@ def build_dataset(repo: Path) -> dict:
             seen_cases.add(cid)
             max_hops = max([max_hops, *citation_hops(code["functions"], tc).values()])
             nodes["TestCase"].append({"id": cid, "suite": tc["suite"], "name": tc["name"], "file": tc["file"],
+                                      "line": tc["line"], "vocab": " ".join(tc["words"]), "vocab_doc": " ".join(tc["doc"]),
                                       "component": d, "gtest_filter": f"{tc['suite']}.{tc['name']}",
                                       "raw_cites": tc["cites"], "text": f"Unit test case {tc['suite']}.{tc['name']} of {d}"})
             edges.append({"src": cid, "type": "TESTS", "dst": d})

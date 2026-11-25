@@ -2,27 +2,27 @@
   "format_version": 5,
   "next_node_id": 6151,
   "next_rel_id": 15869,
-  "checkpoint_lsn": 38,
-  "commit_ts": 38,
+  "checkpoint_lsn": 40,
+  "commit_ts": 40,
   "node_parts": [
     {
-      "path": "nodes/0-262144-187c5ca93a039c172a79e7891d7be59a.parquet",
+      "path": "nodes/0-262144-9967de1ab52ddb5bca4d5011e2ac6505.parquet",
       "id_lo": 0,
       "id_hi": 262144,
       "rows": 6151,
-      "bytes": 891683
+      "bytes": 1118169
     }
   ],
   "rel_parts": [
     {
-      "path": "relationships/0-262144-2cd58da2568c6e5495fbbf9ba4f1073a.parquet",
+      "path": "relationships/0-262144-56a57c31cae0e7c8c5fe3aeb6982c5c5.parquet",
       "id_lo": 0,
       "id_hi": 262144,
       "rows": 15869,
       "bytes": 239557
     }
   ],
-  "bytes_per_node": 144.96553405950252,
+  "bytes_per_node": 181.78653877418307,
   "bytes_per_rel": 15.095910265297118,
   "codec": "parquet",
   "indexes": [
@@ -70,6 +70,16 @@
       "name": "requirement_id",
       "label": "Requirement",
       "property": "id"
+    },
+    {
+      "name": "test_code_vocab",
+      "label": "TestCase",
+      "property": "vocab#FULLTEXT#test_code_vocab"
+    },
+    {
+      "name": "test_vocab",
+      "label": "TestCase",
+      "property": "vocab,vocab_doc#FULLTEXT#test_vocab"
     },
     {
       "name": "testcase_id",
@@ -214,6 +224,31 @@
         ],
         "with_properties": []
       },
+      "test_code_vocab": {
+        "kind": "Fulltext",
+        "relationship": false,
+        "labels": [
+          "TestCase",
+          "TestFunction"
+        ],
+        "properties": [
+          "vocab"
+        ],
+        "with_properties": []
+      },
+      "test_vocab": {
+        "kind": "Fulltext",
+        "relationship": false,
+        "labels": [
+          "TestCase",
+          "TestFunction"
+        ],
+        "properties": [
+          "vocab",
+          "vocab_doc"
+        ],
+        "with_properties": []
+      },
       "testcase_id": {
         "kind": "Range",
         "relationship": false,
@@ -324,6 +359,36 @@
       "part_id": {},
       "porttype_id": {},
       "requirement_id": {},
+      "test_code_vocab": {
+        "indexConfig": {
+          "t": "map",
+          "v": {
+            "fulltext.analyzer": {
+              "t": "string",
+              "v": "standard-no-stop-words"
+            },
+            "fulltext.eventually_consistent": {
+              "t": "bool",
+              "v": false
+            }
+          }
+        }
+      },
+      "test_vocab": {
+        "indexConfig": {
+          "t": "map",
+          "v": {
+            "fulltext.analyzer": {
+              "t": "string",
+              "v": "standard-no-stop-words"
+            },
+            "fulltext.eventually_consistent": {
+              "t": "bool",
+              "v": false
+            }
+          }
+        }
+      },
       "testcase_id": {},
       "testfile_id": {},
       "testfunction_id": {},

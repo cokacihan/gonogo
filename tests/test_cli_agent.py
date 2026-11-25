@@ -104,7 +104,7 @@ def test_mcp_server_tools(store_run):
     assert init["result"]["capabilities"] == {"tools": {}}
     assert srv.handle({"jsonrpc": "2.0", "method": "notifications/initialized"}) is None
     names = {t["name"] for t in srv.handle({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})["result"]["tools"]}
-    assert names == {"poll", "why", "tests_to_rerun", "findings", "ask"}
+    assert names == {"poll", "why", "tests_to_rerun", "suggest", "findings", "ask"}
     r = srv.handle({"jsonrpc": "2.0", "id": 3, "method": "tools/call",
                     "params": {"name": "tests_to_rerun", "arguments": {"files": ["Svc/Health/Health.cpp"]}}})
     out = json.loads(r["result"]["content"][0]["text"])

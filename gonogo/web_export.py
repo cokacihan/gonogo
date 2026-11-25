@@ -23,7 +23,7 @@ from gonogo.queries import T
 from gonogo.verdict import DRIFT_PATH_CYPHER, EVIDENCE_PATHS_CYPHER, TEST_METHODS, VERDICTS_CYPHER
 
 ROOT = Path(__file__).resolve().parents[1]
-DROP = {"embedding", "calls"}
+DROP = {"embedding", "calls", "vocab", "vocab_doc"}  # vocab feeds the CLI full-text index only
 KEEP_TEXT = {"Requirement", "TestRun"}
 
 

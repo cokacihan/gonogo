@@ -4,6 +4,7 @@ Graph-specific tools for coding agents working on F´ flight software:
   poll            readiness poll per component (GO / NO-GO / INCOMPLETE counts)
   why             verdict of one requirement, with reasons and the citing test cases and their CI status
   tests_to_rerun  unit tests to re-run for changed files / components / port types, and GO verdicts put in question
+  suggest         where the REQUIREMENT() line of an uncited requirement would go (candidates, not evidence)
   findings        traceability-hygiene findings (undefined cited IDs, duplicate IDs, cross-component citations)
   ask             rule-based question answering with the Cypher receipt
 Relate's own server (`relate serve --mcp stdio --database data/fprime --read-only`) complements this with raw
@@ -21,6 +22,7 @@ from pathlib import Path
 from gonogo import db as store
 from gonogo.impact import impact
 from gonogo.queries import run as run_tpl
+from gonogo.suggest import suggest
 from gonogo.verdict import current_run, deployment_parts, poll, verdicts
 
 PROTOCOL = "2025-06-18"
@@ -40,6 +42,12 @@ TOOLS = [
          "files": {"type": "array", "items": {"type": "string"}},
          "components": {"type": "array", "items": {"type": "string"}},
          "port_types": {"type": "array", "items": {"type": "string"}}}}},
+    {"name": "suggest", "description": "For a requirement no own test cites: the test bodies and helpers of its "
+     "component that most likely verify it (Relate full-text index over test code, lifted to test cases over the "
+     "call graph), a near-miss ID to rename if one exists, and the REQUIREMENT() line to add. Candidates for a "
+     "reviewer, never evidence.",
+     "inputSchema": {"type": "object", "properties": {"id": {"type": "string"}, "k": {"type": "integer"}},
+                     "required": ["id"]}},
     {"name": "findings", "description": "Traceability-hygiene findings: test files citing undefined requirement IDs, "
      "duplicate requirement IDs, requirements cited by tests of another component.",
      "inputSchema": {"type": "object", "properties": {}}},
@@ -76,6 +84,9 @@ class Server:
             for r in res["rerun"]:
                 r["gtest_filter"] = ":".join(sorted(r.pop("filters")))
             return res
+        if name == "suggest":
+            res = suggest(self.db, args["id"], k=int(args.get("k", 5)))
+            return res or {"error": f"I don't know: {args['id']} is not a requirement in the graph."}
         if name == "findings":
             return {t: run_tpl(self.db, t)[0] for t in
                     ("fp_unknown_citations", "fp_duplicate_requirement_ids", "fp_cross_component_citations")}

@@ -140,7 +140,9 @@ def render_check(d: dict, blocking: list[str], imp: dict, files: list[str], warn
     lines += ["### Changes (informational)", "",
               f"- requirements added {len(r['added'])}, removed {len(r['removed'])}, text changed {len(r['text_changed'])}, "
               f"methods changed {len(r['methods_changed'])}",
-              f"- citations gained {len(d['citations']['gained'])}, lost {len(d['citations']['lost'])}",
+              f"- new requirements cited by an own test: {len(r['added']) - len(r['added_uncited'])} of {len(r['added'])}",
+              f"- existing requirements: own citation gained {len(d['citations']['gained'])}, "
+              f"lost {len(d['citations']['lost'])}",
               f"- port uses added {len(d['ports']['uses_added'])}, removed {len(d['ports']['uses_removed'])}",
               f"- findings resolved: " + ", ".join(f"{k} {len(v['resolved'])}" for k, v in d["findings"].items()), "",
               "_GoNoGo reports traceability evidence from repository text; it is decision support, not a flight-readiness authority._"]

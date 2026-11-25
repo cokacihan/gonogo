@@ -1,0 +1,20 @@
+--- a/Svc/TlmChan/test/ut/TlmChanMain.cpp
++++ b/Svc/TlmChan/test/ut/TlmChanMain.cpp
+@@ -49,6 +49,7 @@
+ }
+ 
+ TEST(TlmChanTest, ProcGuardTest) {
++    REQUIREMENT("TLC-005");
+     TEST_CASE(107.3.1, "Off-nominal Run_handler processing limit (per epoch)");
+     COMMENT("Verify Run_handler defers entries beyond TLMCHAN_MAX_ENTRIES_PER_RUN to next epoch.");
+ 
+--- a/Svc/TlmChan/test/ut/TlmChanTester.cpp
++++ b/Svc/TlmChan/test/ut/TlmChanTester.cpp
+@@ -304,6 +304,7 @@
+ }
+ 
+ void TlmChanTester::checkGuardEvent(U32 expectedDeferred, U32 expectedCapCount) {
++    REQUIREMENT("TLC-006");
+     // Exactly one ProcCapReached event must have been emitted this run
+     ASSERT_EVENTS_SIZE(1);
+     ASSERT_EVENTS_TlmChanEpochProcessingCapReached_SIZE(1);

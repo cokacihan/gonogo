@@ -1,0 +1,1567 @@
+{
+ "requirements": 150,
+ "components": 25,
+ "median_candidate_sites": 37,
+ "median_candidate_cases": 13,
+ "seconds": 102.3,
+ "description_overlap": {
+  "answer": {
+   "n": 453,
+   "ge60": 6,
+   "ge80": 0
+  },
+  "other": {
+   "n": 10851,
+   "ge60": 8,
+   "ge80": 5
+  }
+ },
+ "sites": {
+  "full": {
+   "hit@1": 0.43333333333333335,
+   "hit@3": 0.6466666666666666,
+   "hit@5": 0.7333333333333333,
+   "mrr": 0.562205398326209
+  },
+  "identifiers": {
+   "hit@1": 0.18666666666666668,
+   "hit@3": 0.38666666666666666,
+   "hit@5": 0.5266666666666666,
+   "mrr": 0.33894693103254425
+  },
+  "random": {
+   "hit@1": 0.07301622033936751,
+   "hit@3": 0.2115219146106819,
+   "hit@5": 0.32013975517726156,
+   "mrr": 0.20273248281243877
+  }
+ },
+ "cases": {
+  "full": {
+   "hit@1": 0.62,
+   "hit@3": 0.8466666666666667,
+   "hit@5": 0.8933333333333333,
+   "mrr": 0.73816145160882
+  },
+  "identifiers": {
+   "hit@1": 0.54,
+   "hit@3": 0.7733333333333333,
+   "hit@5": 0.8533333333333334,
+   "mrr": 0.6780117629591313
+  },
+  "no call graph": {
+   "hit@1": 0.5733333333333334,
+   "hit@3": 0.7266666666666667,
+   "hit@5": 0.7733333333333333,
+   "mrr": 0.6578430525556165
+  },
+  "random": {
+   "hit@1": 0.23545657283942276,
+   "hit@3": 0.49592873963484596,
+   "hit@5": 0.6389844976585618,
+   "mrr": 0.41123783496151045
+  }
+ },
+ "per_requirement": [
+  {
+   "id": "AL-001",
+   "component": "Svc/EventManager",
+   "candidate_sites": 24,
+   "answer_sites": 1,
+   "candidate_cases": 7,
+   "answer_cases": 1,
+   "rank_site": null,
+   "rank_case": 1
+  },
+  {
+   "id": "AL-002",
+   "component": "Svc/EventManager",
+   "candidate_sites": 24,
+   "answer_sites": 1,
+   "candidate_cases": 7,
+   "answer_cases": 1,
+   "rank_site": 10,
+   "rank_case": 3
+  },
+  {
+   "id": "AL-003",
+   "component": "Svc/EventManager",
+   "candidate_sites": 24,
+   "answer_sites": 1,
+   "candidate_cases": 7,
+   "answer_cases": 1,
+   "rank_site": 8,
+   "rank_case": 1
+  },
+  {
+   "id": "AL-004",
+   "component": "Svc/EventManager",
+   "candidate_sites": 24,
+   "answer_sites": 1,
+   "candidate_cases": 7,
+   "answer_cases": 1,
+   "rank_site": 7,
+   "rank_case": 1
+  },
+  {
+   "id": "ARG-001",
+   "component": "Svc/ActiveRateGroup",
+   "candidate_sites": 15,
+   "answer_sites": 1,
+   "candidate_cases": 4,
+   "answer_cases": 1,
+   "rank_site": 6,
+   "rank_case": 2
+  },
+  {
+   "id": "ARG-002",
+   "component": "Svc/ActiveRateGroup",
+   "candidate_sites": 15,
+   "answer_sites": 1,
+   "candidate_cases": 4,
+   "answer_cases": 1,
+   "rank_site": 2,
+   "rank_case": 1
+  },
+  {
+   "id": "ARG-003",
+   "component": "Svc/ActiveRateGroup",
+   "candidate_sites": 15,
+   "answer_sites": 1,
+   "candidate_cases": 4,
+   "answer_cases": 1,
+   "rank_site": 3,
+   "rank_case": 2
+  },
+  {
+   "id": "ARG-004",
+   "component": "Svc/ActiveRateGroup",
+   "candidate_sites": 15,
+   "answer_sites": 2,
+   "candidate_cases": 4,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "CD-001",
+   "component": "Svc/CmdDispatcher",
+   "candidate_sites": 36,
+   "answer_sites": 1,
+   "candidate_cases": 15,
+   "answer_cases": 1,
+   "rank_site": 13,
+   "rank_case": 8
+  },
+  {
+   "id": "CD-002",
+   "component": "Svc/CmdDispatcher",
+   "candidate_sites": 36,
+   "answer_sites": 1,
+   "candidate_cases": 15,
+   "answer_cases": 1,
+   "rank_site": 14,
+   "rank_case": 1
+  },
+  {
+   "id": "CD-003",
+   "component": "Svc/CmdDispatcher",
+   "candidate_sites": 36,
+   "answer_sites": 1,
+   "candidate_cases": 15,
+   "answer_cases": 1,
+   "rank_site": 7,
+   "rank_case": 6
+  },
+  {
+   "id": "CD-004",
+   "component": "Svc/CmdDispatcher",
+   "candidate_sites": 36,
+   "answer_sites": 1,
+   "candidate_cases": 15,
+   "answer_cases": 1,
+   "rank_site": 12,
+   "rank_case": 8
+  },
+  {
+   "id": "FPRIME-BM-001",
+   "component": "Svc/BufferManager",
+   "candidate_sites": 16,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 3,
+   "rank_case": 3
+  },
+  {
+   "id": "FPRIME-BM-002",
+   "component": "Svc/BufferManager",
+   "candidate_sites": 16,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 4,
+   "rank_case": 3
+  },
+  {
+   "id": "FPRIME-BM-003",
+   "component": "Svc/BufferManager",
+   "candidate_sites": 16,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "FPRIME-BM-004",
+   "component": "Svc/BufferManager",
+   "candidate_sites": 16,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "FPRIME-BM-005",
+   "component": "Svc/BufferManager",
+   "candidate_sites": 16,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "FPRIME-BM-006",
+   "component": "Svc/BufferManager",
+   "candidate_sites": 16,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "FPRIME-BM-007",
+   "component": "Svc/BufferManager",
+   "candidate_sites": 16,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "FPRIME-PRG-001",
+   "component": "Svc/PassiveRateGroup",
+   "candidate_sites": 17,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 6,
+   "rank_case": 3
+  },
+  {
+   "id": "FPRIME-PRG-002",
+   "component": "Svc/PassiveRateGroup",
+   "candidate_sites": 17,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 3,
+   "rank_case": 2
+  },
+  {
+   "id": "FPRIME-PRG-003",
+   "component": "Svc/PassiveRateGroup",
+   "candidate_sites": 17,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 5,
+   "rank_case": 4
+  },
+  {
+   "id": "FPRIME-PRG-004",
+   "component": "Svc/PassiveRateGroup",
+   "candidate_sites": 17,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "FPRIME-PRG-005",
+   "component": "Svc/PassiveRateGroup",
+   "candidate_sites": 17,
+   "answer_sites": 1,
+   "candidate_cases": 5,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "ISF-CMDS-001",
+   "component": "Svc/CmdSequencer",
+   "candidate_sites": 224,
+   "answer_sites": 1,
+   "candidate_cases": 97,
+   "answer_cases": 1,
+   "rank_site": 94,
+   "rank_case": 77
+  },
+  {
+   "id": "ISF-CMDS-002",
+   "component": "Svc/CmdSequencer",
+   "candidate_sites": 224,
+   "answer_sites": 2,
+   "candidate_cases": 97,
+   "answer_cases": 3,
+   "rank_site": 43,
+   "rank_case": 1
+  },
+  {
+   "id": "ISF-CMDS-003",
+   "component": "Svc/CmdSequencer",
+   "candidate_sites": 224,
+   "answer_sites": 1,
+   "candidate_cases": 97,
+   "answer_cases": 11,
+   "rank_site": 30,
+   "rank_case": 11
+  },
+  {
+   "id": "ISF-CMDS-004",
+   "component": "Svc/CmdSequencer",
+   "candidate_sites": 224,
+   "answer_sites": 1,
+   "candidate_cases": 97,
+   "answer_cases": 2,
+   "rank_site": 15,
+   "rank_case": 2
+  },
+  {
+   "id": "ISF-CMDS-005",
+   "component": "Svc/CmdSequencer",
+   "candidate_sites": 224,
+   "answer_sites": 1,
+   "candidate_cases": 97,
+   "answer_cases": 3,
+   "rank_site": 8,
+   "rank_case": 1
+  },
+  {
+   "id": "ISF-CMDS-006",
+   "component": "Svc/CmdSequencer",
+   "candidate_sites": 224,
+   "answer_sites": 1,
+   "candidate_cases": 97,
+   "answer_cases": 3,
+   "rank_site": 10,
+   "rank_case": 1
+  },
+  {
+   "id": "PDB-001",
+   "component": "Svc/PolyDb",
+   "candidate_sites": 3,
+   "answer_sites": 1,
+   "candidate_cases": 1,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "PDB-002",
+   "component": "Svc/PolyDb",
+   "candidate_sites": 3,
+   "answer_sites": 1,
+   "candidate_cases": 1,
+   "answer_cases": 1,
+   "rank_site": 2,
+   "rank_case": 1
+  },
+  {
+   "id": "PDB-003",
+   "component": "Svc/PolyDb",
+   "candidate_sites": 3,
+   "answer_sites": 1,
+   "candidate_cases": 1,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "PDB-004",
+   "component": "Svc/PolyDb",
+   "candidate_sites": 3,
+   "answer_sites": 1,
+   "candidate_cases": 1,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "REQ-TIMECONVERTER-001",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 1,
+   "candidate_cases": 20,
+   "answer_cases": 1,
+   "rank_site": 3,
+   "rank_case": 3
+  },
+  {
+   "id": "REQ-TIMECONVERTER-002",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 1,
+   "candidate_cases": 20,
+   "answer_cases": 1,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "REQ-TIMECONVERTER-003",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 1,
+   "candidate_cases": 20,
+   "answer_cases": 1,
+   "rank_site": 28,
+   "rank_case": 10
+  },
+  {
+   "id": "REQ-TIMECONVERTER-004",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 2,
+   "candidate_cases": 20,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "REQ-TIMECONVERTER-005",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 1,
+   "candidate_cases": 20,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "REQ-TIMECONVERTER-006",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 1,
+   "candidate_cases": 20,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "REQ-TIMECONVERTER-007",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 1,
+   "candidate_cases": 20,
+   "answer_cases": 1,
+   "rank_site": 5,
+   "rank_case": 4
+  },
+  {
+   "id": "REQ-TIMECONVERTER-008",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 2,
+   "candidate_cases": 20,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "REQ-TIMECONVERTER-009",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 4,
+   "candidate_cases": 20,
+   "answer_cases": 4,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "REQ-TIMECONVERTER-010",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 2,
+   "candidate_cases": 20,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "REQ-TIMECONVERTER-011",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 1,
+   "candidate_cases": 20,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "REQ-TIMECONVERTER-012",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 1,
+   "candidate_cases": 20,
+   "answer_cases": 1,
+   "rank_site": 3,
+   "rank_case": 3
+  },
+  {
+   "id": "REQ-TIMECONVERTER-013",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 1,
+   "candidate_cases": 20,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "REQ-TIMECONVERTER-015",
+   "component": "Svc/TimeConverter",
+   "candidate_sites": 54,
+   "answer_sites": 1,
+   "candidate_cases": 20,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "RGD-001",
+   "component": "Svc/RateGroupDriver",
+   "candidate_sites": 11,
+   "answer_sites": 1,
+   "candidate_cases": 4,
+   "answer_cases": 3,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-DECRYPTOR-001",
+   "component": "Svc/Ccsds/AesGcmDecryptor",
+   "candidate_sites": 42,
+   "answer_sites": 3,
+   "candidate_cases": 16,
+   "answer_cases": 3,
+   "rank_site": 2,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-DECRYPTOR-002",
+   "component": "Svc/Ccsds/AesGcmDecryptor",
+   "candidate_sites": 42,
+   "answer_sites": 5,
+   "candidate_cases": 16,
+   "answer_cases": 5,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-DECRYPTOR-003",
+   "component": "Svc/Ccsds/AesGcmDecryptor",
+   "candidate_sites": 42,
+   "answer_sites": 4,
+   "candidate_cases": 16,
+   "answer_cases": 4,
+   "rank_site": 5,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-DECRYPTOR-004",
+   "component": "Svc/Ccsds/AesGcmDecryptor",
+   "candidate_sites": 42,
+   "answer_sites": 1,
+   "candidate_cases": 16,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-DECRYPTOR-005",
+   "component": "Svc/Ccsds/AesGcmDecryptor",
+   "candidate_sites": 42,
+   "answer_sites": 2,
+   "candidate_cases": 16,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-DECRYPTOR-006",
+   "component": "Svc/Ccsds/AesGcmDecryptor",
+   "candidate_sites": 42,
+   "answer_sites": 1,
+   "candidate_cases": 16,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-DECRYPTOR-007",
+   "component": "Svc/Ccsds/AesGcmDecryptor",
+   "candidate_sites": 42,
+   "answer_sites": 1,
+   "candidate_cases": 16,
+   "answer_cases": 1,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "SVC-CCSDS-AES-ENCRYPTOR-001",
+   "component": "Svc/Ccsds/AesGcmEncryptor",
+   "candidate_sites": 37,
+   "answer_sites": 3,
+   "candidate_cases": 13,
+   "answer_cases": 3,
+   "rank_site": 9,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-ENCRYPTOR-002",
+   "component": "Svc/Ccsds/AesGcmEncryptor",
+   "candidate_sites": 37,
+   "answer_sites": 3,
+   "candidate_cases": 13,
+   "answer_cases": 3,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "SVC-CCSDS-AES-ENCRYPTOR-003",
+   "component": "Svc/Ccsds/AesGcmEncryptor",
+   "candidate_sites": 37,
+   "answer_sites": 1,
+   "candidate_cases": 13,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-ENCRYPTOR-004",
+   "component": "Svc/Ccsds/AesGcmEncryptor",
+   "candidate_sites": 37,
+   "answer_sites": 2,
+   "candidate_cases": 13,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-ENCRYPTOR-005",
+   "component": "Svc/Ccsds/AesGcmEncryptor",
+   "candidate_sites": 37,
+   "answer_sites": 1,
+   "candidate_cases": 13,
+   "answer_cases": 1,
+   "rank_site": 14,
+   "rank_case": 3
+  },
+  {
+   "id": "SVC-CCSDS-AES-ENCRYPTOR-006",
+   "component": "Svc/Ccsds/AesGcmEncryptor",
+   "candidate_sites": 37,
+   "answer_sites": 1,
+   "candidate_cases": 13,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-ENCRYPTOR-007",
+   "component": "Svc/Ccsds/AesGcmEncryptor",
+   "candidate_sites": 37,
+   "answer_sites": 1,
+   "candidate_cases": 13,
+   "answer_cases": 1,
+   "rank_site": 2,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-ENCRYPTOR-008",
+   "component": "Svc/Ccsds/AesGcmEncryptor",
+   "candidate_sites": 37,
+   "answer_sites": 1,
+   "candidate_cases": 13,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-ENCRYPTOR-009",
+   "component": "Svc/Ccsds/AesGcmEncryptor",
+   "candidate_sites": 37,
+   "answer_sites": 2,
+   "candidate_cases": 13,
+   "answer_cases": 2,
+   "rank_site": 3,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-AES-ENCRYPTOR-010",
+   "component": "Svc/Ccsds/AesGcmEncryptor",
+   "candidate_sites": 37,
+   "answer_sites": 1,
+   "candidate_cases": 13,
+   "answer_cases": 1,
+   "rank_site": 22,
+   "rank_case": 9
+  },
+  {
+   "id": "SVC-CCSDS-CLEARTEXT-DECRYPTOR-001",
+   "component": "Svc/Ccsds/ClearTextDecryptor",
+   "candidate_sites": 6,
+   "answer_sites": 1,
+   "candidate_cases": 2,
+   "answer_cases": 1,
+   "rank_site": 3,
+   "rank_case": 2
+  },
+  {
+   "id": "SVC-CCSDS-CLEARTEXT-DECRYPTOR-002",
+   "component": "Svc/Ccsds/ClearTextDecryptor",
+   "candidate_sites": 6,
+   "answer_sites": 1,
+   "candidate_cases": 2,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-CLEARTEXT-DECRYPTOR-003",
+   "component": "Svc/Ccsds/ClearTextDecryptor",
+   "candidate_sites": 6,
+   "answer_sites": 1,
+   "candidate_cases": 2,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-CLEARTEXT-DECRYPTOR-004",
+   "component": "Svc/Ccsds/ClearTextDecryptor",
+   "candidate_sites": 6,
+   "answer_sites": 1,
+   "candidate_cases": 2,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-CLEARTEXT-DECRYPTOR-005",
+   "component": "Svc/Ccsds/ClearTextDecryptor",
+   "candidate_sites": 6,
+   "answer_sites": 1,
+   "candidate_cases": 2,
+   "answer_cases": 1,
+   "rank_site": null,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-001",
+   "component": "Svc/Ccsds/ClearTextEncryptor",
+   "candidate_sites": 6,
+   "answer_sites": 1,
+   "candidate_cases": 2,
+   "answer_cases": 1,
+   "rank_site": 3,
+   "rank_case": 2
+  },
+  {
+   "id": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-002",
+   "component": "Svc/Ccsds/ClearTextEncryptor",
+   "candidate_sites": 6,
+   "answer_sites": 1,
+   "candidate_cases": 2,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-003",
+   "component": "Svc/Ccsds/ClearTextEncryptor",
+   "candidate_sites": 6,
+   "answer_sites": 1,
+   "candidate_cases": 2,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-004",
+   "component": "Svc/Ccsds/ClearTextEncryptor",
+   "candidate_sites": 6,
+   "answer_sites": 1,
+   "candidate_cases": 2,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-CLEARTEXT-ENCRYPTOR-005",
+   "component": "Svc/Ccsds/ClearTextEncryptor",
+   "candidate_sites": 6,
+   "answer_sites": 1,
+   "candidate_cases": 2,
+   "answer_cases": 1,
+   "rank_site": null,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-DEFRAMER-001",
+   "component": "Svc/Ccsds/CcsdsSdlsDeframer",
+   "candidate_sites": 20,
+   "answer_sites": 2,
+   "candidate_cases": 5,
+   "answer_cases": 2,
+   "rank_site": 9,
+   "rank_case": 2
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-DEFRAMER-002",
+   "component": "Svc/Ccsds/CcsdsSdlsDeframer",
+   "candidate_sites": 20,
+   "answer_sites": 2,
+   "candidate_cases": 5,
+   "answer_cases": 2,
+   "rank_site": 3,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-DEFRAMER-003",
+   "component": "Svc/Ccsds/CcsdsSdlsDeframer",
+   "candidate_sites": 20,
+   "answer_sites": 2,
+   "candidate_cases": 5,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-DEFRAMER-004",
+   "component": "Svc/Ccsds/CcsdsSdlsDeframer",
+   "candidate_sites": 20,
+   "answer_sites": 2,
+   "candidate_cases": 5,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-DEFRAMER-005",
+   "component": "Svc/Ccsds/CcsdsSdlsDeframer",
+   "candidate_sites": 20,
+   "answer_sites": 2,
+   "candidate_cases": 5,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-DEFRAMER-006",
+   "component": "Svc/Ccsds/CcsdsSdlsDeframer",
+   "candidate_sites": 20,
+   "answer_sites": 2,
+   "candidate_cases": 5,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-DEFRAMER-007",
+   "component": "Svc/Ccsds/CcsdsSdlsDeframer",
+   "candidate_sites": 20,
+   "answer_sites": 2,
+   "candidate_cases": 5,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-DEFRAMER-008",
+   "component": "Svc/Ccsds/CcsdsSdlsDeframer",
+   "candidate_sites": 20,
+   "answer_sites": 2,
+   "candidate_cases": 5,
+   "answer_cases": 2,
+   "rank_site": 2,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FILE-KEY-MANAGER-001",
+   "component": "Svc/Ccsds/SdlsFileKeyManager",
+   "candidate_sites": 9,
+   "answer_sites": 1,
+   "candidate_cases": 3,
+   "answer_cases": 1,
+   "rank_site": null,
+   "rank_case": 2
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FILE-KEY-MANAGER-002",
+   "component": "Svc/Ccsds/SdlsFileKeyManager",
+   "candidate_sites": 9,
+   "answer_sites": 1,
+   "candidate_cases": 3,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FILE-KEY-MANAGER-003",
+   "component": "Svc/Ccsds/SdlsFileKeyManager",
+   "candidate_sites": 9,
+   "answer_sites": 2,
+   "candidate_cases": 3,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FILE-KEY-MANAGER-004",
+   "component": "Svc/Ccsds/SdlsFileKeyManager",
+   "candidate_sites": 9,
+   "answer_sites": 1,
+   "candidate_cases": 3,
+   "answer_cases": 1,
+   "rank_site": 4,
+   "rank_case": 3
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FRAMER-001",
+   "component": "Svc/Ccsds/CcsdsSdlsFramer",
+   "candidate_sites": 35,
+   "answer_sites": 3,
+   "candidate_cases": 11,
+   "answer_cases": 3,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FRAMER-002",
+   "component": "Svc/Ccsds/CcsdsSdlsFramer",
+   "candidate_sites": 35,
+   "answer_sites": 3,
+   "candidate_cases": 11,
+   "answer_cases": 3,
+   "rank_site": 2,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FRAMER-003",
+   "component": "Svc/Ccsds/CcsdsSdlsFramer",
+   "candidate_sites": 35,
+   "answer_sites": 2,
+   "candidate_cases": 11,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FRAMER-004",
+   "component": "Svc/Ccsds/CcsdsSdlsFramer",
+   "candidate_sites": 35,
+   "answer_sites": 2,
+   "candidate_cases": 11,
+   "answer_cases": 2,
+   "rank_site": 3,
+   "rank_case": 3
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FRAMER-005",
+   "component": "Svc/Ccsds/CcsdsSdlsFramer",
+   "candidate_sites": 35,
+   "answer_sites": 2,
+   "candidate_cases": 11,
+   "answer_cases": 2,
+   "rank_site": 3,
+   "rank_case": 2
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FRAMER-006",
+   "component": "Svc/Ccsds/CcsdsSdlsFramer",
+   "candidate_sites": 35,
+   "answer_sites": 2,
+   "candidate_cases": 11,
+   "answer_cases": 2,
+   "rank_site": 10,
+   "rank_case": 8
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FRAMER-007",
+   "component": "Svc/Ccsds/CcsdsSdlsFramer",
+   "candidate_sites": 35,
+   "answer_sites": 2,
+   "candidate_cases": 11,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FRAMER-008",
+   "component": "Svc/Ccsds/CcsdsSdlsFramer",
+   "candidate_sites": 35,
+   "answer_sites": 2,
+   "candidate_cases": 11,
+   "answer_cases": 2,
+   "rank_site": 5,
+   "rank_case": 4
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-FRAMER-009",
+   "component": "Svc/Ccsds/CcsdsSdlsFramer",
+   "candidate_sites": 35,
+   "answer_sites": 4,
+   "candidate_cases": 11,
+   "answer_cases": 4,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-SA-ROUTER-001",
+   "component": "Svc/Ccsds/SdlsSaRouter",
+   "candidate_sites": 36,
+   "answer_sites": 2,
+   "candidate_cases": 9,
+   "answer_cases": 2,
+   "rank_site": 4,
+   "rank_case": 4
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-SA-ROUTER-002",
+   "component": "Svc/Ccsds/SdlsSaRouter",
+   "candidate_sites": 36,
+   "answer_sites": 2,
+   "candidate_cases": 9,
+   "answer_cases": 2,
+   "rank_site": 11,
+   "rank_case": 3
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-SA-ROUTER-003",
+   "component": "Svc/Ccsds/SdlsSaRouter",
+   "candidate_sites": 36,
+   "answer_sites": 2,
+   "candidate_cases": 9,
+   "answer_cases": 2,
+   "rank_site": 4,
+   "rank_case": 4
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-SA-ROUTER-004",
+   "component": "Svc/Ccsds/SdlsSaRouter",
+   "candidate_sites": 36,
+   "answer_sites": 5,
+   "candidate_cases": 9,
+   "answer_cases": 5,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-SA-ROUTER-005",
+   "component": "Svc/Ccsds/SdlsSaRouter",
+   "candidate_sites": 36,
+   "answer_sites": 3,
+   "candidate_cases": 9,
+   "answer_cases": 3,
+   "rank_site": 8,
+   "rank_case": 4
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-SA-ROUTER-006",
+   "component": "Svc/Ccsds/SdlsSaRouter",
+   "candidate_sites": 36,
+   "answer_sites": 2,
+   "candidate_cases": 9,
+   "answer_cases": 2,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CCSDS-SDLS-SA-ROUTER-008",
+   "component": "Svc/Ccsds/SdlsSaRouter",
+   "candidate_sites": 36,
+   "answer_sites": 1,
+   "candidate_cases": 9,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CMD-SPLITTER-000",
+   "component": "Svc/CmdSplitter",
+   "candidate_sites": 15,
+   "answer_sites": 4,
+   "candidate_cases": 4,
+   "answer_cases": 4,
+   "rank_site": 4,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CMD-SPLITTER-001",
+   "component": "Svc/CmdSplitter",
+   "candidate_sites": 15,
+   "answer_sites": 4,
+   "candidate_cases": 4,
+   "answer_cases": 4,
+   "rank_site": 3,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CMD-SPLITTER-002",
+   "component": "Svc/CmdSplitter",
+   "candidate_sites": 15,
+   "answer_sites": 1,
+   "candidate_cases": 4,
+   "answer_cases": 1,
+   "rank_site": 3,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CMD-SPLITTER-003",
+   "component": "Svc/CmdSplitter",
+   "candidate_sites": 15,
+   "answer_sites": 1,
+   "candidate_cases": 4,
+   "answer_cases": 1,
+   "rank_site": 4,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-CMD-SPLITTER-004",
+   "component": "Svc/CmdSplitter",
+   "candidate_sites": 15,
+   "answer_sites": 1,
+   "candidate_cases": 4,
+   "answer_cases": 1,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "SVC-CMD-SPLITTER-005",
+   "component": "Svc/CmdSplitter",
+   "candidate_sites": 15,
+   "answer_sites": 1,
+   "candidate_cases": 4,
+   "answer_cases": 1,
+   "rank_site": 3,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-COMLOGGERDP-001",
+   "component": "Svc/ComLoggerDp",
+   "candidate_sites": 64,
+   "answer_sites": 2,
+   "candidate_cases": 29,
+   "answer_cases": 2,
+   "rank_site": null,
+   "rank_case": 8
+  },
+  {
+   "id": "SVC-COMQUEUE-013",
+   "component": "Svc/ComQueue",
+   "candidate_sites": 71,
+   "answer_sites": 5,
+   "candidate_cases": 31,
+   "answer_cases": 5,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-DPMANAGER-001",
+   "component": "Svc/DpManager",
+   "candidate_sites": 47,
+   "answer_sites": 2,
+   "candidate_cases": 10,
+   "answer_cases": 2,
+   "rank_site": 5,
+   "rank_case": 3
+  },
+  {
+   "id": "SVC-DPMANAGER-002",
+   "component": "Svc/DpManager",
+   "candidate_sites": 47,
+   "answer_sites": 3,
+   "candidate_cases": 10,
+   "answer_cases": 3,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-DPMANAGER-003",
+   "component": "Svc/DpManager",
+   "candidate_sites": 47,
+   "answer_sites": 2,
+   "candidate_cases": 10,
+   "answer_cases": 2,
+   "rank_site": 5,
+   "rank_case": 5
+  },
+  {
+   "id": "SVC-DPMANAGER-004",
+   "component": "Svc/DpManager",
+   "candidate_sites": 47,
+   "answer_sites": 7,
+   "candidate_cases": 10,
+   "answer_cases": 7,
+   "rank_site": 14,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-DPWRITER-001",
+   "component": "Svc/DpWriter",
+   "candidate_sites": 90,
+   "answer_sites": 1,
+   "candidate_cases": 18,
+   "answer_cases": 1,
+   "rank_site": 9,
+   "rank_case": 3
+  },
+  {
+   "id": "SVC-DPWRITER-005",
+   "component": "Svc/DpWriter",
+   "candidate_sites": 90,
+   "answer_sites": 1,
+   "candidate_cases": 18,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC-DPWRITER-008",
+   "component": "Svc/DpWriter",
+   "candidate_sites": 90,
+   "answer_sites": 1,
+   "candidate_cases": 18,
+   "answer_cases": 1,
+   "rank_site": 4,
+   "rank_case": 1
+  },
+  {
+   "id": "SVC_CHRONO_TIME_002",
+   "component": "Svc/ChronoTime",
+   "candidate_sites": 4,
+   "answer_sites": 1,
+   "candidate_cases": 1,
+   "answer_cases": 1,
+   "rank_site": null,
+   "rank_case": null
+  },
+  {
+   "id": "SVC_CHRONO_TIME_003",
+   "component": "Svc/ChronoTime",
+   "candidate_sites": 4,
+   "answer_sites": 1,
+   "candidate_cases": 1,
+   "answer_cases": 1,
+   "rank_site": null,
+   "rank_case": null
+  },
+  {
+   "id": "TLC-001",
+   "component": "Svc/TlmChan",
+   "candidate_sites": 39,
+   "answer_sites": 1,
+   "candidate_cases": 13,
+   "answer_cases": 4,
+   "rank_site": null,
+   "rank_case": null
+  },
+  {
+   "id": "TLC-002",
+   "component": "Svc/TlmChan",
+   "candidate_sites": 39,
+   "answer_sites": 1,
+   "candidate_cases": 13,
+   "answer_cases": 4,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "TLC-003",
+   "component": "Svc/TlmChan",
+   "candidate_sites": 39,
+   "answer_sites": 1,
+   "candidate_cases": 13,
+   "answer_cases": 1,
+   "rank_site": 15,
+   "rank_case": 1
+  },
+  {
+   "id": "TLC-004",
+   "component": "Svc/TlmChan",
+   "candidate_sites": 39,
+   "answer_sites": 1,
+   "candidate_cases": 13,
+   "answer_cases": 2,
+   "rank_site": null,
+   "rank_case": 3
+  },
+  {
+   "id": "WASM-SEQ-001",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 13,
+   "candidate_cases": 218,
+   "answer_cases": 13,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "WASM-SEQ-002",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 1,
+   "candidate_cases": 218,
+   "answer_cases": 1,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-003",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 6,
+   "candidate_cases": 218,
+   "answer_cases": 6,
+   "rank_site": 12,
+   "rank_case": 12
+  },
+  {
+   "id": "WASM-SEQ-004",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 5,
+   "candidate_cases": 218,
+   "answer_cases": 5,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-005",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 2,
+   "candidate_cases": 218,
+   "answer_cases": 2,
+   "rank_site": 79,
+   "rank_case": 57
+  },
+  {
+   "id": "WASM-SEQ-006",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 6,
+   "candidate_cases": 218,
+   "answer_cases": 6,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-007",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 11,
+   "candidate_cases": 218,
+   "answer_cases": 11,
+   "rank_site": 15,
+   "rank_case": 15
+  },
+  {
+   "id": "WASM-SEQ-008",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 1,
+   "candidate_cases": 218,
+   "answer_cases": 1,
+   "rank_site": 10,
+   "rank_case": 24
+  },
+  {
+   "id": "WASM-SEQ-009",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 8,
+   "candidate_cases": 218,
+   "answer_cases": 8,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-010",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 20,
+   "candidate_cases": 218,
+   "answer_cases": 20,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-011",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 4,
+   "candidate_cases": 218,
+   "answer_cases": 4,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-012",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 8,
+   "candidate_cases": 218,
+   "answer_cases": 8,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-013",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 12,
+   "candidate_cases": 218,
+   "answer_cases": 12,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "WASM-SEQ-014",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 3,
+   "candidate_cases": 218,
+   "answer_cases": 3,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "WASM-SEQ-015",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 4,
+   "candidate_cases": 218,
+   "answer_cases": 4,
+   "rank_site": 2,
+   "rank_case": 2
+  },
+  {
+   "id": "WASM-SEQ-016",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 2,
+   "candidate_cases": 218,
+   "answer_cases": 2,
+   "rank_site": 13,
+   "rank_case": 2
+  },
+  {
+   "id": "WASM-SEQ-017",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 14,
+   "candidate_cases": 218,
+   "answer_cases": 14,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-018",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 18,
+   "candidate_cases": 218,
+   "answer_cases": 18,
+   "rank_site": 2,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-019",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 39,
+   "candidate_cases": 218,
+   "answer_cases": 39,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-020",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 7,
+   "candidate_cases": 218,
+   "answer_cases": 7,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-021",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 23,
+   "candidate_cases": 218,
+   "answer_cases": 23,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-022",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 8,
+   "candidate_cases": 218,
+   "answer_cases": 8,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-023",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 24,
+   "candidate_cases": 218,
+   "answer_cases": 24,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-024",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 4,
+   "candidate_cases": 218,
+   "answer_cases": 4,
+   "rank_site": 1,
+   "rank_case": 1
+  },
+  {
+   "id": "WASM-SEQ-025",
+   "component": "Svc/WasmSequencer",
+   "candidate_sites": 254,
+   "answer_sites": 8,
+   "candidate_cases": 218,
+   "answer_cases": 8,
+   "rank_site": 1,
+   "rank_case": 1
+  }
+ ]
+}

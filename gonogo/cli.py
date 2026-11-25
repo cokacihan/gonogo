@@ -4,6 +4,7 @@
   gonogo build                          dataset (+ CI test results) -> Relate store data/fprime/
   gonogo poll [--all] [--json]          GO / NO-GO / INCOMPLETE per component (Ref deployment by default)
   gonogo why ID                         verdict of one requirement, with the evidence path
+  gonogo suggest ID                     test code that most likely verifies an uncited requirement, and the edit
   gonogo impact --files F... | --component C... | --port-type T...
                                         unit tests to re-run, verdicts put back in question
   gonogo findings                       traceability hygiene findings (IDs that do not line up)
@@ -22,6 +23,7 @@ from pathlib import Path
 
 from gonogo import db as store
 from gonogo.impact import impact as compute_impact, reason
+from gonogo.suggest import patch, suggest
 from gonogo.verdict import (VERDICTS_CYPHER, current_run, deployment_parts, drift_path, evidence_paths, poll,
                             verdicts)
 
@@ -105,8 +107,8 @@ def cmd_why(args) -> int:
     print(f"{c(row['id'], 'bold')}  {c(row['verdict'], row['verdict'])}   ({row['component']}, {row['source']})")
     print(f"  {row['text']}")
     print(f"  declared methods: {', '.join(row['methods']) or 'none'}   {_run_label(run)}")
-    for reason in row["reasons"]:
-        print(f"  - {reason}: {REASON_TEXT[reason]}")
+    for code in row["reasons"]:
+        print(f"  - {code}: {REASON_TEXT[code]}")
     chains = {p["test_case"]: p for p in evidence_paths(conn, row["id"], run)}
     for label, key in (("own tests", "own_tests"), ("tests of other components", "other_tests"),
                        ("tests citing a near-miss ID", "drift_tests")):
@@ -123,6 +125,44 @@ def cmd_why(args) -> int:
         print(c("\n  receipt (Cypher):", "dim"))
         print(c(VERDICTS_CYPHER.strip(), "dim"))
         print(c(f"  params: run={run!r}, accept_declared={args.accept_declared}", "dim"))
+    return 0
+
+
+def cmd_suggest(args) -> int:
+    conn = _open(args)
+    res = suggest(conn, args.id, k=args.k)
+    if res is None:
+        print(f"I don't know: {args.id} is not a requirement in the graph.")
+        return 2
+    if args.json:
+        print(json.dumps(res, indent=2, ensure_ascii=False))
+        return 0
+    if args.patch:  # only the diff, so that `gonogo suggest ID --patch --repo R > x.patch` can be applied
+        diff = res["sites"] and not res["drift"] and patch(Path(args.repo), res["id"], res["sites"][0])
+        if not diff:
+            print(f"No patch: {res['edit']}", file=sys.stderr)
+            return 1
+        sys.stdout.write(diff)
+        return 0
+    print(f"{c(res['id'], 'bold')}  ({res['component']})")
+    print(f"  {res['text']}")
+    if res["cited_at"]:
+        print(f"  already cited at: {', '.join(res['cited_at'])} (see gonogo why {res['id']})")
+    print(c(f"  words matched against the component's test code: {' '.join(res['terms'])}", "dim"))
+    if res["drift"]:
+        print("  near-miss ID in this component's tests:")
+        for d in res["drift"]:
+            print(f"    {d['site']:<36} cites {d['cited']}   {', '.join(d['at'])}")
+    print("  best-matching test code (Relate full-text index, BM25):")
+    for s in res["sites"]:
+        print(f"    {s['score']:5.1f}  {s['kind']:<8} {s['name']:<36} {c(', '.join(s['at']), 'dim')}")
+    print("  test cases that execute it (call graph):")
+    for t in res["cases"]:
+        print(f"    {t['best']:5.1f}  {t['gtest_filter']:<44} {t['status']:<8} {c('via ' + ' -> '.join(t['via']), 'dim')}")
+    print()
+    print(f"  suggested edit: {res['edit']}")
+    print(c("  A suggestion is not evidence: the verdict turns GO only when the line is written and the test passes in CI.",
+            "dim"))
     return 0
 
 
@@ -264,6 +304,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--all", action="store_true"); p.add_argument("--json", action="store_true")
     p = sub.add_parser("why", parents=[flag]); p.set_defaults(fn=cmd_why)
     p.add_argument("id"); p.add_argument("--cypher", action="store_true")
+    p = sub.add_parser("suggest", help="test code that most likely verifies an uncited requirement")
+    p.set_defaults(fn=cmd_suggest); p.add_argument("id"); p.add_argument("--k", type=int, default=5)
+    p.add_argument("--json", action="store_true")
+    p.add_argument("--patch", action="store_true", help="print a git-apply diff that writes the REQUIREMENT() line")
+    p.add_argument("--repo", default="data/raw/fprime", help="F´ checkout the patch is made against")
     p = sub.add_parser("impact", parents=[flag]); p.set_defaults(fn=cmd_impact)
     p.add_argument("--files", nargs="*", default=[]); p.add_argument("--component", nargs="*", default=[])
     p.add_argument("--port-type", nargs="*", default=[]); p.add_argument("--filters", action="store_true")

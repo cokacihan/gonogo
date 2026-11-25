@@ -101,6 +101,11 @@ def build(dataset: dict, path: Path = STORE, results: dict | None = None) -> dic
         db.execute("CREATE VECTOR INDEX entity_embedding IF NOT EXISTS FOR (n:Entity) ON (n.embedding) "
                    "OPTIONS {indexConfig: {`vector.dimensions`: %d, `vector.similarity_function`: 'cosine'}}" % DIM)
         db.execute("CREATE FULLTEXT INDEX entity_text IF NOT EXISTS FOR (n:Entity) ON EACH [n.text, n.id]")
+        # words of the test code (identifiers, no comments or strings): `gonogo suggest` ranks it against requirements
+        db.execute("CREATE FULLTEXT INDEX test_vocab IF NOT EXISTS FOR (n:TestCase|TestFunction) "
+                   "ON EACH [n.vocab, n.vocab_doc]")
+        # identifiers only, without the TEST_CASE()/COMMENT() descriptions: the ablation in eval/suggest_eval.py
+        db.execute("CREATE FULLTEXT INDEX test_code_vocab IF NOT EXISTS FOR (n:TestCase|TestFunction) ON EACH [n.vocab]")
         src = dataset.get("source", {})
         db.execute("MERGE (m:Meta {key: 'dataset'}) SET m.source_repo = $repo, m.source_commit = $commit, "
                    "m.source_license = $lic, m.run = $run, m.unmapped_results = $unmapped",

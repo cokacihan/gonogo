@@ -14,12 +14,16 @@ from dataclasses import asdict, dataclass, field
 
 from gonogo.impact import TESTS_TO_RERUN_CYPHER, impact
 from gonogo.queries import T, answer_ids, run
+from gonogo.suggest import DRIFT_CYPHER, INDEX, SITES_CYPHER, suggest
 from gonogo.verdict import VERDICTS_CYPHER, current_run, deployment_parts, poll, verdicts
 
 REQ_RE = re.compile(r"\b[A-Z][A-Z0-9]*(?:[-_][A-Z0-9]+)*[-_]\d+[A-Za-z]?\b")
 PATH_RE = re.compile(r"\b(?:Svc|Drv|Fw|Os|CFDP|Utils|TestDeploymentsProject)/[\w/]*\w")
 TYPE_RE = re.compile(r"\b(?:Svc|Drv|Fw|Os|Ref|CFDP|Utils)(?:\.\w+)+\b")
 INSTANCE_RE = re.compile(r"(?:Ref:)?(\$?\b[a-z]\w*[A-Z]\w*|\b[A-Z]\w*\.\$?[a-z]\w*)\b")
+# "where should the REQUIREMENT() go", "which test should cite X", "how do I make X GO"
+CITE_HELP = (r"suggest", r"\bwhere\b.*\b(cite|put|add|write)", r"which tests?\b.*\b(should|could|would|can|might)\b",
+             r"\bmake\b.*\bgo\b", r"\bhow\b.*\b(fix|close|cite|get)\b", r"\bcandidate")
 IMPACT = (r"impact", r"affect", r"break", r"\bchang", r"modif", r"\bedit", r"re-?run", r"retest", r"touch")
 VERDICT_WORDS = (r"\bwhy\b", r"\bgo\b", r"no-go", r"verdict", r"status", r"ready", r"verif", r"tested", r"evidence",
                  r"\bpass", r"\bfly\b")
@@ -262,7 +266,31 @@ class Agent:
         return Answer(question, "answered", text, "components_go", VERDICTS_CYPHER.strip(), {"run": self.run},
                       [p for p in table if p["verdict"] == "GO"], go)
 
+    def _cite_help(self, question: str, rid: str) -> Answer:
+        res = suggest(self.db, rid)
+        if res["drift"]:
+            d = res["drift"][0]
+            text = (f"{rid} is already tested under a near-miss ID: {d['site']} cites {d['cited']} "
+                    f"({', '.join(d['at'])}). Renaming it to {rid.split('@')[0]} links the test.")
+            return Answer(question, "answered", text, "suggest", DRIFT_CYPHER.strip(),
+                          {"id": rid, "ref": rid.split("@")[0]}, res["drift"], [x["site"] for x in res["drift"]],
+                          [{"id": rid, "label": "Requirement"}])
+        if res["sites"]:
+            sites = "; ".join(f"{s['kind']} {s['name']} ({s['at'][0]})" for s in res["sites"][:3])
+            cases = ", ".join(f"{c['gtest_filter']} {c['status']}" for c in res["cases"][:3])
+            text = (f"Candidates for REQUIREMENT(\"{rid.split('@')[0]}\"), ranked by Relate's full-text index over the "
+                    f"test code of {res['component']}: {sites}. Test cases that run them: {cases}. "
+                    "A candidate is not evidence: a reviewer confirms it, then the test must pass in CI.")
+        else:
+            text = f"No test code of {res['component']} shares a word with {rid}: a new test is needed."
+        return Answer(question, "answered", text, "suggest", SITES_CYPHER.strip(),
+                      {"id": rid, "terms": " ".join(res["terms"]), "index": INDEX, "k": len(res["sites"]) or 5},
+                      res["sites"], [s["site"] for s in res["sites"]],
+                      [{"id": rid, "label": "Requirement"}])
+
     def _about(self, question: str, q: str, eid: str, label: str, resolved: list) -> Answer:
+        if label == "Requirement" and _has(q, *CITE_HELP):
+            return self._cite_help(question, eid)
         if label == "Requirement":
             return self._verdict_of(question, eid) if eid in {r["id"] for r in self.rows} else \
                 self._template(question, "describe", resolved, id=eid)
