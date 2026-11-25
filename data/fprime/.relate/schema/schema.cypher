@@ -3,6 +3,7 @@ CREATE VECTOR INDEX `entity_embedding` FOR (n:`Entity`) ON (n.`embedding`) OPTIO
 CREATE RANGE INDEX `entity_id` FOR (n:`Entity`) ON (n.`id`);
 CREATE FULLTEXT INDEX `entity_text` FOR (n:`Entity`) ON EACH [n.`text`, n.`id`] OPTIONS {indexConfig: {`fulltext.analyzer`: 'standard-no-stop-words',`fulltext.eventually_consistent`: false}};
 CREATE RANGE INDEX `instance_id` FOR (n:`Instance`) ON (n.`id`);
+CREATE RANGE INDEX `library_id` FOR (n:`Library`) ON (n.`id`);
 CREATE RANGE INDEX `part_id` FOR (n:`Part`) ON (n.`id`);
 CREATE RANGE INDEX `porttype_id` FOR (n:`PortType`) ON (n.`id`);
 CREATE RANGE INDEX `requirement_id` FOR (n:`Requirement`) ON (n.`id`);

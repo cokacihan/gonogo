@@ -1,29 +1,29 @@
 {
   "format_version": 5,
-  "next_node_id": 6077,
-  "next_rel_id": 15219,
-  "checkpoint_lsn": 35,
-  "commit_ts": 35,
+  "next_node_id": 6151,
+  "next_rel_id": 15869,
+  "checkpoint_lsn": 38,
+  "commit_ts": 38,
   "node_parts": [
     {
-      "path": "nodes/0-262144-c40388153f0b2e8f2083b3acb335a7f4.parquet",
+      "path": "nodes/0-262144-187c5ca93a039c172a79e7891d7be59a.parquet",
       "id_lo": 0,
       "id_hi": 262144,
-      "rows": 6077,
-      "bytes": 887943
+      "rows": 6151,
+      "bytes": 891683
     }
   ],
   "rel_parts": [
     {
-      "path": "relationships/0-262144-a89b50ebdc332c6852365f4df49ad872.parquet",
+      "path": "relationships/0-262144-2cd58da2568c6e5495fbbf9ba4f1073a.parquet",
       "id_lo": 0,
       "id_hi": 262144,
-      "rows": 15219,
-      "bytes": 232609
+      "rows": 15869,
+      "bytes": 239557
     }
   ],
-  "bytes_per_node": 146.11535297021555,
-  "bytes_per_rel": 15.284118536040475,
+  "bytes_per_node": 144.96553405950252,
+  "bytes_per_rel": 15.095910265297118,
   "codec": "parquet",
   "indexes": [
     {
@@ -49,6 +49,11 @@
     {
       "name": "instance_id",
       "label": "Instance",
+      "property": "id"
+    },
+    {
+      "name": "library_id",
+      "label": "Library",
       "property": "id"
     },
     {
@@ -159,6 +164,17 @@
         "relationship": false,
         "labels": [
           "Instance"
+        ],
+        "properties": [
+          "id"
+        ],
+        "with_properties": []
+      },
+      "library_id": {
+        "kind": "Range",
+        "relationship": false,
+        "labels": [
+          "Library"
         ],
         "properties": [
           "id"
@@ -304,6 +320,7 @@
         }
       },
       "instance_id": {},
+      "library_id": {},
       "part_id": {},
       "porttype_id": {},
       "requirement_id": {},

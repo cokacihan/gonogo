@@ -22,11 +22,11 @@ STORE = DATA_DIR / "fprime"                       # committed Relate store (dire
 DATASET = DATA_DIR / "fprime_dataset.json"        # output of gonogo.fprime (repository text -> graph)
 RESULTS = DATA_DIR / "fprime_test_results.json"   # output of the CI unit-test run (gonogo.testresults)
 
-LABELS = ["Part", "Requirement", "Verification", "Document", "TestFile", "TestCase", "TestFunction", "PortType",
+LABELS = ["Part", "Library", "Requirement", "Verification", "Document", "TestFile", "TestCase", "TestFunction", "PortType",
           "Instance"]
 EMBED_LABELS = {"Part", "Requirement", "PortType", "Instance", "Document"}
 REL_TYPES = ["SATISFIES", "DOCUMENTED_IN", "VERIFIED_BY", "CITES", "EVIDENCED_BY", "TESTS", "USES_PORT",
-             "INSTANCE_OF", "CONNECTS_TO", "RAN_IN", "CALLS"]
+             "INSTANCE_OF", "CONNECTS_TO", "RAN_IN", "CALLS", "INCLUDES"]
 
 
 def _remove_store(path: Path) -> None:

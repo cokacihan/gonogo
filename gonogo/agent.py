@@ -200,10 +200,13 @@ class Agent:
 
     def _impact(self, question: str, components=(), port_types=(), resolved=None) -> Answer:
         res = impact(self.db, components=list(components), port_types=list(port_types), verdict_rows=self.rows)
+        assumed = (f" Assuming the headers of {', '.join(res['assumed_interface_change'])} change; name the files "
+                   "for an exact set." if res["assumed_interface_change"] else "")
         text = (f"Re-run {res['test_cases']} unit-test case(s) in {len(res['rerun'])} component(s): "
                 f"{', '.join(r['component'] for r in res['rerun'][:8])}{' …' if len(res['rerun']) > 8 else ''}. "
                 f"{len(res['requirements'])} requirement(s) depend on them; {len(res['go_pending_rerun'])} are GO "
-                f"today and pending re-run. Deployment connections for integration review: {len(res['integration_review'])}.")
+                f"today and pending re-run. Deployment connections for integration review: "
+                f"{len(res['integration_review'])}.{assumed}")
         return Answer(question, "answered", text, "impact", TESTS_TO_RERUN_CYPHER.strip(),
                       {"components": res["components"], "port_types": res["port_types"]}, res["rerun"],
                       sorted({r["component"] for r in res["rerun"]}), resolved or [])

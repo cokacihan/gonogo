@@ -12,7 +12,7 @@ and **INCOMPLETE**, with a reason, whenever it cannot know.
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
 <!-- gonogo:headline -->
-- **561** requirements, **2309** unit-test cases, **124** components, **72** port types and the **49**-instance Ref deployment of [NASA F´](https://github.com/nasa/fprime) (commit [`6fff089e8e`](https://github.com/nasa/fprime/tree/6fff089e8e2035307105cad4b28631eea1552ff6)) in one Relate graph (13153 relationships).
+- **561** requirements, **2309** unit-test cases, **124** components, **72** port types and the **49**-instance Ref deployment of [NASA F´](https://github.com/nasa/fprime) (commit [`6fff089e8e`](https://github.com/nasa/fprime/tree/6fff089e8e2035307105cad4b28631eea1552ff6)) in one Relate graph (13803 relationships).
 - Test code as a call graph: 2230 helper functions and 5318 `CALLS` edges. Evidence is a graph path from a test case to the `REQUIREMENT()` it relies on, up to 4 calls deep in F´.
 - F´'s own unit tests, **run in our CI** ([run 45468869538](https://github.com/cokacihan/tracegraph/actions/runs/45468869538)): 2665 test cases, 2649 passed, 16 skipped, 0 failed. All 393 of the 393 test cases that cite a requirement ran.
 - Ref deployment poll: **57 GO**, **0 NO-GO**, **170 INCOMPLETE** of 227 requirements in 34 components. Fully GO: `Svc/BufferManager`, `Svc/CmdSequencer`, `Svc/DpManager`.
@@ -157,9 +157,18 @@ Run [45468869538](https://github.com/cokacihan/tracegraph/actions/runs/454688695
 F´ unit tests run per component against an autocoded harness, so GoNoGo applies these rules
 ([`gonogo/impact.py`](gonogo/impact.py)):
 
-- **A changed component directory**: re-run that component's unit tests.
+- **A changed component directory**: re-run that component's unit tests. A change to the component's own `.cpp` stays
+  local, because its interface did not change.
+- **A changed header, or any change in library code** (a directory without an FPP component, such as `Fw/Types` or
+  `Utils/Types`): also re-run the tests of every component that includes it, directly or through other units. The
+  importer reads every `#include` in the checkout into `INCLUDES` edges, and the query finds the shortest chain with
+  `shortestPath((component)-[:INCLUDES*1..12]->(changed))`. The chain is printed as the reason.
 - **A changed port-type definition**: re-run the unit tests of every component that uses the port type.
 - **A changed deployment topology**: listed for integration review only, because it does not change which unit tests break.
+
+The include graph is kept per directory, not per file, so it errs on the safe side: a component that includes any
+header of a changed directory is listed, even if it does not use the changed file. A re-run set that is too large costs
+CI minutes; one that is too small lets a broken test through.
 
 Requirements that are GO today and depend on a re-run test are reported as *GO pending re-run*.
 
@@ -191,12 +200,29 @@ Unit tests to re-run: 1156 test cases in 27 components
   Svc/WasmSequencer                         218 cases   uses port:Svc.Sched as writeTelemetry, port:Svc.Sched as checkTimers
   TestDeploymentsProject/Ref/BlockDriver      3 cases   uses port:Svc.Sched as Sched
   TestDeploymentsProject/Ref/DpDemo           0 cases   uses port:Svc.Sched as run
-  TestDeploymentsProject/Ref/SendBuffApp      0 cases   uses port:Svc.Sched as SchedIn
-  TestDeploymentsProject/Ref/SignalGen        1 cases   uses port:Svc.Sched as schedIn
+  … 2 more components (--all to list them)
 
   requirements depending on these tests: 185; GO today, pending re-run: 61
 ```
 <!-- /gonogo:impact_sched -->
+
+A library header, with the include chain that brings each component in:
+
+<!-- gonogo:impact_lib -->
+```text
+  changes that reach every includer: Utils/Types
+Unit tests to re-run: 276 test cases in 7 components
+  Svc/ComQueue                               31 cases   includes Utils/Types
+  Svc/FrameAccumulator                       27 cases   includes Utils/Types
+  Svc/Subtopologies/ComCcsds                  0 cases   includes Svc/FrameAccumulator -> Utils/Types
+  Svc/Subtopologies/ComCcsdsSdls              0 cases   includes Svc/Subtopologies/ComCcsds -> Svc/FrameAccumulator -> Utils/Types
+  Svc/Subtopologies/ComFprime                 0 cases   includes Svc/FrameAccumulator -> Utils/Types
+  Svc/WasmSequencer                         218 cases   includes Utils/Types
+  TestDeploymentsProject/Ref                  0 cases   includes Svc/Subtopologies/ComCcsds -> Svc/FrameAccumulator -> Utils/Types
+
+  requirements depending on these tests: 62; GO today, pending re-run: 25
+```
+<!-- /gonogo:impact_lib -->
 
 ## Findings
 
@@ -274,7 +300,7 @@ process. The table below covers four real F´ snapshots (generated from [`data/r
   snapshot when one file is handier.
 
 <!-- gonogo:modes -->
-Committed directory store `data/fprime/`: 1.13 MB. Same graph measured in both modes: directory 1.13 MB, single `.rl` file 20.64 MB.
+Committed directory store `data/fprime/`: 1.14 MB. Same graph measured in both modes: directory 1.13 MB, single `.rl` file 20.64 MB.
 <!-- /gonogo:modes -->
 
 - **What the graph models.**

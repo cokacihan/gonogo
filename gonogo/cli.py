@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 from gonogo import db as store
-from gonogo.impact import impact as compute_impact
+from gonogo.impact import impact as compute_impact, reason
 from gonogo.verdict import (VERDICTS_CYPHER, current_run, deployment_parts, drift_path, evidence_paths, poll,
                             verdicts)
 
@@ -136,12 +136,20 @@ def cmd_impact(args) -> int:
     inp = res["input"]
     if inp["unmatched"]:
         print(c(f"  not mapped to any component or port type: {', '.join(inp['unmatched'])}", "dim"))
+    if res["assumed_interface_change"]:
+        print(c(f"  named without files, so their headers are assumed to change: "
+                f"{', '.join(res['assumed_interface_change'])} (pass --files for an exact set)", "dim"))
+    if res["ripple"]:
+        print(c(f"  changes that reach every includer: {', '.join(res['ripple'])}", "dim"))
     print(c(f"Unit tests to re-run: {res['test_cases']} test cases in {len(res['rerun'])} components", "bold"))
-    for r in res["rerun"]:
-        why = "changed" if r["changed_directly"] else "uses " + ", ".join(r["via_ports"])
+    shown = res["rerun"] if args.all else res["rerun"][:25]
+    for r in shown:
+        why = reason(r)
         print(f"  {r['component']:<40} {r['test_cases']:>4} cases   {c(why, 'dim')}")
         if args.filters and r["filters"]:
             print(c(f"    GTEST_FILTER={':'.join(sorted(r['filters']))}", "dim"))
+    if len(shown) < len(res["rerun"]):
+        print(c(f"  … {len(res['rerun']) - len(shown)} more components (--all to list them)", "dim"))
     print(f"\n  requirements depending on these tests: {len(res['requirements'])}; "
           f"GO today, pending re-run: {len(res['go_pending_rerun'])}")
     if res["integration_review"]:
@@ -259,6 +267,7 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("impact", parents=[flag]); p.set_defaults(fn=cmd_impact)
     p.add_argument("--files", nargs="*", default=[]); p.add_argument("--component", nargs="*", default=[])
     p.add_argument("--port-type", nargs="*", default=[]); p.add_argument("--filters", action="store_true")
+    p.add_argument("--all", action="store_true", help="list every component, not only the first 25")
     p.add_argument("--json", action="store_true")
     p = sub.add_parser("findings"); p.set_defaults(fn=cmd_findings); p.add_argument("--json", action="store_true")
     p = sub.add_parser("ask"); p.set_defaults(fn=cmd_ask)

@@ -152,6 +152,8 @@ button[type="submit"], .quiet {
 .quiet { background: transparent; color: var(--ink); border-color: #aab3bc; }
 .impact-out, .query-out { margin-top: var(--s5); }
 .impact-out table, .query-out table { border-collapse: collapse; width: 100%; max-width: 62rem; font-size: 0.95rem; }
+.impact-out td, .impact-out td code { overflow-wrap: anywhere; } /* long component paths and include chains on phones */
+.impact-out details summary { cursor: pointer; color: var(--link); margin: var(--s3) 0; }
 th, td { text-align: left; padding: var(--s2) var(--s3) var(--s2) 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
 th { font: 600 1rem var(--display); }
 td code, .meta { font: 0.85rem var(--code); }

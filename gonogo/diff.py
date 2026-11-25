@@ -16,7 +16,7 @@ import tempfile
 from pathlib import Path
 
 from gonogo import db as store
-from gonogo.impact import impact
+from gonogo.impact import impact, reason
 from gonogo.queries import run
 from gonogo.verdict import CITE_HOPS, verdicts
 
@@ -130,7 +130,9 @@ def render_check(d: dict, blocking: list[str], imp: dict, files: list[str], warn
                   f"{imp['test_cases']} test cases in {len(imp['rerun'])} components "
                   f"(GO today and pending re-run: {len(imp['go_pending_rerun'])}).", ""]
         lines += [f"- `{r['component']}`: {r['test_cases']} cases"
-                  + ("" if r["changed_directly"] else f" (uses {', '.join(r['via_ports'])})") for r in imp["rerun"][:25]]
+                  + ("" if r["changed_directly"] else f" ({reason(r)})") for r in imp["rerun"][:25]]
+        if len(imp["rerun"]) > 25:
+            lines.append(f"- … {len(imp['rerun']) - 25} more components")
         if imp["integration_review"]:
             lines += ["", f"Deployment connections to review (integration, not unit tests): {len(imp['integration_review'])}"]
         lines.append("")

@@ -34,7 +34,7 @@ SDD_FREE_TEXT = """## Requirements
 """
 
 
-def _write(tmp_path, name, text):
+def _write(tmp_path, name, text=""):
     p = tmp_path / name
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(text, encoding="utf-8")
@@ -157,3 +157,21 @@ def test_known_real_findings_present(fp_data):
     assert {f"ISF-HTH-00{i}" for i in range(1, 8)} <= unknown
     dups = {d["id"] for d in fp_data["diagnostics"]["duplicate_requirement_ids"]}
     assert {"FH-002", "SVC-CCSDS-SPD-009"} <= dups
+
+
+def test_include_resolution_follows_fprime_include_paths(tmp_path):
+    _write(tmp_path, "Svc/A/A.hpp", '#include <config/ACfg.hpp>\n#include <BCfg/B.hpp>\n#include "Svc/B/BComponentAc.hpp"\n'
+                                    '#include <Utils/Types/Queue.hpp>\n#include <vector>\n#include "Local.hpp"\n')
+    _write(tmp_path, "Svc/A/Local.hpp")
+    _write(tmp_path, "Svc/B/B.hpp")  # its *Ac.hpp is generated at build time and absent from the checkout
+    _write(tmp_path, "Svc/B/config/BCfg/B.hpp")
+    _write(tmp_path, "default/config/ACfg.hpp")
+    _write(tmp_path, "Utils/Types/Queue.hpp", "#include <Utils/Types/CircularBuffer.hpp>\n")
+    _write(tmp_path, "Utils/Types/CircularBuffer.hpp")
+    libs, edges, stats = fprime.include_graph(tmp_path, {"Svc/A", "Svc/B"})
+    got = {(e["src"], e["dst"]) for e in edges}
+    assert got == {("Svc/A", "default/config/ACfg.hpp"),  # a configuration header is its own unit
+                   ("Svc/A", "Svc/B"),                     # component-local <BCfg/...> and an autocoded header
+                   ("Svc/A", "Utils/Types")}               # library directory; Queue -> CircularBuffer stays inside it
+    assert libs == {"default/config/ACfg.hpp", "Utils/Types"}
+    assert stats["external_or_same_dir"] == 2  # <vector> and the same-directory "Local.hpp"

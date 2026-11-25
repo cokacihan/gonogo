@@ -190,25 +190,32 @@ function renderImpact() {
   const files = $("#files").value.split(/\r?\n/);
   const cls = classifyFiles(S.db, files);
   const out = $("#impact-out");
-  if (!cls.components.length && !cls.port_types.length) {
-    out.innerHTML = `<p class="error">None of these paths is inside an F´ component or defines a port type. Use paths
-      from the repository root, such as <code>Svc/Health/Health.cpp</code>.</p>` +
+  if (!cls.components.length && !cls.port_types.length && !cls.ripple.length) {
+    out.innerHTML = `<p class="error">None of these paths is inside an F´ component or library, or defines a port type.
+      Use paths from the repository root, such as <code>Svc/Health/Health.cpp</code>.</p>` +
       (cls.topology.length ? `<p>Topology files changed: ${cls.topology.map((f) => `<code>${esc(f)}</code>`).join(", ")}.
       Review the deployment connections; no unit tests change.</p>` : "");
     return;
   }
-  const res = impact(S.db, S.queries, cls.components, cls.port_types, S.rows);
-  const rows = res.rerun.map((r) => {
-    const why = r.changed_directly ? "changed" : `uses ${r.via_ports.map((v) => v.replace("port:", "")).join(", ")}`;
+  const res = impact(S.db, S.queries, cls.components, cls.port_types, S.rows, cls.ripple);
+  const SHOWN = 25; // a header in Fw reaches most of the repository: show the first rows, keep the rest folded
+  const rowHtml = res.rerun.map((r) => {
+    const why = r.changed_directly ? "changed"
+      : r.via_ports.length ? `uses ${r.via_ports.map((v) => v.replace("port:", "")).join(", ")}`
+      : `includes ${r.include_chain.slice(1).join(" → ")}`;
     const filter = [...r.filters].sort().join(":");
     return `<tr><td><code>${esc(r.component)}</code></td><td>${esc(why)}</td><td>${fmt(r.test_cases)}</td>
       <td>${r.test_cases ? `<button type="button" class="quiet" data-copy="${esc(filter)}">Copy gtest filter</button>` : "no unit tests"}</td></tr>`;
-  }).join("");
+  });
+  const head = "<thead><tr><th>Component</th><th>Why</th><th>Test cases</th><th></th></tr></thead>";
+  const table = `<table>${head}<tbody>${rowHtml.slice(0, SHOWN).join("")}</tbody></table>` +
+    (rowHtml.length > SHOWN ? `<details><summary>Show the other ${rowHtml.length - SHOWN} components</summary>
+      <table>${head}<tbody>${rowHtml.slice(SHOWN).join("")}</tbody></table></details>` : "");
   out.innerHTML = `<p><span class="big">${fmt(res.testCases)}</span> unit-test cases to re-run in ${res.rerun.length}
     component${res.rerun.length === 1 ? "" : "s"}. ${fmt(res.requirements.length)} requirements depend on them;
     ${fmt(res.goPending.length)} are GO today and stay pending until the re-run.</p>
     ${cls.unmatched.length ? `<p class="meta">Not mapped: ${cls.unmatched.map(esc).join(", ")}</p>` : ""}
-    <table><thead><tr><th>Component</th><th>Why</th><th>Test cases</th><th></th></tr></thead><tbody>${rows}</tbody></table>
+    ${table}
     ${res.integration.length ? `<h3>Integration review</h3><p>${res.integration.length} deployment connections touch the
       changed components. They do not change which unit tests break.</p>
       <table><thead><tr><th>Instance</th><th>Direction</th><th>Peer</th><th>Ports</th></tr></thead><tbody>

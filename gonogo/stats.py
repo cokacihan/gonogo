@@ -139,7 +139,8 @@ def compute(measure_modes: bool = False) -> dict:
         shutil.rmtree(tmp, ignore_errors=True)
     out["cli"] = {"why_hth": cli("why", "HTH-001"), "why_tlc": cli("why", "TLC-001"),
                   "impact_sched": cli("impact", "--files", "Svc/Sched/Sched.fpp"),
-                  "impact_health": cli("impact", "--files", "Svc/Health/Health.cpp")}
+                  "impact_health": cli("impact", "--files", "Svc/Health/Health.cpp"),
+                  "impact_lib": cli("impact", "--files", "Utils/Types/CircularBuffer.hpp")}
     return out
 
 
@@ -231,7 +232,7 @@ def blocks(s: dict, old_modes: dict | None = None) -> dict[str, str]:
             lines.append(f"| [#{r['pr']}](https://github.com/nasa/fprime/pull/{r['pr']}) {r['title']} | **{r['result']}** | "
                          f"{why} | {today} |")
         b["replays"] = "\n".join(lines)
-    for k in ("why_hth", "why_tlc", "impact_sched", "impact_health"):
+    for k in ("why_hth", "why_tlc", "impact_sched", "impact_health", "impact_lib"):
         b[k] = "```text\n" + s["cli"][k] + "\n```"
     return b
 

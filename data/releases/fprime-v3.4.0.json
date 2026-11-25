@@ -12312,6 +12312,218 @@
     "deployment": "Ref",
     "text": "Ref deployment instance uplink of Svc.Deframer"
    }
+  ],
+  "Library": [
+   {
+    "id": "CFDP/Checksum",
+    "name": "CFDP/Checksum",
+    "text": "Library code in CFDP/Checksum"
+   },
+   {
+    "id": "CFDP/Checksum/GTest",
+    "name": "CFDP/Checksum/GTest",
+    "text": "Library code in CFDP/Checksum/GTest"
+   },
+   {
+    "id": "CFDP/Checksum/test/ut",
+    "name": "CFDP/Checksum/test/ut",
+    "text": "Library code in CFDP/Checksum/test/ut"
+   },
+   {
+    "id": "Drv/DataTypes",
+    "name": "Drv/DataTypes",
+    "text": "Library code in Drv/DataTypes"
+   },
+   {
+    "id": "Fw",
+    "name": "Fw",
+    "text": "Library code in Fw"
+   },
+   {
+    "id": "Fw//Buffer",
+    "name": "Fw//Buffer",
+    "text": "Library code in Fw//Buffer"
+   },
+   {
+    "id": "Fw/Cfg",
+    "name": "Fw/Cfg",
+    "text": "Library code in Fw/Cfg"
+   },
+   {
+    "id": "Fw/Comp",
+    "name": "Fw/Comp",
+    "text": "Library code in Fw/Comp"
+   },
+   {
+    "id": "Fw/Logger",
+    "name": "Fw/Logger",
+    "text": "Library code in Fw/Logger"
+   },
+   {
+    "id": "Fw/Logger/test/ut",
+    "name": "Fw/Logger/test/ut",
+    "text": "Library code in Fw/Logger/test/ut"
+   },
+   {
+    "id": "Fw/SerializableFile",
+    "name": "Fw/SerializableFile",
+    "text": "Library code in Fw/SerializableFile"
+   },
+   {
+    "id": "Fw/SerializableFile/test/TestSerializable",
+    "name": "Fw/SerializableFile/test/TestSerializable",
+    "text": "Library code in Fw/SerializableFile/test/TestSerializable"
+   },
+   {
+    "id": "Fw/SerializableFile/test/ut",
+    "name": "Fw/SerializableFile/test/ut",
+    "text": "Library code in Fw/SerializableFile/test/ut"
+   },
+   {
+    "id": "Fw/Test",
+    "name": "Fw/Test",
+    "text": "Library code in Fw/Test"
+   },
+   {
+    "id": "Os",
+    "name": "Os",
+    "text": "Library code in Os"
+   },
+   {
+    "id": "Os/Baremetal",
+    "name": "Os/Baremetal",
+    "text": "Library code in Os/Baremetal"
+   },
+   {
+    "id": "Os/Baremetal/TaskRunner",
+    "name": "Os/Baremetal/TaskRunner",
+    "text": "Library code in Os/Baremetal/TaskRunner"
+   },
+   {
+    "id": "Os/Linux",
+    "name": "Os/Linux",
+    "text": "Library code in Os/Linux"
+   },
+   {
+    "id": "Os/MacOs",
+    "name": "Os/MacOs",
+    "text": "Library code in Os/MacOs"
+   },
+   {
+    "id": "Os/Posix",
+    "name": "Os/Posix",
+    "text": "Library code in Os/Posix"
+   },
+   {
+    "id": "Os/Stubs",
+    "name": "Os/Stubs",
+    "text": "Library code in Os/Stubs"
+   },
+   {
+    "id": "Os/Stubs/Linux",
+    "name": "Os/Stubs/Linux",
+    "text": "Library code in Os/Stubs/Linux"
+   },
+   {
+    "id": "Os/X86",
+    "name": "Os/X86",
+    "text": "Library code in Os/X86"
+   },
+   {
+    "id": "Os/test/ut",
+    "name": "Os/test/ut",
+    "text": "Library code in Os/test/ut"
+   },
+   {
+    "id": "STest/STest",
+    "name": "STest/STest",
+    "text": "Library code in STest/STest"
+   },
+   {
+    "id": "STest/STest/Pick",
+    "name": "STest/STest/Pick",
+    "text": "Library code in STest/STest/Pick"
+   },
+   {
+    "id": "STest/STest/Random",
+    "name": "STest/STest/Random",
+    "text": "Library code in STest/STest/Random"
+   },
+   {
+    "id": "STest/STest/Rule",
+    "name": "STest/STest/Rule",
+    "text": "Library code in STest/STest/Rule"
+   },
+   {
+    "id": "STest/STest/Scenario",
+    "name": "STest/STest/Scenario",
+    "text": "Library code in STest/STest/Scenario"
+   },
+   {
+    "id": "STest/STest/types",
+    "name": "STest/STest/types",
+    "text": "Library code in STest/STest/types"
+   },
+   {
+    "id": "Svc/Cycle",
+    "name": "Svc/Cycle",
+    "text": "Library code in Svc/Cycle"
+   },
+   {
+    "id": "Svc/UdpReceiver",
+    "name": "Svc/UdpReceiver",
+    "text": "Library code in Svc/UdpReceiver"
+   },
+   {
+    "id": "Svc/UdpReceiver/test/ut",
+    "name": "Svc/UdpReceiver/test/ut",
+    "text": "Library code in Svc/UdpReceiver/test/ut"
+   },
+   {
+    "id": "Svc/UdpSender",
+    "name": "Svc/UdpSender",
+    "text": "Library code in Svc/UdpSender"
+   },
+   {
+    "id": "Svc/UdpSender/test/ut",
+    "name": "Svc/UdpSender/test/ut",
+    "text": "Library code in Svc/UdpSender/test/ut"
+   },
+   {
+    "id": "Utils",
+    "name": "Utils",
+    "text": "Library code in Utils"
+   },
+   {
+    "id": "Utils/Hash",
+    "name": "Utils/Hash",
+    "text": "Library code in Utils/Hash"
+   },
+   {
+    "id": "Utils/Hash/libcrc",
+    "name": "Utils/Hash/libcrc",
+    "text": "Library code in Utils/Hash/libcrc"
+   },
+   {
+    "id": "Utils/Hash/openssl",
+    "name": "Utils/Hash/openssl",
+    "text": "Library code in Utils/Hash/openssl"
+   },
+   {
+    "id": "Utils/Types",
+    "name": "Utils/Types",
+    "text": "Library code in Utils/Types"
+   },
+   {
+    "id": "Utils/Types/test/ut/CircularBuffer",
+    "name": "Utils/Types/test/ut/CircularBuffer",
+    "text": "Library code in Utils/Types/test/ut/CircularBuffer"
+   },
+   {
+    "id": "Utils/test/ut",
+    "name": "Utils/test/ut",
+    "text": "Library code in Utils/test/ut"
+   }
   ]
  },
  "edges": [
@@ -25184,6 +25396,1752 @@
    "src_port": "bufferSendOut",
    "dst_port": "bufferSendIn",
    "graph": "Uplink"
+  },
+  {
+   "src": "CFDP/Checksum",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "CFDP/Checksum/GTest",
+   "type": "INCLUDES",
+   "dst": "CFDP/Checksum",
+   "lines": 1
+  },
+  {
+   "src": "CFDP/Checksum/test/ut",
+   "type": "INCLUDES",
+   "dst": "CFDP/Checksum",
+   "lines": 1
+  },
+  {
+   "src": "Drv/BlockDriver",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Drv/DataTypes",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 2
+  },
+  {
+   "src": "Drv/Ip",
+   "type": "INCLUDES",
+   "dst": "Fw//Buffer",
+   "lines": 1
+  },
+  {
+   "src": "Drv/Ip",
+   "type": "INCLUDES",
+   "dst": "Fw/Buffer",
+   "lines": 1
+  },
+  {
+   "src": "Drv/Ip",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 6
+  },
+  {
+   "src": "Drv/Ip",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 5
+  },
+  {
+   "src": "Drv/Ip",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 5
+  },
+  {
+   "src": "Drv/Ip",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 1
+  },
+  {
+   "src": "Drv/LinuxGpioDriver",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 3
+  },
+  {
+   "src": "Drv/LinuxI2cDriver",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Drv/LinuxI2cDriver",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 3
+  },
+  {
+   "src": "Drv/LinuxSpiDriver",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Drv/LinuxUartDriver",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Drv/LinuxUartDriver",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 3
+  },
+  {
+   "src": "Drv/TcpClient",
+   "type": "INCLUDES",
+   "dst": "Drv/Ip",
+   "lines": 6
+  },
+  {
+   "src": "Drv/TcpClient",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Drv/TcpClient",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Drv/TcpClient",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 1
+  },
+  {
+   "src": "Drv/TcpServer",
+   "type": "INCLUDES",
+   "dst": "Drv/Ip",
+   "lines": 6
+  },
+  {
+   "src": "Drv/TcpServer",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Drv/TcpServer",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Drv/TcpServer",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 1
+  },
+  {
+   "src": "Drv/Udp",
+   "type": "INCLUDES",
+   "dst": "Drv/Ip",
+   "lines": 6
+  },
+  {
+   "src": "Drv/Udp",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Drv/Udp",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Drv/Udp",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Buffer",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 5
+  },
+  {
+   "src": "Fw/Cmd",
+   "type": "INCLUDES",
+   "dst": "Fw/Cfg",
+   "lines": 2
+  },
+  {
+   "src": "Fw/Cmd",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Cmd",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 5
+  },
+  {
+   "src": "Fw/Com",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 3
+  },
+  {
+   "src": "Fw/Comp",
+   "type": "INCLUDES",
+   "dst": "Fw",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Comp",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Comp",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 4
+  },
+  {
+   "src": "Fw/Comp",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 5
+  },
+  {
+   "src": "Fw/FilePacket",
+   "type": "INCLUDES",
+   "dst": "CFDP/Checksum",
+   "lines": 1
+  },
+  {
+   "src": "Fw/FilePacket",
+   "type": "INCLUDES",
+   "dst": "CFDP/Checksum/GTest",
+   "lines": 1
+  },
+  {
+   "src": "Fw/FilePacket",
+   "type": "INCLUDES",
+   "dst": "Fw/Buffer",
+   "lines": 2
+  },
+  {
+   "src": "Fw/FilePacket",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 15
+  },
+  {
+   "src": "Fw/Log",
+   "type": "INCLUDES",
+   "dst": "Fw/Cfg",
+   "lines": 3
+  },
+  {
+   "src": "Fw/Log",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 3
+  },
+  {
+   "src": "Fw/Log",
+   "type": "INCLUDES",
+   "dst": "Fw/Time",
+   "lines": 2
+  },
+  {
+   "src": "Fw/Log",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 8
+  },
+  {
+   "src": "Fw/Logger",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Logger/test/ut",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Logger/test/ut",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Logger/test/ut",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Logger/test/ut",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Logger/test/ut",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Rule",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Logger/test/ut",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Scenario",
+   "lines": 3
+  },
+  {
+   "src": "Fw/Obj",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Obj",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 2
+  },
+  {
+   "src": "Fw/Port",
+   "type": "INCLUDES",
+   "dst": "Fw/Comp",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Port",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Port",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 3
+  },
+  {
+   "src": "Fw/Port",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 8
+  },
+  {
+   "src": "Fw/Port",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Prm",
+   "type": "INCLUDES",
+   "dst": "Fw/Cfg",
+   "lines": 2
+  },
+  {
+   "src": "Fw/Prm",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 4
+  },
+  {
+   "src": "Fw/SerializableFile",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 4
+  },
+  {
+   "src": "Fw/SerializableFile",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Fw/SerializableFile/test/ut",
+   "type": "INCLUDES",
+   "dst": "Fw/SerializableFile",
+   "lines": 1
+  },
+  {
+   "src": "Fw/SerializableFile/test/ut",
+   "type": "INCLUDES",
+   "dst": "Fw/SerializableFile/test/TestSerializable",
+   "lines": 1
+  },
+  {
+   "src": "Fw/SerializableFile/test/ut",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 2
+  },
+  {
+   "src": "Fw/Test",
+   "type": "INCLUDES",
+   "dst": "Fw/Cfg",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Test",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 3
+  },
+  {
+   "src": "Fw/Time",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 2
+  },
+  {
+   "src": "Fw/Tlm",
+   "type": "INCLUDES",
+   "dst": "Fw/Cfg",
+   "lines": 2
+  },
+  {
+   "src": "Fw/Tlm",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 3
+  },
+  {
+   "src": "Fw/Tlm",
+   "type": "INCLUDES",
+   "dst": "Fw/Time",
+   "lines": 1
+  },
+  {
+   "src": "Fw/Tlm",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 6
+  },
+  {
+   "src": "Fw/Types",
+   "type": "INCLUDES",
+   "dst": "Fw/Cfg",
+   "lines": 4
+  },
+  {
+   "src": "Fw/Types",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 2
+  },
+  {
+   "src": "Os",
+   "type": "INCLUDES",
+   "dst": "Fw",
+   "lines": 1
+  },
+  {
+   "src": "Os",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Os",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 2
+  },
+  {
+   "src": "Os",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 12
+  },
+  {
+   "src": "Os",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash",
+   "lines": 3
+  },
+  {
+   "src": "Os",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash/libcrc",
+   "lines": 1
+  },
+  {
+   "src": "Os/Baremetal",
+   "type": "INCLUDES",
+   "dst": "Fw/Comp",
+   "lines": 1
+  },
+  {
+   "src": "Os/Baremetal",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 5
+  },
+  {
+   "src": "Os/Baremetal",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 8
+  },
+  {
+   "src": "Os/Baremetal",
+   "type": "INCLUDES",
+   "dst": "Os/Baremetal/TaskRunner",
+   "lines": 1
+  },
+  {
+   "src": "Os/Baremetal",
+   "type": "INCLUDES",
+   "dst": "Os/Pthreads",
+   "lines": 1
+  },
+  {
+   "src": "Os/Baremetal/TaskRunner",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Os/Baremetal/TaskRunner",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 2
+  },
+  {
+   "src": "Os/Linux",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 5
+  },
+  {
+   "src": "Os/Linux",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 8
+  },
+  {
+   "src": "Os/Linux",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash/libcrc",
+   "lines": 1
+  },
+  {
+   "src": "Os/MacOs",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 2
+  },
+  {
+   "src": "Os/MacOs",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 2
+  },
+  {
+   "src": "Os/MacOs",
+   "type": "INCLUDES",
+   "dst": "Os/Pthreads",
+   "lines": 1
+  },
+  {
+   "src": "Os/Posix",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Os/Posix",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 6
+  },
+  {
+   "src": "Os/Posix",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 8
+  },
+  {
+   "src": "Os/Pthreads",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Os/Pthreads",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 7
+  },
+  {
+   "src": "Os/Pthreads",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Os/Stubs",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Os/Stubs/Linux",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Os/Stubs/Linux",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Os/Stubs/Linux",
+   "type": "INCLUDES",
+   "dst": "Os/Stubs",
+   "lines": 1
+  },
+  {
+   "src": "Os/X86",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Os/X86",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Os/test/ut",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 7
+  },
+  {
+   "src": "Os/test/ut",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 11
+  },
+  {
+   "src": "Os/test/ut",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash",
+   "lines": 1
+  },
+  {
+   "src": "Ref",
+   "type": "INCLUDES",
+   "dst": "Drv/BlockDriver",
+   "lines": 1
+  },
+  {
+   "src": "Ref",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 2
+  },
+  {
+   "src": "Ref",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 2
+  },
+  {
+   "src": "Ref",
+   "type": "INCLUDES",
+   "dst": "Svc/FramingProtocol",
+   "lines": 2
+  },
+  {
+   "src": "Ref",
+   "type": "INCLUDES",
+   "dst": "Svc/Health",
+   "lines": 1
+  },
+  {
+   "src": "Ref/RecvBuffApp",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Ref/RecvBuffApp",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Ref/SendBuffApp",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Ref/SendBuffApp",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Ref/SignalGen",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 3
+  },
+  {
+   "src": "Ref/SignalGen",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 2
+  },
+  {
+   "src": "STest/STest/Pick",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Random",
+   "lines": 1
+  },
+  {
+   "src": "STest/STest/Pick",
+   "type": "INCLUDES",
+   "dst": "STest/STest/types",
+   "lines": 1
+  },
+  {
+   "src": "STest/STest/Random",
+   "type": "INCLUDES",
+   "dst": "STest/STest/types",
+   "lines": 1
+  },
+  {
+   "src": "STest/STest/Rule",
+   "type": "INCLUDES",
+   "dst": "STest/STest",
+   "lines": 1
+  },
+  {
+   "src": "STest/STest/Rule",
+   "type": "INCLUDES",
+   "dst": "STest/STest/types",
+   "lines": 1
+  },
+  {
+   "src": "STest/STest/Scenario",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Random",
+   "lines": 4
+  },
+  {
+   "src": "STest/STest/Scenario",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Rule",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ActiveLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 2
+  },
+  {
+   "src": "Svc/ActiveLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Log",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ActiveLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ActiveLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 2
+  },
+  {
+   "src": "Svc/ActiveLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ActiveLogger",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 3
+  },
+  {
+   "src": "Svc/ActiveLogger",
+   "type": "INCLUDES",
+   "dst": "Os/Stubs",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ActiveRateGroup",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ActiveRateGroup",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ActiveRateGroup",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ActiveRateGroup",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ActiveTextLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ActiveTextLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 5
+  },
+  {
+   "src": "Svc/ActiveTextLogger",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 4
+  },
+  {
+   "src": "Svc/AssertFatalAdapter",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Svc/AssertFatalAdapter",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 3
+  },
+  {
+   "src": "Svc/BufferAccumulator",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 6
+  },
+  {
+   "src": "Svc/BufferAccumulator",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/BufferLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 3
+  },
+  {
+   "src": "Svc/BufferLogger",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 8
+  },
+  {
+   "src": "Svc/BufferLogger",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash",
+   "lines": 1
+  },
+  {
+   "src": "Svc/BufferManager",
+   "type": "INCLUDES",
+   "dst": "Fw/Buffer",
+   "lines": 1
+  },
+  {
+   "src": "Svc/BufferManager",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/BufferManager",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 3
+  },
+  {
+   "src": "Svc/CmdDispatcher",
+   "type": "INCLUDES",
+   "dst": "Fw/Cmd",
+   "lines": 1
+  },
+  {
+   "src": "Svc/CmdDispatcher",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 2
+  },
+  {
+   "src": "Svc/CmdDispatcher",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 1
+  },
+  {
+   "src": "Svc/CmdDispatcher",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 2
+  },
+  {
+   "src": "Svc/CmdDispatcher",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/CmdDispatcher",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 2
+  },
+  {
+   "src": "Svc/CmdSequencer",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 8
+  },
+  {
+   "src": "Svc/CmdSequencer",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/CmdSequencer",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 13
+  },
+  {
+   "src": "Svc/CmdSequencer",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 10
+  },
+  {
+   "src": "Svc/CmdSequencer",
+   "type": "INCLUDES",
+   "dst": "Os/Stubs",
+   "lines": 9
+  },
+  {
+   "src": "Svc/CmdSequencer",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash/libcrc",
+   "lines": 3
+  },
+  {
+   "src": "Svc/CmdSplitter",
+   "type": "INCLUDES",
+   "dst": "Fw/Cmd",
+   "lines": 3
+  },
+  {
+   "src": "Svc/CmdSplitter",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/CmdSplitter",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/CmdSplitter",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Cmd",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Comp",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 4
+  },
+  {
+   "src": "Svc/ComLogger",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 5
+  },
+  {
+   "src": "Svc/ComLogger",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComQueue",
+   "type": "INCLUDES",
+   "dst": "Fw/Buffer",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComQueue",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComQueue",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 4
+  },
+  {
+   "src": "Svc/ComQueue",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComQueue",
+   "type": "INCLUDES",
+   "dst": "Utils/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComSplitter",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComSplitter",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComSplitter",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/ComStub",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 2
+  },
+  {
+   "src": "Svc/ComStub",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Cycle",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Cycle",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 2
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 2
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 4
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 5
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Rule",
+   "lines": 2
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Scenario",
+   "lines": 3
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "Svc/FramingProtocol",
+   "lines": 4
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash",
+   "lines": 5
+  },
+  {
+   "src": "Svc/Deframer",
+   "type": "INCLUDES",
+   "dst": "Utils/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/FatalHandler",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 2
+  },
+  {
+   "src": "Svc/FatalHandler",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 2
+  },
+  {
+   "src": "Svc/FileDownlink",
+   "type": "INCLUDES",
+   "dst": "Fw/FilePacket",
+   "lines": 1
+  },
+  {
+   "src": "Svc/FileDownlink",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/FileDownlink",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 4
+  },
+  {
+   "src": "Svc/FileDownlink",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 5
+  },
+  {
+   "src": "Svc/FileManager",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/FileManager",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/FileUplink",
+   "type": "INCLUDES",
+   "dst": "Fw/FilePacket",
+   "lines": 1
+  },
+  {
+   "src": "Svc/FileUplink",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 3
+  },
+  {
+   "src": "Svc/FileUplink",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Framer",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Framer",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Framer",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Framer",
+   "type": "INCLUDES",
+   "dst": "Svc/FramingProtocol",
+   "lines": 2
+  },
+  {
+   "src": "Svc/Framer",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash",
+   "lines": 1
+  },
+  {
+   "src": "Svc/FramingProtocol",
+   "type": "INCLUDES",
+   "dst": "Fw/Buffer",
+   "lines": 2
+  },
+  {
+   "src": "Svc/FramingProtocol",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 2
+  },
+  {
+   "src": "Svc/FramingProtocol",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/FramingProtocol",
+   "type": "INCLUDES",
+   "dst": "Fw/Time",
+   "lines": 2
+  },
+  {
+   "src": "Svc/FramingProtocol",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 6
+  },
+  {
+   "src": "Svc/FramingProtocol",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 3
+  },
+  {
+   "src": "Svc/FramingProtocol",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Random",
+   "lines": 1
+  },
+  {
+   "src": "Svc/FramingProtocol",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash",
+   "lines": 4
+  },
+  {
+   "src": "Svc/FramingProtocol",
+   "type": "INCLUDES",
+   "dst": "Utils/Types",
+   "lines": 2
+  },
+  {
+   "src": "Svc/GenericHub",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 1
+  },
+  {
+   "src": "Svc/GenericHub",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Svc/GenericHub",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/GenericHub",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 1
+  },
+  {
+   "src": "Svc/GroundInterface",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 1
+  },
+  {
+   "src": "Svc/GroundInterface",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 3
+  },
+  {
+   "src": "Svc/GroundInterface",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 3
+  },
+  {
+   "src": "Svc/GroundInterface",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Rule",
+   "lines": 2
+  },
+  {
+   "src": "Svc/GroundInterface",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Scenario",
+   "lines": 3
+  },
+  {
+   "src": "Svc/GroundInterface",
+   "type": "INCLUDES",
+   "dst": "Utils/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Health",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/Health",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 4
+  },
+  {
+   "src": "Svc/LinuxTimer",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Svc/LinuxTimer",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/LinuxTimer",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 2
+  },
+  {
+   "src": "Svc/PassiveConsoleTextLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Logger",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PassiveConsoleTextLogger",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PassiveRateGroup",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PassiveRateGroup",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PassiveRateGroup",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PassiveRateGroup",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PolyDb",
+   "type": "INCLUDES",
+   "dst": "Fw/Comp",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PolyDb",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PolyDb",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 2
+  },
+  {
+   "src": "Svc/PolyDb",
+   "type": "INCLUDES",
+   "dst": "Fw/Time",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PolyDb",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 4
+  },
+  {
+   "src": "Svc/PolyDb",
+   "type": "INCLUDES",
+   "dst": "Svc/PolyIf",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PosixTime",
+   "type": "INCLUDES",
+   "dst": "Fw/Time",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PrmDb",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 2
+  },
+  {
+   "src": "Svc/PrmDb",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 1
+  },
+  {
+   "src": "Svc/PrmDb",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 2
+  },
+  {
+   "src": "Svc/PrmDb",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 2
+  },
+  {
+   "src": "Svc/PrmDb",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 3
+  },
+  {
+   "src": "Svc/PrmDb",
+   "type": "INCLUDES",
+   "dst": "Os/Stubs",
+   "lines": 1
+  },
+  {
+   "src": "Svc/RateGroupDriver",
+   "type": "INCLUDES",
+   "dst": "Fw/Obj",
+   "lines": 1
+  },
+  {
+   "src": "Svc/RateGroupDriver",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/RateGroupDriver",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/StaticMemory",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/StaticMemory",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 1
+  },
+  {
+   "src": "Svc/SystemResources",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 2
+  },
+  {
+   "src": "Svc/TlmChan",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 1
+  },
+  {
+   "src": "Svc/TlmChan",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 2
+  },
+  {
+   "src": "Svc/TlmChan",
+   "type": "INCLUDES",
+   "dst": "Fw/Tlm",
+   "lines": 1
+  },
+  {
+   "src": "Svc/TlmChan",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Svc/TlmPacketizer",
+   "type": "INCLUDES",
+   "dst": "Fw/Com",
+   "lines": 2
+  },
+  {
+   "src": "Svc/TlmPacketizer",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/TlmPacketizer",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/UdpReceiver",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Svc/UdpReceiver/test/ut",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/UdpReceiver/test/ut",
+   "type": "INCLUDES",
+   "dst": "Svc/UdpReceiver",
+   "lines": 1
+  },
+  {
+   "src": "Svc/UdpSender/test/ut",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Svc/UdpSender/test/ut",
+   "type": "INCLUDES",
+   "dst": "Svc/UdpSender",
+   "lines": 1
+  },
+  {
+   "src": "Utils",
+   "type": "INCLUDES",
+   "dst": "Fw/Time",
+   "lines": 2
+  },
+  {
+   "src": "Utils",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Utils",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 3
+  },
+  {
+   "src": "Utils",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash",
+   "lines": 1
+  },
+  {
+   "src": "Utils/Hash",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 3
+  },
+  {
+   "src": "Utils/Hash",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash/libcrc",
+   "lines": 1
+  },
+  {
+   "src": "Utils/Hash/libcrc",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash",
+   "lines": 1
+  },
+  {
+   "src": "Utils/Hash/openssl",
+   "type": "INCLUDES",
+   "dst": "Utils/Hash",
+   "lines": 1
+  },
+  {
+   "src": "Utils/Types",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 5
+  },
+  {
+   "src": "Utils/Types",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Utils/Types/test/ut/CircularBuffer",
+   "type": "INCLUDES",
+   "dst": "Fw/Test",
+   "lines": 1
+  },
+  {
+   "src": "Utils/Types/test/ut/CircularBuffer",
+   "type": "INCLUDES",
+   "dst": "Fw/Types",
+   "lines": 1
+  },
+  {
+   "src": "Utils/Types/test/ut/CircularBuffer",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Pick",
+   "lines": 2
+  },
+  {
+   "src": "Utils/Types/test/ut/CircularBuffer",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Rule",
+   "lines": 1
+  },
+  {
+   "src": "Utils/Types/test/ut/CircularBuffer",
+   "type": "INCLUDES",
+   "dst": "STest/STest/Scenario",
+   "lines": 3
+  },
+  {
+   "src": "Utils/Types/test/ut/CircularBuffer",
+   "type": "INCLUDES",
+   "dst": "Utils/Types",
+   "lines": 1
+  },
+  {
+   "src": "Utils/test/ut",
+   "type": "INCLUDES",
+   "dst": "Os",
+   "lines": 1
+  },
+  {
+   "src": "Utils/test/ut",
+   "type": "INCLUDES",
+   "dst": "Utils",
+   "lines": 3
   }
  ],
  "diagnostics": {
@@ -25277,6 +27235,13 @@
    }
   ],
   "max_citation_hops": 2,
+  "includes": {
+   "edges": 291,
+   "libraries": 42,
+   "resolved_includes": 1265,
+   "unmapped_includes": 2,
+   "external_or_same_dir": 885
+  },
   "unresolved_connections": [],
   "subtopologies": [],
   "instance_types_without_component": []

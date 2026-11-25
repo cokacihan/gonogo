@@ -7,7 +7,7 @@
   "port_types": 72,
   "instances": 49,
   "connections": 93,
-  "relationships": 13153,
+  "relationships": 13803,
   "requirements_cited": 154,
   "test_functions": 2230,
   "calls": 5318,
@@ -214,7 +214,7 @@
    }
   ]
  },
- "store_dir_bytes": 1128567,
+ "store_dir_bytes": 1139650,
  "releases": [
   {
    "tag": "v3.4.0",

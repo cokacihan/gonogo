@@ -452,6 +452,100 @@ def ref_topology(repo: Path) -> dict:
             "connections": resolved, "unresolved": unresolved}
 
 
+# ---------------------------------------------------------------- source dependencies (#include)
+INCLUDE_RE = re.compile(r'^\s*#\s*include\s*[<"]([^>"]+)[>"]', re.M)
+SOURCE_SUFFIXES = (".hpp", ".h", ".hh", ".cpp", ".cc", ".c")
+
+
+CONFIG_DIR = "default/config"  # project configuration headers, included as <config/...>
+LIB_ROOTS = ("STest", CONFIG_DIR)  # library code outside the component roots that tests and components include
+
+
+def unit_of(path: str, part_ids: set[str], roots_: list[str]) -> str | None:
+    """The component directory (Part) owning a repository path, else a Library unit: its directory, or the file
+    itself for a configuration header (each one belongs to one component or concern, so the directory would be far
+    too coarse)."""
+    if path.startswith(CONFIG_DIR + "/"):
+        return path
+    parts = path.split("/")
+    for k in range(len(parts) - 1, 0, -1):
+        if "/".join(parts[:k]) in part_ids:
+            return "/".join(parts[:k])
+    if len(parts) >= 2 and any(path.startswith(r + "/") for r in (*roots_, *LIB_ROOTS)):
+        return "/".join(parts[:-1])
+    return None
+
+
+def _include_bases(repo: Path, roots_: list[str]) -> tuple[list[str], dict[str, str]]:
+    """Directories an F´ build puts on the include path, and component-local config directories (<XConfig/...>)."""
+    bases = ["", "default/", "STest/"]
+    bases += ["TestDeploymentsProject/"] if "TestDeploymentsProject/Ref" in roots_ else []
+    named = {}
+    for root in roots_:
+        for d in (repo / root).rglob("config"):
+            if d.is_dir():
+                for sub in d.iterdir():
+                    if sub.is_dir():
+                        named.setdefault(sub.name, _rel(sub, repo))
+    return bases, named
+
+
+def resolve_include(target: str, src: str, repo: Path, bases: list[str], named: dict[str, str]) -> str | None:
+    """Repository path of an #include target, or None for system, third-party and same-directory headers.
+    Autocoded headers (*Ac.hpp) do not exist in a source checkout: their directory is enough to find the unit."""
+    if "/" not in target:
+        same = (repo / src).parent / target
+        if same.exists():
+            return None  # same directory: same unit
+        cand = repo / CONFIG_DIR / target
+        return f"{CONFIG_DIR}/{target}" if cand.is_file() else None
+    head, _, rest = target.partition("/")
+    cands = [b + target for b in bases] + ([f"{named[head]}/{rest}"] if head in named else [])
+    for c in cands:
+        if (repo / c).is_file():
+            return c
+    for c in cands:
+        if (repo / c).parent.is_dir() and c.endswith("Ac.hpp"):
+            return c
+    return None
+
+
+def include_graph(repo: Path, part_ids: set[str]) -> tuple[set[str], list[dict], dict]:
+    """INCLUDES edges between units (components and library directories) from #include lines of every source
+    file, tests included: a test that includes another unit's header must re-run when that header changes."""
+    rts = roots(repo)
+    bases, named = _include_bases(repo, rts)
+    counts: dict[tuple[str, str], int] = defaultdict(int)
+    libs: set[str] = set()
+    resolved = unmapped = external = 0
+    for root in (*rts, *(r for r in LIB_ROOTS if (repo / r).is_dir())):
+        for f in (repo / root).rglob("*"):
+            if f.suffix not in SOURCE_SUFFIXES or not f.is_file() or "googletest" in f.parts:
+                continue
+            rel = _rel(f, repo)
+            src = unit_of(rel, part_ids, rts)
+            if src is None:
+                continue
+            for target in INCLUDE_RE.findall(f.read_text(encoding="utf-8", errors="replace")):
+                path = resolve_include(target, rel, repo, bases, named)
+                if path is None:
+                    external += 1
+                    continue
+                dst = unit_of(path, part_ids, rts)
+                if dst is None:
+                    unmapped += 1
+                    continue
+                resolved += 1
+                for u in (src, dst):
+                    if u not in part_ids:
+                        libs.add(u)
+                if dst != src:
+                    counts[(src, dst)] += 1
+    edges = [{"src": s, "type": "INCLUDES", "dst": d, "lines": n} for (s, d), n in sorted(counts.items())]
+    return libs, edges, {"edges": len(edges), "libraries": len(libs), "resolved_includes": resolved,
+                         "unmapped_includes": unmapped, "external_or_same_dir": external}
+
+
 # ---------------------------------------------------------------- dataset
 def _git_sha(repo: Path) -> str:
     try:
@@ -584,6 +678,10 @@ def build_dataset(repo: Path) -> dict:
         edges.append({"src": f"Ref:{c['src']}", "type": "CONNECTS_TO", "dst": f"Ref:{c['dst']}",
                       "src_port": c["src_port"], "dst_port": c["dst_port"], "graph": c["graph"]})
 
+    libs, inc_edges, inc_stats = include_graph(repo, part_ids)
+    nodes["Library"] = [{"id": lib, "name": lib, "text": f"Library code in {lib}"} for lib in sorted(libs)]
+    edges += inc_edges
+
     return {
         "source": {"repo": "https://github.com/nasa/fprime", "commit": _git_sha(repo), "license": "Apache-2.0",
                    "copyright": "California Institute of Technology"},
@@ -593,7 +691,7 @@ def build_dataset(repo: Path) -> dict:
         "nodes": dict(nodes),
         "edges": edges,
         "diagnostics": {"duplicate_requirement_ids": duplicates, "dangling_citations": dangling,
-                        "max_citation_hops": max_hops,
+                        "max_citation_hops": max_hops, "includes": inc_stats,
                         "unresolved_connections": topo["unresolved"], "subtopologies": topo["subtopologies"],
                         "instance_types_without_component": sorted({t for t in topo["instances"].values()
                                                                     if types.get(t) not in part_ids})},
