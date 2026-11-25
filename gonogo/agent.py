@@ -23,7 +23,7 @@ TYPE_RE = re.compile(r"\b(?:Svc|Drv|Fw|Os|Ref|CFDP|Utils)(?:\.\w+)+\b")
 INSTANCE_RE = re.compile(r"(?:Ref:)?(\$?\b[a-z]\w*[A-Z]\w*|\b[A-Z]\w*\.\$?[a-z]\w*)\b")
 # "where should the REQUIREMENT() go", "which test should cite X", "how do I make X GO"
 CITE_HELP = (r"suggest", r"\bwhere\b.*\b(cite|put|add|write)", r"which tests?\b.*\b(should|could|would|can|might)\b",
-             r"\bmake\b.*\bgo\b", r"\bhow\b.*\b(fix|close|cite|get)\b", r"\bcandidate")
+             r"\bmake\b.*\bgo\b", r"\bhow (do|can|should|would) (i|we)\b.*\b(fix|close|cite|link)\b", r"\bcandidate")
 IMPACT = (r"impact", r"affect", r"break", r"\bchang", r"modif", r"\bedit", r"re-?run", r"retest", r"touch")
 VERDICT_WORDS = (r"\bwhy\b", r"\bgo\b", r"no-go", r"verdict", r"status", r"ready", r"verif", r"tested", r"evidence",
                  r"\bpass", r"\bfly\b")
@@ -268,6 +268,8 @@ class Agent:
 
     def _cite_help(self, question: str, rid: str) -> Answer:
         res = suggest(self.db, rid)
+        if res["cited_at"]:  # already linked: the verdict answers it (GO, or why not despite the citation)
+            return self._verdict_of(question, rid)
         if res["drift"]:
             d = res["drift"][0]
             text = (f"{rid} is already tested under a near-miss ID: {d['site']} cites {d['cited']} "
@@ -282,7 +284,7 @@ class Agent:
                     f"test code of {res['component']}: {sites}. Test cases that run them: {cases}. "
                     "A candidate is not evidence: a reviewer confirms it, then the test must pass in CI.")
         else:
-            text = f"No test code of {res['component']} shares a word with {rid}: a new test is needed."
+            text = f"{rid} ({res['component']}), suggested edit: {res['edit']}."
         return Answer(question, "answered", text, "suggest", SITES_CYPHER.strip(),
                       {"id": rid, "terms": " ".join(res["terms"]), "index": INDEX, "k": len(res["sites"]) or 5},
                       res["sites"], [s["site"] for s in res["sites"]],

@@ -54,14 +54,17 @@ async function main() {
 // ?c=Svc/Health&r=HTH-001 opens a component and one requirement (links in the README and the demo use it)
 function openDeepLink() {
   const q = new URLSearchParams(location.search);
-  const c = q.get("c") || (q.get("r") && S.byId.get(q.get("r"))?.component);
+  const rid = q.get("r");
+  const c = q.get("c") || (rid && (S.byId.get(rid) || S.rows.find((x) => x.id.split("@")[0] === rid))?.component);
   if (!c || !S.table.some((p) => p.component === c)) return;
   if (!S.table.find((p) => p.component === c).inDeployment) {
     document.querySelector('.scope button[data-scope="all"]')?.click();
   }
   select(c);
-  const r = q.get("r");
-  const toggle = r && [...document.querySelectorAll("#detail .req-toggle")].find((b) => b.dataset.id === r);
+  const r = rid;
+  // the full ID (FH-002@Svc/FatalHandler/docs/sdd.md for a duplicated one) or the plain ID, which opens its first row
+  const toggles = [...document.querySelectorAll("#detail .req-toggle")];
+  const toggle = r && (toggles.find((t) => t.dataset.id === r) || toggles.find((t) => t.dataset.id.split("@")[0] === r));
   if (toggle) {
     toggle.click();
     toggle.scrollIntoView({ block: "center" });
@@ -172,7 +175,7 @@ function reqItem(r, i) {
     "RETURN owner.id AS test_component, tc.gtest_filter AS test_case, x.status AS status,\n" +
     "       [n IN nodes(path) | n.name] AS call_chain";
   return `<li>
-    <button type="button" class="req-toggle" aria-expanded="false" aria-controls="req-${i}" data-id="${esc(r.id.split("@")[0])}">
+    <button type="button" class="req-toggle" aria-expanded="false" aria-controls="req-${i}" data-id="${esc(r.id)}">
       <span class="dot ${esc(r.verdict)}" role="img" aria-label="${esc(r.verdict)}"></span>
       <span class="req-id">${esc(r.id.split("@")[0])}</span>
       <span class="req-text">${md(r.text)}</span>
@@ -210,19 +213,20 @@ function renderImpact() {
   const files = $("#files").value.split(/\r?\n/);
   const cls = classifyFiles(S.db, files);
   const out = $("#impact-out");
-  if (!cls.components.length && !cls.port_types.length && !cls.ripple.length) {
+  if (!cls.components.length && !cls.port_types.length && !cls.ripple.length && !cls.config.length) {
     out.innerHTML = `<p class="error">None of these paths is inside an F´ component or library, or defines a port type.
       Use paths from the repository root, such as <code>Svc/Health/Health.cpp</code>.</p>` +
       (cls.topology.length ? `<p>Topology files changed: ${cls.topology.map((f) => `<code>${esc(f)}</code>`).join(", ")}.
       Review the deployment connections; no unit tests change.</p>` : "");
     return;
   }
-  const res = impact(S.db, S.queries, cls.components, cls.port_types, S.rows, cls.ripple);
+  const res = impact(S.db, S.queries, cls.components, cls.port_types, S.rows, cls.ripple, cls.config.length > 0);
   const SHOWN = 25; // a header in Fw reaches most of the repository: show the first rows, keep the rest folded
   const rowHtml = res.rerun.map((r) => {
     const why = r.changed_directly ? "changed"
       : r.via_ports.length ? `uses ${r.via_ports.map((v) => v.replace("port:", "")).join(", ")}`
-      : `includes ${r.include_chain.slice(1).join(" → ")}`;
+      : r.include_chain.length ? `includes ${r.include_chain.slice(1).join(" → ")}`
+      : "FPP configuration changed (visible to every component)";
     const filter = [...r.filters].sort().join(":");
     return `<tr><td><code>${esc(r.component)}</code></td><td>${esc(why)}</td><td>${fmt(r.test_cases)}</td>
       <td>${r.test_cases ? `<button type="button" class="quiet" data-copy="${esc(filter)}">Copy gtest filter</button>` : "no unit tests"}</td></tr>`;

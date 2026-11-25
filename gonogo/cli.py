@@ -23,7 +23,7 @@ from pathlib import Path
 
 from gonogo import db as store
 from gonogo.impact import impact as compute_impact, reason
-from gonogo.suggest import patch, suggest
+from gonogo.suggest import patch, rename_patch, suggest
 from gonogo.verdict import (VERDICTS_CYPHER, current_run, deployment_parts, drift_path, evidence_paths, poll,
                             verdicts)
 
@@ -138,11 +138,19 @@ def cmd_suggest(args) -> int:
         print(json.dumps(res, indent=2, ensure_ascii=False))
         return 0
     if args.patch:  # only the diff, so that `gonogo suggest ID --patch --repo R > x.patch` can be applied
-        diff = res["sites"] and not res["drift"] and patch(Path(args.repo), res["id"], res["sites"][0])
+        if res["cited_at"] or not (res["text"] or "").strip():
+            diff = None  # already cited, or nothing to match: the edit text says why
+        elif res["drift"]:  # the test exists under a near-miss ID: the fix is a rename
+            diff = rename_patch(Path(args.repo), res["id"], res["drift"])
+        else:
+            diff = res["sites"] and patch(Path(args.repo), res["id"], res["sites"][0])
         if not diff:
             print(f"No patch: {res['edit']}", file=sys.stderr)
             return 1
-        sys.stdout.write(diff)
+        # bytes, not text: a text-mode stdout on Windows would turn the CRLF lines of a checkout into CR CR LF
+        sys.stdout.flush()
+        sys.stdout.buffer.write(diff.encode("utf-8"))
+        sys.stdout.buffer.flush()
         return 0
     print(f"{c(res['id'], 'bold')}  ({res['component']})")
     print(f"  {res['text']}")
@@ -181,6 +189,9 @@ def cmd_impact(args) -> int:
                 f"{', '.join(res['assumed_interface_change'])} (pass --files for an exact set)", "dim"))
     if res["ripple"]:
         print(c(f"  changes that reach every includer: {', '.join(res['ripple'])}", "dim"))
+    if res["input"]["config_files"]:
+        print(c(f"  FPP configuration changed, visible to every FPP model: {', '.join(res['input']['config_files'])}",
+                "dim"))
     print(c(f"Unit tests to re-run: {res['test_cases']} test cases in {len(res['rerun'])} components", "bold"))
     shown = res["rerun"] if args.all else res["rerun"][:25]
     for r in shown:

@@ -65,14 +65,30 @@ def random_mrr(n: int, g: int) -> float:
     return sum(comb(n - i, g - 1) / comb(n, g) / i for i in range(1, n - g + 2))
 
 
-def first_rank(ranked: list[str], answers: set[str]) -> int | None:
-    return next((i for i, x in enumerate(ranked, 1) if x in answers), None)
+def first_rank(ranked: list[tuple[str, tuple]], answers: set[str]) -> int | None:
+    return next((i for i, (x, _) in enumerate(ranked, 1) if x in answers), None)
 
 
-def summarise(ranks: list[int | None]) -> dict:
-    n = len(ranks)
-    out = {f"hit@{k}": sum(1 for r in ranks if r is not None and r <= k) / n for k in KS}
-    out["mrr"] = sum(1 / r for r in ranks if r) / n
+def tie_aware(ranked: list[tuple[str, tuple]], answers: set[str]) -> dict:
+    """Expected hit@k and reciprocal rank of the first answer when equal scores are ordered at random, so that a tie
+    is never broken in favour of the answer (the query itself breaks ties by id). `ranked` is (id, score key) in
+    descending order; candidates without any matching word are not ranked and count as misses."""
+    first = first_rank(ranked, answers)
+    if first is None:
+        return {f"hit@{k}": 0.0 for k in KS} | {"rr": 0.0}
+    key = ranked[first - 1][1]
+    group = [x for x, kk in ranked if kk == key]
+    offset = sum(1 for _, kk in ranked if kk > key)  # better-scored candidates; none of them is an answer
+    t, a = len(group), sum(1 for x in group if x in answers)
+    hits = {f"hit@{k}": random_hit(t, a, k - offset) if k > offset else 0.0 for k in KS}
+    rr = sum(comb(t - j, a - 1) / comb(t, a) / (offset + j) for j in range(1, t - a + 2))
+    return hits | {"rr": rr}
+
+
+def summarise(results: list[dict]) -> dict:
+    n = len(results)
+    out = {f"hit@{k}": sum(r[f"hit@{k}"] for r in results) / n for k in KS}
+    out["mrr"] = sum(r["rr"] for r in results) / n
     return out
 
 
@@ -92,17 +108,22 @@ def main() -> dict:
     for t in truth:
         terms = query_terms(t["text"], t["component"])
         sites, cases = set(t["sites"]), set(t["cases"])
+        def by_site(rows_):  # sites rank by BM25 score; cases by best site score, then the sum (as the query does)
+            return [(s["site"], (s["score"],)) for s in rows_]
+
+        def by_case(rows_):
+            return [(c["test_case"], (c["best"], c["total"])) for c in rows_]
         ranked = {
-            ("full", "sites"): [s["site"] for s in rank_sites(db, t["id"], terms, DEPTH)],
-            ("full", "cases"): [c["test_case"] for c in rank_cases(db, t["id"], terms, DEPTH)],
-            ("identifiers", "sites"): [s["site"] for s in rank_sites(db, t["id"], terms, DEPTH, index="test_code_vocab")],
-            ("identifiers", "cases"): [c["test_case"] for c in rank_cases(db, t["id"], terms, DEPTH,
-                                                                             index="test_code_vocab")],
-            ("no call graph", "cases"): [c["test_case"] for c in rank_cases(db, t["id"], terms, DEPTH, lift=False)],
+            ("full", "sites"): by_site(rank_sites(db, t["id"], terms, DEPTH)),
+            ("full", "cases"): by_case(rank_cases(db, t["id"], terms, DEPTH)),
+            ("identifiers", "sites"): by_site(rank_sites(db, t["id"], terms, DEPTH, index="test_code_vocab")),
+            ("identifiers", "cases"): by_case(rank_cases(db, t["id"], terms, DEPTH, index="test_code_vocab")),
+            ("no call graph", "cases"): by_case(rank_cases(db, t["id"], terms, DEPTH, lift=False)),
         }
-        ranks = {key: first_rank(lst, sites if key[1] == "sites" else cases) for key, lst in ranked.items()}
-        for (row, level), r in ranks.items():
-            rows[row][level].append(r)
+        answers = {"sites": sites, "cases": cases}
+        ranks = {key: first_rank(lst, answers[key[1]]) for key, lst in ranked.items()}
+        for (row, level), lst in ranked.items():
+            rows[row][level].append(tie_aware(lst, answers[level]))
         for level, n, g in (("sites", t["n_sites"], len(sites)), ("cases", t["n_cases"], len(cases))):
             for k in KS:
                 rand[level][f"hit@{k}"] += random_hit(n, g, k) / len(truth)
@@ -162,14 +183,18 @@ def markdown(res: dict) -> str:
            "## Test case (a case that reaches the macro over CALLS)", "", *table("cases"), "",
            "`random` is the exact expected value of a uniformly random order of the same candidates. `identifiers` "
            "leaves out the TEST_CASE()/COMMENT() descriptions, which could repeat a requirement's words next to its "
-           "citation. `no call graph` ranks a case only by its own TEST body.", "",
+           "citation. `no call graph` ranks a case only by its own TEST body. Candidates with equal scores count "
+           "at their expected position under a random order, so a tie is never broken in favour of the answer; "
+           "candidates that share no word with the requirement are not ranked and count as misses.", "",
            "## Do the descriptions give the answer away?", "",
            f"Share of a requirement's words found in the TEST_CASE()/COMMENT() descriptions of a candidate: "
            f"in {ov['answer']['ge80']} of {ov['answer']['n']} (requirement, answer site) pairs the descriptions carry "
            f"80 % or more of them, in {ov['answer']['ge60']} pairs 60 % or more (other candidates: "
-           f"{ov['other']['ge80']} and {ov['other']['ge60']} of {ov['other']['n']} pairs). The descriptions say what "
-           f"a test checks; they do not copy the requirement sentence next to the citation. Both rows are reported "
-           f"anyway.", ""]
+           f"{ov['other']['ge80']} and {ov['other']['ge60']} of {ov['other']['n']} pairs). In these requirements the "
+           f"descriptions say what a test checks rather than repeat the requirement sentence. Elsewhere in F´ they "
+           f"sometimes do repeat it (Svc/Health's `faultTlm` writes HTH-003's sentence in a COMMENT next to its "
+           f"near-miss citation ISF-HTH-003, outside this measurement), so the `identifiers` row is reported as the "
+           f"conservative figure.", ""]
     return "\n".join(out)
 
 

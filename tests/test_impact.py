@@ -79,3 +79,18 @@ def test_config_header_ripples_only_to_its_includers(db):
     assert res["input"]["unmatched"] == []
     assert {r["component"] for r in res["rerun"]} == {"Svc/TlmChan"}
     assert res["rerun"][0]["include_chain"] == ["Svc/TlmChan", "default/config/TlmChanImplCfg.hpp"]
+
+
+def test_fpp_model_is_an_interface_change(db):
+    # the autocoder turns the .fpp into the header other components include, so it ripples like the header does
+    fpp = impact(db, files=["Svc/DpCompressProc/DpCompressProc.fpp"])
+    hpp = impact(db, files=["Svc/DpCompressProc/DpCompressProc.hpp"])
+    assert {r["component"] for r in fpp["rerun"]} == {r["component"] for r in hpp["rerun"]}
+    assert len(fpp["rerun"]) > 1
+
+
+def test_fpp_configuration_reaches_every_component(db, fp_data):
+    res = impact(db, files=["default/config/ComCfg.fpp"])
+    assert res["input"]["unmatched"] == [] and res["input"]["config_files"] == ["default/config/ComCfg.fpp"]
+    assert {r["component"] for r in res["rerun"]} == {p["id"] for p in fp_data["nodes"]["Part"]}
+    assert res["test_cases"] == len(fp_data["nodes"]["TestCase"])

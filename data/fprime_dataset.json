@@ -43095,7 +43095,7 @@
      "Svc/Health/test/ut/HealthTester.cpp:202"
     ],
     "vocab": "assert base clear command comment component count cycl entri event fault health index invok late name number output ping pingsend port respons run size snprintf svc telemetry test tester tracker type warn",
-    "vocab_doc": "fault telemetry",
+    "vocab_doc": "event fail fatal fault health issu ping return specifi svc telemetry timeout",
     "text": "Test helper fault tlm of Svc/Health",
     "unknown_citations": [
      "ISF-HTH-003"
@@ -43304,7 +43304,7 @@
      "Svc/Health/test/ut/HealthTester.cpp:549"
     ],
     "vocab": "assert check code command comment component dog event from health invok respons run size strok telemetry test tester watch watchdog wdog",
-    "vocab_doc": "check watchdog",
+    "vocab_doc": "check health limit pass ping port repli strok svc watchdog within",
     "text": "Test helper watchdog check of Svc/Health",
     "unknown_citations": [
      "ISF-HTH-007"
@@ -44512,7 +44512,7 @@
      "Svc/RateGroupDriver/test/ut/RateGroupDriverImplTester.cpp:37"
     ],
     "vocab": "assert call clear comment cycl div divider divisor driver expect get group impl index invok iter lcm nominal number offset port rate raw rollover run sched set size svc test tester tick time type util",
-    "vocab_doc": "execution nominal",
+    "vocab_doc": "call correctly enough execution internal nominal output over port roll rollover tick valu verify",
     "text": "Test helper run sched nominal of Svc/RateGroupDriver",
     "unknown_citations": []
    },
@@ -73055,7 +73055,7 @@
     "file": "Svc/PolyDb/test/ut/PolyDbTestMain.cpp",
     "line": 10,
     "vocab": "command comment disp nominal poly read run svc test tester writ",
-    "vocab_doc": "nominal poly read test writ",
+    "vocab_doc": "databas measurement nominal poly read status test valu vary writ",
     "component": "Svc/PolyDb",
     "gtest_filter": "CmdDispTestNominal.NominalReadWrite",
     "text": "Unit test case CmdDispTestNominal.NominalReadWrite of Svc/PolyDb",
@@ -73861,7 +73861,7 @@
     "file": "Svc/TlmChan/test/ut/TlmChanMain.cpp",
     "line": 102,
     "vocab": "channel comment hash identification run size svc telemetry test tester",
-    "vocab_doc": "branch check hash identification rang width",
+    "vocab_doc": "activ algorithm branch check hash identification identify murmur number output rang slot telemetry tlmchan verify wang width xor",
     "component": "Svc/TlmChan",
     "gtest_filter": "TlmChanHashTest.HashSizeIdentification",
     "text": "Unit test case TlmChanHashTest.HashSizeIdentification of Svc/TlmChan",
@@ -73874,7 +73874,7 @@
     "file": "Svc/TlmChan/test/ut/TlmChanMain.cpp",
     "line": 118,
     "vocab": "channel comment determinism hash run svc telemetry test tester",
-    "vocab_doc": "determinism hash session within",
+    "vocab_doc": "alway call channel determinism hash lifetim repeat return session slot verify within",
     "component": "Svc/TlmChan",
     "gtest_filter": "TlmChanHashTest.HashDeterminism",
     "text": "Unit test case TlmChanHashTest.HashDeterminism of Svc/TlmChan",
@@ -73887,7 +73887,7 @@
     "file": "Svc/TlmChan/test/ut/TlmChanMain.cpp",
     "line": 138,
     "vocab": "channel comment diversity hash run seed svc telemetry test tester",
-    "vocab_doc": "boot diversity hash seed",
+    "vocab_doc": "boot channel collision computation diversity hash independent infeasibl instanc list offlin pre receiv seed statistically telemetry verify",
     "component": "Svc/TlmChan",
     "gtest_filter": "TlmChanHashTest.HashSeedDiversity",
     "text": "Unit test case TlmChanHashTest.HashSeedDiversity of Svc/TlmChan",
@@ -73900,7 +73900,7 @@
     "file": "Svc/TlmChan/test/ut/TlmChanMain.cpp",
     "line": 159,
     "vocab": "avalanch channel comment hash run svc telemetry test tester",
-    "vocab_doc": "avalanch effect hash linearity non",
+    "vocab_doc": "avalanch bit case chang channel confirm diffusion effect hash linear linearity majority non output slot verify",
     "component": "Svc/TlmChan",
     "gtest_filter": "TlmChanHashTest.HashAvalanche",
     "text": "Unit test case TlmChanHashTest.HashAvalanche of Svc/TlmChan",
@@ -73913,7 +73913,7 @@
     "file": "Svc/TlmChan/test/ut/TlmChanMain.cpp",
     "line": 180,
     "vocab": "channel collision comment harden hash run svc telemetry test tester",
-    "vocab_doc": "attack collision harden hash original regression shadow",
+    "vocab_doc": "attack collision cyber fill harden hash improv known linear longer original regression sequenc shadow slot verify",
     "component": "Svc/TlmChan",
     "gtest_filter": "TlmChanHashTest.HashCollisionHardening",
     "text": "Unit test case TlmChanHashTest.HashCollisionHardening of Svc/TlmChan",
@@ -73926,7 +73926,7 @@
     "file": "Svc/TlmChan/test/ut/TlmChanMain.cpp",
     "line": 198,
     "vocab": "channel comment distribution hash run svc telemetry test tester",
-    "vocab_doc": "distribution hash slot uniformity",
+    "vocab_doc": "averag dead distribution hash hits hot ids sequential slot spot uniformity verify zone",
     "component": "Svc/TlmChan",
     "gtest_filter": "TlmChanHashTest.HashDistribution",
     "text": "Unit test case TlmChanHashTest.HashDistribution of Svc/TlmChan",
@@ -74355,7 +74355,7 @@
     "file": "Svc/TlmPacketizer/test/ut/main.cpp",
     "line": 201,
     "vocab": "configuration malform nominal packetizer reload svc telemetry test tester",
-    "vocab_doc": "",
+    "vocab_doc": "buffer configuration emit fail malform out overrid packet reload return",
     "component": "Svc/TlmPacketizer",
     "gtest_filter": "TestNominal.ConfigInMalformedReloadTest",
     "text": "Unit test case TestNominal.ConfigInMalformedReloadTest of Svc/TlmPacketizer",

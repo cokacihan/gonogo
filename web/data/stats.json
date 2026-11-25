@@ -214,7 +214,7 @@
    }
   ]
  },
- "store_dir_bytes": 1368050,
+ "store_dir_bytes": 1368548,
  "releases": [
   {
    "tag": "v3.4.0",
@@ -379,7 +379,7 @@
   "components": 25,
   "median_candidate_sites": 37,
   "median_candidate_cases": 13,
-  "seconds": 102.3,
+  "seconds": 102.0,
   "description_overlap": {
    "answer": {
     "n": 453,
@@ -395,9 +395,9 @@
   "sites": {
    "full": {
     "hit@1": 0.43333333333333335,
-    "hit@3": 0.6466666666666666,
+    "hit@3": 0.6533333333333333,
     "hit@5": 0.7333333333333333,
-    "mrr": 0.562205398326209
+    "mrr": 0.5627697722239161
    },
    "identifiers": {
     "hit@1": 0.18666666666666668,
@@ -415,9 +415,9 @@
   "cases": {
    "full": {
     "hit@1": 0.62,
-    "hit@3": 0.8466666666666667,
+    "hit@3": 0.8533333333333334,
     "hit@5": 0.8933333333333333,
-    "mrr": 0.73816145160882
+    "mrr": 0.7387170071643755
    },
    "identifiers": {
     "hit@1": 0.54,
@@ -426,10 +426,10 @@
     "mrr": 0.6780117629591313
    },
    "no call graph": {
-    "hit@1": 0.5733333333333334,
-    "hit@3": 0.7266666666666667,
-    "hit@5": 0.7733333333333333,
-    "mrr": 0.6578430525556165
+    "hit@1": 0.5866666666666667,
+    "hit@3": 0.7466666666666667,
+    "hit@5": 0.7866666666666666,
+    "mrr": 0.6706208303333943
    },
    "random": {
     "hit@1": 0.23545657283942276,
@@ -439,7 +439,7 @@
    }
   }
  },
- "closed_loop": "## Closing the loop on nasa/fprime#5170\n\nGate on the merged PR: **FAIL** (2 blocking). `gonogo suggest` proposed:\n\n- `TLC-005` (The `Svc::TlmChan` component shall limit the number of telemetry entries processed per `Run` invocation to `TLMCHAN_MAX_ENTRIES_PER_RUN`): `REQUIREMENT(\"TLC-005\");` in TEST `TlmChanTest.ProcGuardTest` (Svc/TlmChan/test/ut/TlmChanMain.cpp:51); next candidates: `dumpHash`, `runHashSizeIdentification`\n- `TLC-006` (The `Svc::TlmChan` component shall emit a `WARNING_HI` event when the per-run processing cap is reached): `REQUIREMENT(\"TLC-006\");` in function `checkGuardEvent` (Svc/TlmChan/test/ut/TlmChanTester.cpp:306); next candidates: `runProcGuard`, `TlmChanTest.ProcGuardTest`\n\nWith these 2 lines ([patch](pr5170-suggested.patch)) the same gate against the same base says **PASS**:\n\n## GoNoGo traceability gate: **PASS**\n\nBase `d833799941` \u2192 head `bf71d97e6c`. Requirements 299 \u2192 301; cited by own tests 48 \u2192 50.\n\n### Unit tests to re-run for 12 changed file(s)\n\n11 test cases in 1 components (GO today and pending re-run: 0).\n\n- `Svc/TlmChan`: 11 cases\n\nDeployment connections to review (integration, not unit tests): 2\n\n### Changes (informational)\n\n- requirements added 2, removed 0, text changed 0, methods changed 0\n- citations gained 0, lost 0\n- port uses added 3, removed 0\n- findings resolved: unknown_citations 0, duplicate_ids 0, cross_component 0\n\n_GoNoGo reports traceability evidence from repository text; it is decision support, not a flight-readiness authority._\n",
+ "closed_loop": "## Closing the loop on nasa/fprime#5170\n\nGate on the merged PR: **FAIL** (2 blocking). `gonogo suggest` proposed:\n\n- `TLC-005` (The `Svc::TlmChan` component shall limit the number of telemetry entries processed per `Run` invocation to `TLMCHAN_MAX_ENTRIES_PER_RUN`): `REQUIREMENT(\"TLC-005\");` in TEST `TlmChanTest.ProcGuardTest` (Svc/TlmChan/test/ut/TlmChanMain.cpp:51); next candidates: `dumpHash`, `runHashSizeIdentification`\n- `TLC-006` (The `Svc::TlmChan` component shall emit a `WARNING_HI` event when the per-run processing cap is reached): `REQUIREMENT(\"TLC-006\");` in function `checkGuardEvent` (Svc/TlmChan/test/ut/TlmChanTester.cpp:306); next candidates: `runProcGuard`, `TlmChanTest.ProcGuardTest`\n\nWith these 2 lines ([patch](pr5170-suggested.patch)) the same gate against the same base says **PASS**:\n\n## GoNoGo traceability gate: **PASS**\n\nBase `d833799941` \u2192 head `bf71d97e6c`. Requirements 299 \u2192 301; cited by own tests 48 \u2192 50.\n\n### Unit tests to re-run for 12 changed file(s)\n\n11 test cases in 1 components (GO today and pending re-run: 0).\n\n- `Svc/TlmChan`: 11 cases\n\nDeployment connections to review (integration, not unit tests): 2\n\n### Changes (informational)\n\n- requirements added 2, removed 0, text changed 0, methods changed 0\n- new requirements cited by an own test: 2 of 2\n- existing requirements: own citation gained 0, lost 0\n- port uses added 3, removed 0\n- findings resolved: unknown_citations 0, duplicate_ids 0, cross_component 0\n\n_GoNoGo reports traceability evidence from repository text; it is decision support, not a flight-readiness authority._\n",
  "modes": {
   "directory_bytes": 1128567,
   "single_file_bytes": 20635648

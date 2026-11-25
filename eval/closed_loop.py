@@ -24,7 +24,7 @@ from pathlib import Path
 from gonogo import db as store
 from gonogo.diff import check
 from gonogo.fprime import build_dataset
-from gonogo.suggest import patch, suggest
+from gonogo.suggest import patch_many, suggest
 
 ROOT = Path(__file__).resolve().parent.parent
 REPLAY = ROOT / "data" / "replay"
@@ -48,20 +48,28 @@ def main(repo: Path) -> dict:
     before, _, code_before = check(base_db, head_db, files)
     blocking_ids = [b.rsplit(": ", 1)[1] for b in before["blocking"] if "without an own citing test" in b]
 
-    diffs, picks = [], []
+    edits, picks = [], []
     for rid in blocking_ids:
         s = suggest(head_db, rid)
+        if not s["sites"]:
+            raise SystemExit(f"suggest has no candidate for {rid}: {s['edit']}")
         top = s["sites"][0]
-        diffs.append(patch(repo, rid, top))
+        edits.append((rid, top))
         picks.append({"id": rid, "text": s["text"], "site": top["name"], "kind": top["kind"], "at": top["at"],
                       "next": [x["name"] for x in s["sites"][1:3]]})
-    PATCH.write_text("".join(diffs), encoding="utf-8", newline="\n")
+    # one diff for all edits: two lines landing in the same file are applied to one copy and never conflict
+    native = patch_many(repo, edits)  # line endings of this checkout (CRLF on a Windows checkout with core.autocrlf)
+    if not native:
+        raise SystemExit("no patch could be written for the suggested sites")
+    PATCH.write_bytes(native.replace("\r\n", "\n").encode("utf-8"))  # committed form: LF, git converts on checkout
+    local = Path(tempfile.mkdtemp(prefix="gonogo_patch_")) / "suggested.patch"
+    local.write_bytes(native.encode("utf-8"))
 
-    subprocess.run(["git", "-C", str(repo), "apply", str(PATCH)], check=True)
+    subprocess.run(["git", "-C", str(repo), "apply", str(local)], check=True)
     try:
         patched = build_dataset(repo)
     finally:
-        subprocess.run(["git", "-C", str(repo), "apply", "-R", str(PATCH)], check=True)
+        subprocess.run(["git", "-C", str(repo), "apply", "-R", str(local)], check=True)
     touched = sorted({line[6:] for line in PATCH.read_text(encoding="utf-8").splitlines() if line.startswith("+++ b/")})
     after, md, code_after = check(base_db, graph(patched), files + touched)
 

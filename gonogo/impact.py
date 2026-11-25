@@ -5,7 +5,11 @@ Rules (F´ unit tests run per component against an autocoded harness):
   * a changed header, or any change in library code (a directory that is not a component, e.g. Fw/Types)
                                             -> also re-run the tests of every component that includes it,
                                                directly or through other units: (s)-[:INCLUDES*1..12]->(changed);
+  * a changed FPP model (.fpp/.fppi) counts as a header change: the autocoder turns it into the headers that
+    other units include;
   * a changed port type definition         -> re-run the unit tests of every component that uses the port type;
+  * a changed FPP configuration file (default/config/*.fpp: constants, sizes, configuration types) is visible to
+    every FPP model                         -> re-run the unit tests of every component;
   * deployment connections of affected components are listed for integration review only: a topology change
     does not change which unit tests break.
 A component's own .cpp file stays local: its interface did not change. A component named without files is
@@ -16,6 +20,8 @@ from __future__ import annotations
 
 INCLUDE_HOPS = 12
 HEADER_SUFFIXES = (".hpp", ".h", ".hh")
+FPP_SUFFIXES = (".fpp", ".fppi")  # autocoded into headers: an interface change
+CONFIG_DIR = "default/config"
 
 # shortestPath (breadth-first, one path) rather than EXISTS over a variable-length pattern: the include graph is
 # dense (Fw is included by most units), and proving that NO path exists by enumerating paths is exponential.
@@ -29,7 +35,7 @@ CALL {{
   RETURN collect(chain) AS chains
 }}
 WITH s, chains, EXISTS {{ MATCH (s)-[:USES_PORT]->(pt:PortType) WHERE pt.id IN $port_types }} AS uses_changed_port
-WHERE s.id IN $components OR uses_changed_port OR size(chains) > 0
+WHERE s.id IN $components OR uses_changed_port OR size(chains) > 0 OR $everywhere
 OPTIONAL MATCH (s)-[u:USES_PORT]->(pt2:PortType) WHERE pt2.id IN $port_types
 WITH s, chains, collect(DISTINCT pt2.id + ' as ' + u.port) AS via_ports
 OPTIONAL MATCH (tc:TestCase)-[:TESTS]->(s)
@@ -64,20 +70,23 @@ def classify_files(db, files: list[str]) -> dict:
     by_file: dict[str, list[str]] = {}
     for d in port_defs:
         by_file.setdefault(d["file"], []).append(d["id"])
-    comps, ripple, ports, topology, unmatched = set(), set(), set(), [], []
+    comps, ripple, ports, topology, unmatched, config = set(), set(), set(), [], [], []
     for f in files:
         f = f.strip().replace("\\", "/").removeprefix("./")
         if not f:
             continue
         hit = False
-        if f in by_file:  # a port-type definition file
+        if f in by_file:  # a port-type definition file: every user of the port type
             ports.update(by_file[f])
             hit = True
+        if f.startswith(CONFIG_DIR + "/") and f.endswith(FPP_SUFFIXES):  # FPP configuration: every model sees it
+            config.append(f)
+            hit = True
         owner = max((u for u in parts | libs if f == u or f.startswith(u + "/")), key=len, default=None)
-        if owner and f not in by_file:
+        if owner:  # also for a port-type file: the directory that holds it changed too (the safe side)
             if owner in parts:
                 comps.add(owner)
-            if owner in libs or f.endswith(HEADER_SUFFIXES):
+            if owner in libs or f.endswith(HEADER_SUFFIXES + FPP_SUFFIXES):
                 ripple.add(owner)
             hit = True
         if f.endswith(("topology.fpp", "instances.fpp")) or "/Top/" in f or "Subtopologies/" in f:
@@ -86,7 +95,7 @@ def classify_files(db, files: list[str]) -> dict:
         if not hit:
             unmatched.append(f)
     return {"components": sorted(comps), "ripple": sorted(ripple), "port_types": sorted(ports),
-            "topology_files": topology, "unmatched": unmatched}
+            "config_files": config, "topology_files": topology, "unmatched": unmatched}
 
 
 def reason(row: dict) -> str:
@@ -95,12 +104,15 @@ def reason(row: dict) -> str:
         return "changed"
     if row["via_ports"]:
         return "uses " + ", ".join(row["via_ports"])
-    return "includes " + " -> ".join(row["include_chain"][1:])
+    if row["include_chain"]:
+        return "includes " + " -> ".join(row["include_chain"][1:])
+    return "FPP configuration changed (visible to every component)"
 
 
-def tests_to_rerun(db, components: list[str], port_types: list[str], ripple: list[str]) -> list[dict]:
-    return [r.data() for r in db.execute(TESTS_TO_RERUN_CYPHER,
-                                         {"components": components, "port_types": port_types, "ripple": ripple})]
+def tests_to_rerun(db, components: list[str], port_types: list[str], ripple: list[str],
+                   everywhere: bool = False) -> list[dict]:
+    return [r.data() for r in db.execute(TESTS_TO_RERUN_CYPHER, {"components": components, "port_types": port_types,
+                                                                "ripple": ripple, "everywhere": everywhere})]
 
 
 def integration_review(db, components: list[str]) -> list[dict]:
@@ -114,7 +126,7 @@ def impact(db, files: list[str] | None = None, components: list[str] | None = No
     comps = sorted(set(cls["components"]) | set(named))
     ripple = sorted(set(cls["ripple"]) | set(named))  # named without files: assume the interface may change
     ports = sorted(set(cls["port_types"]) | {p if p.startswith("port:") else f"port:{p}" for p in (port_types or [])})
-    rerun = tests_to_rerun(db, comps, ports, ripple)
+    rerun = tests_to_rerun(db, comps, ports, ripple, everywhere=bool(cls["config_files"]))
     affected_reqs = {r for row in rerun for r in row["requirements"]}
     pending = sorted(v["id"] for v in (verdict_rows or []) if v["id"] in affected_reqs and v["verdict"] == "GO")
     return {"input": cls, "components": comps, "ripple": ripple, "port_types": ports, "rerun": rerun,

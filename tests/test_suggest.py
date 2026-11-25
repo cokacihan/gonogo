@@ -61,3 +61,39 @@ def test_agent_and_mcp_answer_citation_help(db, store_run):
     assert Agent(db).ask("How do I make HTH-001 GO?").text.startswith("HTH-001 is already tested under a near-miss ID")
     assert Agent(db).ask("Why is HTH-001 not GO?").template != "suggest"  # a verdict question stays a verdict
     assert Server(store_run).call("suggest", {"id": "TLC-006"})["sites"][0]["name"] == "checkGuardEvent"
+
+
+def _git_apply_check(repo, diff):
+    import subprocess
+    subprocess.run(["git", "init", "-q", str(repo)], check=True)
+    (repo / "x.patch").write_bytes(diff.encode("utf-8"))
+    return subprocess.run(["git", "-C", str(repo), "apply", "--check", "x.patch"], capture_output=True, text=True)
+
+
+def test_patch_edge_cases_apply_with_git(tmp_path):
+    from gonogo.suggest import patch_many
+    src = tmp_path / "Svc/X/test/ut/XMain.cpp"
+    src.parent.mkdir(parents=True)
+    # no UnitTest.hpp include, a one-line TEST body, two edits in one file, no newline at the end of the file
+    src.write_bytes(b'#include <gtest/gtest.h>\n\nTEST(A, One) { run(); }\n\nTEST(A, Two) {\n    go();\n}')
+    diff = patch_many(tmp_path, [("X-001", {"at": ["Svc/X/test/ut/XMain.cpp:3"], "kind": "TEST", "name": "A.One"}),
+                                 ("X-002", {"at": ["Svc/X/test/ut/XMain.cpp:5"], "kind": "TEST", "name": "A.Two"})])
+    assert diff.count("#include <Fw/Test/UnitTest.hpp>") == 1  # one include for both edits
+    assert '+TEST(A, One) { REQUIREMENT("X-001"); run(); }' in diff  # inside the one-line body, not after it
+    assert '+    REQUIREMENT("X-002");' in diff and "No newline at end of file" in diff
+    res = _git_apply_check(tmp_path, diff)
+    assert res.returncode == 0, res.stderr
+
+
+def test_eval_breaks_ties_at_random_not_by_id():
+    # the expected hit@k and reciprocal rank must equal the average over every order of the tied candidates
+    import itertools
+    from eval.suggest_eval import KS, tie_aware
+    ranked = [("a", (5,)), ("b", (4,)), ("c", (3,)), ("d", (3,)), ("e", (3,)), ("f", (3,)), ("g", (3,))]
+    answers = {"e", "g"}
+    orders = [["a", "b", *p] for p in itertools.permutations(["c", "d", "e", "f", "g"])]
+    firsts = [next(i for i, x in enumerate(o, 1) if x in answers) for o in orders]
+    got = tie_aware(ranked, answers)
+    for k in KS:
+        assert abs(got[f"hit@{k}"] - sum(f <= k for f in firsts) / len(firsts)) < 1e-12
+    assert abs(got["rr"] - sum(1 / f for f in firsts) / len(firsts)) < 1e-12

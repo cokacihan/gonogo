@@ -80,8 +80,9 @@ export function deploymentParts(db) {
   return new Set(rows(db, "MATCH (:Instance)-[:INSTANCE_OF]->(p:Part) RETURN DISTINCT p.id AS id").map((r) => r.id));
 }
 
-// Same rules as gonogo/impact.py: a component's own .cpp stays local; a header, or any change in library code
-// (a directory without an FPP component), ripples to every unit that includes it.
+// Same rules as gonogo/impact.py: a component's own .cpp stays local; a header, an FPP model, or any change in library
+// code (a directory without an FPP component), ripples to every unit that includes it; an FPP configuration file
+// (default/config/*.fpp) reaches every component.
 export function classifyFiles(db, files) {
   const partRows = rows(db, "MATCH (p:Part) RETURN p.id AS id, size(p.types) > 0 AS component");
   const parts = new Set(partRows.map((r) => r.id));
@@ -89,7 +90,7 @@ export function classifyFiles(db, files) {
   partRows.filter((r) => !r.component).forEach((r) => libs.add(r.id));
   const units = [...parts, ...libs];
   const defs = rows(db, "MATCH (t:PortType) WHERE t.defined_in IS NOT NULL RETURN t.id AS id, t.defined_in AS file");
-  const comps = new Set(), ripple = new Set(), ports = new Set(), topology = [], unmatched = [];
+  const comps = new Set(), ripple = new Set(), ports = new Set(), topology = [], unmatched = [], config = [];
   for (let f of files) {
     f = f.trim().replace(/\\/g, "/").replace(/^\.\//, "");
     if (!f) continue;
@@ -97,20 +98,22 @@ export function classifyFiles(db, files) {
     const portHits = defs.filter((d) => d.file === f).map((d) => d.id);
     portHits.forEach((p) => ports.add(p));
     if (portHits.length) hit = true;
+    if (f.startsWith("default/config/") && /\.fppi?$/.test(f)) { config.push(f); hit = true; }
     const owner = units.filter((u) => f === u || f.startsWith(u + "/")).sort((a, b) => b.length - a.length)[0];
-    if (owner && !portHits.length) {
+    if (owner) {
       if (parts.has(owner)) comps.add(owner);
-      if (libs.has(owner) || /\.(hpp|h|hh)$/.test(f)) ripple.add(owner);
+      if (libs.has(owner) || /\.(hpp|h|hh|fpp|fppi)$/.test(f)) ripple.add(owner);
       hit = true;
     }
     if (/(topology|instances)\.fpp$/.test(f) || f.includes("/Top/") || f.includes("Subtopologies/")) { topology.push(f); hit = true; }
     if (!hit) unmatched.push(f);
   }
-  return { components: [...comps].sort(), ripple: [...ripple].sort(), port_types: [...ports].sort(), topology, unmatched };
+  return { components: [...comps].sort(), ripple: [...ripple].sort(), port_types: [...ports].sort(), config, topology,
+    unmatched };
 }
 
-export function impact(db, queries, components, portTypes, verdictRows, ripple = []) {
-  const rerun = rows(db, queries.tests_to_rerun, { components, port_types: portTypes, ripple });
+export function impact(db, queries, components, portTypes, verdictRows, ripple = [], everywhere = false) {
+  const rerun = rows(db, queries.tests_to_rerun, { components, port_types: portTypes, ripple, everywhere });
   const reqs = new Set(rerun.flatMap((r) => r.requirements));
   const pending = verdictRows.filter((v) => reqs.has(v.id) && v.verdict === "GO").map((v) => v.id);
   const integration = rows(db, queries.integration, { components });

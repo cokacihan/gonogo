@@ -202,7 +202,8 @@ _STRING = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
 def _code_lines(text: str):
     """Yield (raw line, code without comments/strings) so braces in strings never confuse depth."""
     in_block = False
-    for raw in text.splitlines():
+    # split at newlines only, as git and editors number lines (str.splitlines also splits at form feeds etc.)
+    for raw in text.replace("\r\n", "\n").split("\n"):
         code = _STRING.sub('""', raw)
         if in_block:
             if "*/" not in code:
@@ -218,6 +219,11 @@ def _code_lines(text: str):
         yield raw, code.split("//", 1)[0]
 
 
+def _doc_words(text: str) -> set[str]:
+    """Words of the string literals in a piece of a TEST_CASE()/COMMENT() call."""
+    return {w for s in _STRING.findall(text) for w in text_words(s[1:-1])}
+
+
 def test_code(comp_dir: Path, repo: Path) -> dict:
     """Test sources of one component as a call graph: gtest cases, functions, calls between them, and the
     REQUIREMENT("ID") citations written in each body. No closure is computed here: the graph does that
@@ -231,7 +237,7 @@ def test_code(comp_dir: Path, repo: Path) -> dict:
                                                   "words": set(), "doc": set()})
     cases: list[dict] = []
     for f in sorted(p for p in test_dir.rglob("*") if p.suffix in (".cpp", ".hpp", ".cc", ".h") and p.is_file()):
-        depth, cur, start, opened, own = 0, None, 0, False, None
+        depth, cur, start, opened, own, doc_depth = 0, None, 0, False, None, 0
         for lineno, (raw, code) in enumerate(_code_lines(f.read_text(encoding="utf-8", errors="replace")), 1):
             if cur is None:
                 if (g := GTEST.match(code)):
@@ -249,15 +255,22 @@ def test_code(comp_dir: Path, repo: Path) -> dict:
             if cur is not None:
                 cur["cites"].update(REQ_MACRO.findall(raw))
                 cur["words"] |= code_words(code)  # comments and strings are already gone: REQUIREMENT("ID") adds no word
-                if (dm := DOC_MACRO.search(raw)):  # F´ test descriptions: TEST_CASE(107.3.1, "..."), COMMENT("...")
-                    cur["doc"].update(w for s in _STRING.findall(raw[dm.end():]) for w in text_words(s[1:-1]))
+                # F´ test descriptions: TEST_CASE(107.3.1, "..."), COMMENT("..."), also when the text continues on the
+                # next lines. Detection and parenthesis depth use `code` (strings and comments removed).
+                if doc_depth > 0:
+                    cur["doc"].update(_doc_words(raw))
+                    doc_depth += code.count("(") - code.count(")")
+                elif (dm := DOC_MACRO.search(code)):
+                    rm = DOC_MACRO.search(raw)
+                    cur["doc"].update(_doc_words(raw[rm.end():] if rm else raw))
+                    doc_depth = 1 + code[dm.end():].count("(") - code[dm.end():].count(")")
                 cur["calls"].update(c for c in CALL_RE.findall(code) if c != own and c not in NOT_FUNCS and not c.isupper())
             depth += code.count("{") - code.count("}")
             if cur is not None:
                 if "{" in code:
                     opened = True
                 if (opened and depth <= start) or (not opened and code.rstrip().endswith(";")):
-                    cur = None
+                    cur, doc_depth = None, 0
     known = set(funcs)
     functions = {n: {"calls": sorted(c for c in v["calls"] if c in known), "cites": sorted(v["cites"]),
                      "files": sorted(v["files"]), "at": sorted(v["at"]), "words": sorted(v["words"]), "doc": sorted(v["doc"])}
@@ -531,7 +544,8 @@ def include_graph(repo: Path, part_ids: set[str]) -> tuple[set[str], list[dict],
     resolved = unmapped = external = 0
     for root in (*rts, *(r for r in LIB_ROOTS if (repo / r).is_dir())):
         for f in (repo / root).rglob("*"):
-            if f.suffix not in SOURCE_SUFFIXES or not f.is_file() or "googletest" in f.parts:
+            if (f.suffix not in SOURCE_SUFFIXES or not f.is_file() or "googletest" in f.parts
+                    or any(p.startswith("build-") for p in f.parts)):  # generated sources of a built checkout
                 continue
             rel = _rel(f, repo)
             src = unit_of(rel, part_ids, rts)
@@ -714,7 +728,7 @@ def build_dataset(repo: Path) -> dict:
 if __name__ == "__main__":
     import argparse
 
-    ap = argparse.ArgumentParser(description="Import NASA F Prime into a TraceGraph dataset")
+    ap = argparse.ArgumentParser(description="Import NASA F Prime into a GoNoGo dataset")
     ap.add_argument("--repo", default=str(Path(__file__).resolve().parents[1] / "data" / "raw" / "fprime"))
     ap.add_argument("--out", default=str(Path(__file__).resolve().parents[1] / "data" / "fprime_dataset.json"))
     a = ap.parse_args()

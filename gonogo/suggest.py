@@ -94,13 +94,17 @@ def suggest(db, rid: str, k: int = 5) -> dict | None:
     drift = [r.data() for r in db.execute(DRIFT_CYPHER, {"id": rid, "ref": rid.split("@")[0]})]
     sites = rank_sites(db, rid, terms, k)
     cases = rank_cases(db, rid, terms, k, run=current_run(db))
-    if drift:
-        edit = (f'rename {drift[0]["cited"]} to {rid.split("@")[0]} in REQUIREMENT() at '
-                + ", ".join(a for d in drift for a in d["at"]))
+    ref = rid.split("@")[0]
+    if req["cited_at"]:  # nothing to add: the component's tests already cite it (its verdict says whether they passed)
+        edit = f"none: already cited by test code of {req['component']} at {', '.join(req['cited_at'])} (gonogo why {ref})"
+    elif drift:
+        edit = f'rename {drift[0]["cited"]} to {ref} in REQUIREMENT() at ' + ", ".join(a for d in drift for a in d["at"])
+    elif not (req["text"] or "").strip():
+        edit = "none proposed: the SDD row has no requirement text to match against the test code"
     elif sites:
         top = sites[0]
         where = "the TEST body" if top["kind"] == "TEST" else f"function {top['name']}"
-        edit = f'add REQUIREMENT("{rid.split("@")[0]}"); to {where} ({", ".join(top["at"])}), if it checks this'
+        edit = f'add REQUIREMENT("{ref}"); to {where} ({", ".join(top["at"])}), if it checks this'
     else:
         edit = "no test code of the component shares a word with the requirement: a new test is needed"
     return {**req, "terms": terms, "drift": drift, "sites": sites, "cases": cases, "edit": edit}
@@ -121,25 +125,106 @@ def _body_start(lines: list[str], line: int) -> int | None:
     return None
 
 
-def patch(repo: Path, rid: str, site: dict) -> str | None:
-    """A unified diff (for `git apply`) that writes REQUIREMENT("ID"); as the first statement of the suggested
-    TEST body or helper. The person who applies it decides whether that test really checks the requirement."""
+def _definition_line(lines: list[str], line: int, site: dict) -> int | None:
+    """The 1-based line where the site is defined. The graph's line is used when it still names the site; otherwise
+    (a checkout at another commit) the definition is looked up by name, so the macro never lands in another body."""
+    name = site.get("name")
+    if not name:
+        return line
+    if site.get("kind") == "TEST":
+        suite, _, case = name.partition(".")
+        pattern = re.compile(rf"^\s*TEST(?:_F)?\(\s*{re.escape(suite)}\s*,\s*{re.escape(case)}\s*\)")
+    else:  # a top-level definition starts in column 0 in F´ sources: `void Tester::name(...) {`
+        pattern = re.compile(rf"^\S.*\b{re.escape(name)}\s*\(")
+    if 0 < line <= len(lines) and pattern.search(lines[line - 1]):
+        return line
+    return next((k + 1 for k, x in enumerate(lines) if pattern.search(x) and _body_start(lines, k + 1) is not None),
+                None)
+
+
+def _read_lines(path: Path) -> list[str]:
+    r"""Lines with their endings, split at "\n" only, as git counts them (str.splitlines also splits at \x0c etc.)."""
+    text = path.read_bytes().decode("utf-8")
+    parts = text.split("\n")
+    lines = [x + "\n" for x in parts[:-1]]
+    return lines + ([parts[-1]] if parts[-1] else [])
+
+
+def _unified(before: list[str], after: list[str], file: str) -> str:
+    """A unified diff that `git apply` accepts, with the marker for a last line without a newline."""
+    out = []
+    for line in difflib.unified_diff(before, after, f"a/{file}", f"b/{file}"):
+        out.append(line)
+        if not line.endswith("\n"):
+            out.append("\n\\ No newline at end of file\n")
+    return "".join(out)
+
+
+def _insert(lines: list[str], rid: str, site: dict, line: int) -> list[str] | None:
+    """`lines` with REQUIREMENT("ID"); as the first statement of the site's body, or None if the body is not found."""
+    start = _definition_line(lines, line, site)
+    i = None if start is None else _body_start(lines, start)
+    if i is None:
+        return None
     ref = rid.split("@")[0]
-    for at in sorted(site["at"], key=lambda a: not a.split(":")[0].endswith((".cpp", ".cc"))):
-        file, line = at.rsplit(":", 1)
+    eol = "\r\n" if lines[i].endswith("\r\n") else "\n"
+    code = lines[i].split("//", 1)[0]
+    brace = code.index("{")
+    if code[brace + 1:].strip():  # a one-line body `TEST(A, B) { run(); }`: write the macro right after the brace
+        out = list(lines)
+        out[i] = lines[i][: brace + 1] + f' REQUIREMENT("{ref}");' + lines[i][brace + 1:]
+        return out
+    nxt = next((x for x in lines[i + 1:] if x.strip()), "    ")
+    indent = re.match(r"[ \t]*", nxt).group(0) or "    "
+    return lines[: i + 1] + [f'{indent}REQUIREMENT("{ref}");{eol}'] + lines[i + 1:]
+
+
+def patch_many(repo: Path, edits: list[tuple[str, dict]]) -> str | None:
+    """One unified diff (for `git apply`) that writes REQUIREMENT("ID"); as the first statement of each suggested TEST
+    body or helper. Edits to the same file are applied one after another to one copy, so they never conflict. The
+    person who applies it decides whether each test really checks its requirement."""
+    files: dict[str, tuple[list[str], list[str]]] = {}
+    for rid, site in edits:
+        for at in sorted(site["at"], key=lambda a: not a.split(":")[0].endswith((".cpp", ".cc"))):
+            file, line = at.rsplit(":", 1)
+            if file not in files:
+                if not (repo / file).is_file():
+                    continue
+                original = _read_lines(repo / file)
+                files[file] = (original, list(original))
+            original, current = files[file]
+            new = _insert(current, rid, site, int(line))
+            if new is not None:
+                files[file] = (original, new)
+                break
+    out = []
+    for file, (original, current) in sorted(files.items()):
+        if current == original:
+            continue
+        if not any(UNIT_TEST_H in x for x in current):
+            eol = "\r\n" if any(x.endswith("\r\n") for x in current) else "\n"
+            last_inc = max((k for k, x in enumerate(current) if x.lstrip().startswith("#include")), default=-1)
+            current = current[: last_inc + 1] + [f"#include <{UNIT_TEST_H}>{eol}"] + current[last_inc + 1:]
+        out.append(_unified(original, current, file))
+    return "".join(out) or None
+
+
+def patch(repo: Path, rid: str, site: dict) -> str | None:
+    """The diff for one requirement; see patch_many."""
+    return patch_many(repo, [(rid, site)])
+
+
+def rename_patch(repo: Path, rid: str, drift: list[dict]) -> str | None:
+    """A unified diff that renames the near-miss ID in REQUIREMENT("ISF-HTH-003") to the defined one (HTH-003)."""
+    ref, out = rid.split("@")[0], []
+    cited = {d["cited"] for d in drift}
+    for file in sorted({a.rsplit(":", 1)[0] for d in drift for a in d["at"]}):
         path = repo / file
         if not path.is_file():
             continue
-        lines = path.read_bytes().decode("utf-8").splitlines(keepends=True)
-        i = _body_start(lines, int(line))
-        if i is None:
-            continue
-        eol = "\r\n" if lines[i].endswith("\r\n") else "\n"
-        nxt = next((x for x in lines[i + 1:] if x.strip()), "    ")
-        indent = re.match(r"[ \t]*", nxt).group(0) or "    "
-        after = lines[: i + 1] + [f'{indent}REQUIREMENT("{ref}");{eol}'] + lines[i + 1:]
-        if not any(UNIT_TEST_H in x for x in lines):
-            last_inc = max((k for k, x in enumerate(after) if x.lstrip().startswith("#include")), default=-1)
-            after.insert(last_inc + 1, f"#include <{UNIT_TEST_H}>{eol}")
-        return "".join(difflib.unified_diff(lines, after, f"a/{file}", f"b/{file}"))
-    return None
+        lines = _read_lines(path)
+        after = [re.sub(r'REQUIREMENT\(\s*"([^"]+)"\s*\)',
+                        lambda m: f'REQUIREMENT("{ref}")' if m.group(1) in cited else m.group(0), x) for x in lines]
+        if after != lines:
+            out.append(_unified(lines, after, file))
+    return "".join(out) or None

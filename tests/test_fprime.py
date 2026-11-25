@@ -175,3 +175,14 @@ def test_include_resolution_follows_fprime_include_paths(tmp_path):
                    ("Svc/A", "Utils/Types")}               # library directory; Queue -> CircularBuffer stays inside it
     assert libs == {"default/config/ACfg.hpp", "Utils/Types"}
     assert stats["external_or_same_dir"] == 2  # <vector> and the same-directory "Local.hpp"
+
+
+def test_test_descriptions_are_read_across_lines(tmp_path):
+    _write(tmp_path, "Svc/X/test/ut/XTester.cpp", 'void XTester::faultTlm() {\n'
+           '    TEST_CASE(900.1.3, "Fault Telemetry");\n    REQUIREMENT("X-003");\n    COMMENT(\n'
+           '        "The component shall issue a FATAL event if a ping "\n        "is late.");\n'
+           '    // COMMENT("commented out words")\n    this->dispatchAll();\n}\n')
+    fn = fprime.test_code(tmp_path / "Svc" / "X", tmp_path)["functions"]["faultTlm"]
+    assert {"fault", "telemetry", "fatal", "ping", "late"} <= set(fn["doc"])
+    assert "commented" not in fn["doc"] and "x" not in fn["doc"]  # comments and the cited ID give no words
+    assert fn["cites"] == ["X-003"]

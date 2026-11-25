@@ -18,7 +18,8 @@ Deployment connections to review (integration, not unit tests): 2
 ### Changes (informational)
 
 - requirements added 2, removed 0, text changed 0, methods changed 0
-- citations gained 0, lost 0
+- new requirements cited by an own test: 0 of 2
+- existing requirements: own citation gained 0, lost 0
 - port uses added 3, removed 0
 - findings resolved: unknown_citations 0, duplicate_ids 0, cross_component 0
 
