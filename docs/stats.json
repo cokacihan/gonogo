@@ -273,6 +273,53 @@
    "findings_cross_component": 12
   }
  ],
+ "replays": [
+  {
+   "pr": "5170",
+   "title": "TlmChan hash improvements",
+   "base": "d833799",
+   "head": "bf71d97",
+   "result": "FAIL",
+   "blocking": [
+    "new requirement without an own citing test case, in a component that cites requirements: TLC-005",
+    "new requirement without an own citing test case, in a component that cites requirements: TLC-006"
+   ],
+   "warnings": [],
+   "added": [
+    "TLC-005",
+    "TLC-006"
+   ],
+   "rerun_cases": 11,
+   "today": {
+    "TLC-005": [
+     "NO_CITING_TEST"
+    ],
+    "TLC-006": [
+     "NO_CITING_TEST"
+    ]
+   }
+  },
+  {
+   "pr": "5291",
+   "title": "Reject invalid PVN in SpacePacketDeframer",
+   "base": "acaa3fb",
+   "head": "9a4d173",
+   "result": "PASS",
+   "blocking": [],
+   "warnings": [
+    "new requirement without an own citing test case (component does not use REQUIREMENT()): SVC-CCSDS-SPD-010"
+   ],
+   "added": [
+    "SVC-CCSDS-SPD-010"
+   ],
+   "rerun_cases": 11,
+   "today": {
+    "SVC-CCSDS-SPD-010": [
+     "NO_CITING_TEST"
+    ]
+   }
+  }
+ ],
  "mutation": {
   "summary": {
    "citation_deleted": {

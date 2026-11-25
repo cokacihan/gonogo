@@ -26,6 +26,9 @@ from gonogo.verdict import case_citations, current_run, deployment_parts, poll, 
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASES = [("v3.4.0", "2023-11-29"), ("v4.0.0", "2025-08-07"), ("v4.4.2", "2026-11-04")]
+# merged nasa/fprime pull requests replayed through the gate (graphs and file lists in data/replay/)
+REPLAYS = [("5170", "TlmChan hash improvements", "d833799", "bf71d97"),
+           ("5291", "Reject invalid PVN in SpacePacketDeframer", "acaa3fb", "9a4d173")]
 FPRIME_BLOB = "https://github.com/nasa/fprime/blob/{sha}/{path}"
 
 
@@ -107,6 +110,22 @@ def compute(measure_modes: bool = False) -> dict:
             c.close()
             shutil.rmtree(tmp.parent, ignore_errors=True)
     out["releases"].append({"tag": "devel", "date": "2026-11-24", **current_metrics})
+    from gonogo.diff import check, open_any
+    rep_dir = ROOT / "data" / "replay"
+    by_id = {r["id"]: r for r in rows}
+    out["replays"] = []
+    for pr, title, base, head in REPLAYS:
+        if not (rep_dir / f"pr{pr}-{base}.json").exists():
+            continue
+        files = [ln.strip() for ln in (rep_dir / f"pr{pr}-files.txt").read_text(encoding="utf-8").splitlines() if ln.strip()]
+        bdb, hdb = open_any(rep_dir / f"pr{pr}-{base}.json"), open_any(rep_dir / f"pr{pr}-{head}.json")
+        res, _, code = check(bdb, hdb, files)
+        bdb.close(); hdb.close()
+        added = res["diff"]["requirements"]["added"]
+        out["replays"].append({"pr": pr, "title": title, "base": base, "head": head, "result": "FAIL" if code else "PASS",
+                               "blocking": res["blocking"], "warnings": res["warnings"], "added": added,
+                               "rerun_cases": res["impact"]["test_cases"],
+                               "today": {a: by_id[a]["reasons"] for a in added if a in by_id}})
     mut = ROOT / "eval" / "mutation_results.json"
     if mut.exists():
         m = json.loads(mut.read_text(encoding="utf-8"))
@@ -203,6 +222,15 @@ def blocks(s: dict, old_modes: dict | None = None) -> dict[str, str]:
         size_line += (f" Same graph measured in both modes: directory {_mb(modes['directory_bytes'])}, "
                       f"single `.rl` file {_mb(modes['single_file_bytes'])}.")
     b["modes"] = size_line
+    if s.get("replays"):
+        lines = ["| nasa/fprime PR | Gate | Why | Status of those requirements at the pinned devel commit |",
+                 "|---|---|---|---|"]
+        for r in s["replays"]:
+            why = "; ".join(r["blocking"] or r["warnings"]) or "no findings"
+            today = ", ".join(f"`{k}`: {'GO' if not v else ', '.join(v)}" for k, v in r["today"].items()) or "n/a"
+            lines.append(f"| [#{r['pr']}](https://github.com/nasa/fprime/pull/{r['pr']}) {r['title']} | **{r['result']}** | "
+                         f"{why} | {today} |")
+        b["replays"] = "\n".join(lines)
     for k in ("why_hth", "why_tlc", "impact_sched", "impact_health"):
         b[k] = "```text\n" + s["cli"][k] + "\n```"
     return b

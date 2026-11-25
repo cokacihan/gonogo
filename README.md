@@ -337,14 +337,46 @@ and the requirements whose GO depends on them.
 
 ## CI gate
 
-`python -m gonogo check --base <base store or dataset> --head <head> --files <changed files>` prints a Markdown report
-and exits 1 on **FAIL**. The gate says PASS/FAIL, not GO/NO-GO, because those words are reserved for test-backed
-verdicts. It fails when a change:
+`python -m gonogo check --base <base> --head <head> --files <changed files>` prints a Markdown report and exits 1 on
+**FAIL**. The gate says PASS/FAIL, not GO/NO-GO, because those words are reserved for test-backed verdicts. It fails
+when a change:
 - introduces an undefined cited ID, a duplicate ID or a cross-component citation;
-- makes a requirement lose every citing test of its component;
-- adds a requirement that no test of its component cites.
+- makes a requirement lose every citing test case of its component;
+- adds a requirement without a citing test case to a component whose other requirements are cited. In a component that
+  does not use `REQUIREMENT()` at all, the same change is only a warning, so the gate stays quiet on F´'s current
+  practice.
 
 It also lists the unit tests to re-run.
+
+### Replayed on real F´ pull requests
+
+The gate was replayed on merged nasa/fprime pull requests, with the base and merge commits imported into two Relate
+graphs. [`gate-replay.yml`](.github/workflows/gate-replay.yml) re-checks these outcomes on every push (generated):
+
+<!-- gonogo:replays -->
+| nasa/fprime PR | Gate | Why | Status of those requirements at the pinned devel commit |
+|---|---|---|---|
+| [#5170](https://github.com/nasa/fprime/pull/5170) TlmChan hash improvements | **FAIL** | new requirement without an own citing test case, in a component that cites requirements: TLC-005; new requirement without an own citing test case, in a component that cites requirements: TLC-006 | `TLC-005`: NO_CITING_TEST, `TLC-006`: NO_CITING_TEST |
+| [#5291](https://github.com/nasa/fprime/pull/5291) Reject invalid PVN in SpacePacketDeframer | **PASS** | new requirement without an own citing test case (component does not use REQUIREMENT()): SVC-CCSDS-SPD-010 | `SVC-CCSDS-SPD-010`: NO_CITING_TEST |
+<!-- /gonogo:replays -->
+
+### Use it on your F´ repository
+
+[`action.yml`](action.yml) is a composite GitHub Action. The replay workflow also runs it end to end against the real
+`nasa/fprime` history.
+
+```yaml
+on: pull_request
+jobs:
+  gonogo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: cokacihan/tracegraph@main
+        with:
+          base: ${{ github.event.pull_request.base.sha }}
+```
 
 ## Reproduce from scratch
 
