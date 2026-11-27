@@ -15,7 +15,7 @@
  },
  "ci_run": {
   "id": "45468869538",
-  "url": "https://github.com/cokacihan/tracegraph/actions/runs/45468869538",
+  "url": "https://github.com/cokacihan/gonogo/actions/runs/45468869538",
   "executables": 136,
   "cases": 2665,
   "passed": 2649,
@@ -214,7 +214,7 @@
    }
   ]
  },
- "store_dir_bytes": 1368548,
+ "store_dir_bytes": 1368542,
  "releases": [
   {
    "tag": "v3.4.0",

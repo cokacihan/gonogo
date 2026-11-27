@@ -2,7 +2,7 @@
 #
 #   - uses: actions/checkout@v4
 #     with: { fetch-depth: 0 }
-#   - uses: cokacihan/tracegraph@main
+#   - uses: cokacihan/gonogo@main
 #     with:
 #       base: ${{ github.event.pull_request.base.sha }}
 #

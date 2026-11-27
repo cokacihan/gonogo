@@ -15,7 +15,7 @@
  },
  "ci_run": {
   "id": "45468869538",
-  "url": "https://github.com/cokacihan/tracegraph/actions/runs/45468869538",
+  "url": "https://github.com/cokacihan/gonogo/actions/runs/45468869538",
   "executables": 136,
   "cases": 2665,
   "passed": 2649,
@@ -214,7 +214,7 @@
    }
   ]
  },
- "store_dir_bytes": 1368548,
+ "store_dir_bytes": 1368542,
  "releases": [
   {
    "tag": "v3.4.0",
@@ -326,40 +326,60 @@
     "mutations": 20,
     "gonogo_detected": 20,
     "grep_detected": 20,
+    "grep_scoped_detected": 20,
     "with_collateral": 0
    },
    "citation_id_drift": {
     "mutations": 20,
     "gonogo_detected": 20,
     "grep_detected": 20,
+    "grep_scoped_detected": 20,
+    "with_collateral": 0
+   },
+   "citation_orphaned": {
+    "mutations": 20,
+    "gonogo_detected": 20,
+    "grep_detected": 0,
+    "grep_scoped_detected": 0,
+    "with_collateral": 0
+   },
+   "citing_test_deleted": {
+    "mutations": 7,
+    "gonogo_detected": 7,
+    "grep_detected": 0,
+    "grep_scoped_detected": 0,
     "with_collateral": 0
    },
    "cross_component_cite": {
     "mutations": 20,
     "gonogo_detected": 20,
     "grep_detected": 0,
+    "grep_scoped_detected": 20,
     "with_collateral": 0
    },
    "duplicate_id": {
     "mutations": 20,
     "gonogo_detected": 20,
     "grep_detected": 20,
+    "grep_scoped_detected": 20,
     "with_collateral": 1
    },
    "method_blanked": {
     "mutations": 20,
     "gonogo_detected": 20,
     "grep_detected": 12,
+    "grep_scoped_detected": 12,
     "with_collateral": 0
    },
    "port_type_use_added": {
     "mutations": 20,
     "gonogo_detected": 20,
     "grep_detected": 20,
+    "grep_scoped_detected": 20,
     "with_collateral": 0
    }
   },
-  "seconds": 1065.9,
+  "seconds": 1327.5,
   "seed": 2026,
   "collateral": [
    {
@@ -368,6 +388,7 @@
     "file": "Svc\\ComLogger\\docs\\sdd.md",
     "gonogo": true,
     "grep": true,
+    "grep_scoped": true,
     "collateral": [
      "SVC-COMLOGGER-002@Svc/ComLoggerDp"
     ]
@@ -440,6 +461,420 @@
   }
  },
  "closed_loop": "## Closing the loop on nasa/fprime#5170\n\nGate on the merged PR: **FAIL** (2 blocking). `gonogo suggest` proposed:\n\n- `TLC-005` (The `Svc::TlmChan` component shall limit the number of telemetry entries processed per `Run` invocation to `TLMCHAN_MAX_ENTRIES_PER_RUN`): `REQUIREMENT(\"TLC-005\");` in TEST `TlmChanTest.ProcGuardTest` (Svc/TlmChan/test/ut/TlmChanMain.cpp:51); next candidates: `dumpHash`, `runHashSizeIdentification`\n- `TLC-006` (The `Svc::TlmChan` component shall emit a `WARNING_HI` event when the per-run processing cap is reached): `REQUIREMENT(\"TLC-006\");` in function `checkGuardEvent` (Svc/TlmChan/test/ut/TlmChanTester.cpp:306); next candidates: `runProcGuard`, `TlmChanTest.ProcGuardTest`\n\nWith these 2 lines ([patch](pr5170-suggested.patch)) the same gate against the same base says **PASS**:\n\n## GoNoGo traceability gate: **PASS**\n\nBase `d833799941` \u2192 head `bf71d97e6c`. Requirements 299 \u2192 301; cited by own tests 48 \u2192 50.\n\n### Unit tests to re-run for 12 changed file(s)\n\n11 test cases in 1 components (GO today and pending re-run: 0).\n\n- `Svc/TlmChan`: 11 cases\n\nDeployment connections to review (integration, not unit tests): 2\n\n### Changes (informational)\n\n- requirements added 2, removed 0, text changed 0, methods changed 0\n- new requirements cited by an own test: 2 of 2\n- existing requirements: own citation gained 0, lost 0\n- port uses added 3, removed 0\n- findings resolved: unknown_citations 0, duplicate_ids 0, cross_component 0\n\n_GoNoGo reports traceability evidence from repository text; it is decision support, not a flight-readiness authority._\n",
+ "suggest_heldout": {
+  "new": "6fff089e8e2035307105cad4b28631eea1552ff6",
+  "releases": [
+   {
+    "release": "v3.4.0",
+    "findable": 4,
+    "cited_in_new_test_code": 4
+   },
+   {
+    "release": "v4.0.0",
+    "findable": 0,
+    "cited_in_new_test_code": 2
+   },
+   {
+    "release": "v4.4.2",
+    "findable": 0,
+    "cited_in_new_test_code": 0
+   }
+  ],
+  "later_cited": 10,
+  "findable": 4,
+  "cited_in_new_test_code": 6,
+  "suggest": {
+   "hit@1": 0.0,
+   "hit@3": 0.5,
+   "hit@5": 0.75,
+   "mrr": 0.28318424534972436
+  },
+  "random": {
+   "hit@1": 0.008130081300813052,
+   "hit@3": 0.024390243902439046,
+   "hit@5": 0.04065040650406504,
+   "mrr": 0.043849264656712204
+  }
+ },
+ "impact_replay": {
+  "pull_requests": 30,
+  "suite_test_cases": 2309,
+  "components_total": 124,
+  "head": "6fff089e8e2035307105cad4b28631eea1552ff6",
+  "oldest": "2026-10-29",
+  "newest": "2026-11-19",
+  "median_share": 0.0377,
+  "median_test_cases": 87.0,
+  "full_suite_prs": 1,
+  "zero_test_prs": 8,
+  "prs_with_include_additions": 3,
+  "unmapped_files": 1,
+  "source_files": 191,
+  "rows": [
+   {
+    "sha": "633c89d5b7",
+    "date": "2026-11-19",
+    "subject": "Build the project by default: exclude framework and library modules from 'all', add 'unive",
+    "source_files": 1,
+    "unmapped": [
+     "TestDeploymentsProject/CMakeLists.txt"
+    ],
+    "test_cases": 0,
+    "components": 0,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0
+   },
+   {
+    "sha": "0ab58d9c24",
+    "date": "2026-11-19",
+    "subject": "Ref: fix PrmDb read-back race in the Fpy integration test (#6415)",
+    "source_files": 1,
+    "unmapped": [],
+    "test_cases": 0,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0
+   },
+   {
+    "sha": "83221ba82a",
+    "date": "2026-11-18",
+    "subject": "Fix FileHandlingCfdp subtopology cfdpManager.configure call (#6410)",
+    "source_files": 3,
+    "unmapped": [],
+    "test_cases": 0,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0
+   },
+   {
+    "sha": "b9d46b64cf",
+    "date": "2026-11-17",
+    "subject": "Svc::Version: expand custom version slot maximum from 10 to 32 (#6409)",
+    "source_files": 6,
+    "unmapped": [],
+    "test_cases": 7,
+    "components": 2,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.003
+   },
+   {
+    "sha": "3c42124506",
+    "date": "2026-11-17",
+    "subject": "TlmPacketizer: describe the red-black tree lookup in the SDD (#6401)",
+    "source_files": 1,
+    "unmapped": [],
+    "test_cases": 0,
+    "components": 0,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0
+   },
+   {
+    "sha": "43b14c5401",
+    "date": "2026-11-17",
+    "subject": "Update PassiveRateGroup to push initial values for channels (#6382)",
+    "source_files": 6,
+    "unmapped": [],
+    "test_cases": 5,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0022
+   },
+   {
+    "sha": "654e14decd",
+    "date": "2026-11-12",
+    "subject": "Bump FPP & Purge fpp-to-json (#6339)",
+    "source_files": 1,
+    "unmapped": [],
+    "test_cases": 0,
+    "components": 0,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0
+   },
+   {
+    "sha": "16c73bda41",
+    "date": "2026-11-12",
+    "subject": "FpySequencer: remove the flags section left in the SDD (#6372)",
+    "source_files": 1,
+    "unmapped": [],
+    "test_cases": 0,
+    "components": 0,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0
+   },
+   {
+    "sha": "5d55cfb5e6",
+    "date": "2026-11-11",
+    "subject": "Remove the ComLoggerDp decoder script in favor of fprime-dp comlog (#6375)",
+    "source_files": 5,
+    "unmapped": [],
+    "test_cases": 29,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0126
+   },
+   {
+    "sha": "2259dab91a",
+    "date": "2026-11-11",
+    "subject": "Svc/BufferLogger: remove unused schedIn port (#6370)",
+    "source_files": 5,
+    "unmapped": [],
+    "test_cases": 11,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0048
+   },
+   {
+    "sha": "f28d2daea7",
+    "date": "2026-11-05",
+    "subject": "Compile-time Override of Default Assert Hooks (cleanup of #5058) (#6326)",
+    "source_files": 10,
+    "unmapped": [],
+    "test_cases": 2290,
+    "components": 107,
+    "added_by_includes": 105,
+    "full_suite": false,
+    "share": 0.9918
+   },
+   {
+    "sha": "ac9af9820e",
+    "date": "2026-11-04",
+    "subject": "Svc/DpCatalog: skip state file records whose directory index is not configured (#6324)",
+    "source_files": 6,
+    "unmapped": [],
+    "test_cases": 87,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0377
+   },
+   {
+    "sha": "6c3bd2af35",
+    "date": "2026-11-04",
+    "subject": "Svc/DpCatalog: add RETRANSMIT_DP command to reschedule a transmitted data product (#6286)",
+    "source_files": 8,
+    "unmapped": [],
+    "test_cases": 87,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0377
+   },
+   {
+    "sha": "a4b1b1c043",
+    "date": "2026-11-04",
+    "subject": "Add CI for Fpy (#6191)",
+    "source_files": 4,
+    "unmapped": [],
+    "test_cases": 0,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0
+   },
+   {
+    "sha": "1cd3b5fb1c",
+    "date": "2026-11-04",
+    "subject": "CfdpManager: default MaxPduSize and OutgoingFileChunkSize that fit the stock ComCcsds down",
+    "source_files": 4,
+    "unmapped": [],
+    "test_cases": 2309,
+    "components": 124,
+    "added_by_includes": 0,
+    "full_suite": true,
+    "share": 1.0
+   },
+   {
+    "sha": "73ad499410",
+    "date": "2026-11-04",
+    "subject": "Svc/DpCatalog: add DELETE_DP command to delete a single data product (#6307)",
+    "source_files": 9,
+    "unmapped": [],
+    "test_cases": 87,
+    "components": 2,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0377
+   },
+   {
+    "sha": "850d8a4225",
+    "date": "2026-11-04",
+    "subject": "CfdpManager: release slots for PDUs that cannot start a transaction (#6182)",
+    "source_files": 7,
+    "unmapped": [],
+    "test_cases": 217,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.094
+   },
+   {
+    "sha": "29f389341d",
+    "date": "2026-11-04",
+    "subject": "CfdpManager: bound the TX dispatch loop and yield on throttled sends (#6297)",
+    "source_files": 7,
+    "unmapped": [],
+    "test_cases": 217,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.094
+   },
+   {
+    "sha": "95e18b6ce9",
+    "date": "2026-11-03",
+    "subject": "Svc/Ccsds/CfdpManager: reject unsupported PDU header flags and ID widths, size NAK array f",
+    "source_files": 8,
+    "unmapped": [],
+    "test_cases": 217,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.094
+   },
+   {
+    "sha": "8999ac6113",
+    "date": "2026-11-03",
+    "subject": "CfdpManager: recycle downlinks finished while still queued instead of stalling run1Hz (#62",
+    "source_files": 7,
+    "unmapped": [],
+    "test_cases": 217,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.094
+   },
+   {
+    "sha": "44850bda60",
+    "date": "2026-11-03",
+    "subject": "CFDP: correct SDD example wiring, tmp_dir staging, and timer defaults (#6209)",
+    "source_files": 2,
+    "unmapped": [],
+    "test_cases": 0,
+    "components": 0,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0
+   },
+   {
+    "sha": "d3003862b5",
+    "date": "2026-11-03",
+    "subject": "Svc/Ccsds/CfdpManager: skip over-long playback entries and accept zero-duration timers (#5",
+    "source_files": 8,
+    "unmapped": [],
+    "test_cases": 217,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.094
+   },
+   {
+    "sha": "519a47914f",
+    "date": "2026-11-03",
+    "subject": "Add SET_DP_PRIORITY command to DpCatalog for data product reprioritization (#6139)",
+    "source_files": 8,
+    "unmapped": [],
+    "test_cases": 87,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0377
+   },
+   {
+    "sha": "e8046134c2",
+    "date": "2026-11-02",
+    "subject": "CfdpManager: ignore AbandonTransaction on an already-finished transaction (#6298)",
+    "source_files": 5,
+    "unmapped": [],
+    "test_cases": 217,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.094
+   },
+   {
+    "sha": "2ccd97cc7b",
+    "date": "2026-11-02",
+    "subject": "Clamp NAK PDU segment request count before narrowing to U8 (#6165)",
+    "source_files": 4,
+    "unmapped": [],
+    "test_cases": 217,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.094
+   },
+   {
+    "sha": "7865cc39d1",
+    "date": "2026-11-02",
+    "subject": "Decode EPP packet lengths as header-inclusive totals (cleanup of #6047) (#6289)",
+    "source_files": 6,
+    "unmapped": [],
+    "test_cases": 40,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.0173
+   },
+   {
+    "sha": "a2b049b889",
+    "date": "2026-11-02",
+    "subject": "CmdSequencer, FpySequencer: add optional file sandbox (#6299)",
+    "source_files": 15,
+    "unmapped": [],
+    "test_cases": 444,
+    "components": 2,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.1923
+   },
+   {
+    "sha": "9c4aa75607",
+    "date": "2026-11-02",
+    "subject": "FpySequencer: check stack space in widening conversion ops (#6302)",
+    "source_files": 2,
+    "unmapped": [],
+    "test_cases": 347,
+    "components": 1,
+    "added_by_includes": 0,
+    "full_suite": false,
+    "share": 0.1503
+   },
+   {
+    "sha": "15ebbf3db8",
+    "date": "2026-10-29",
+    "subject": "Svc: coalesce droppable Svc.Sched ticks into one hooked internal message (#6288)",
+    "source_files": 37,
+    "unmapped": [],
+    "test_cases": 710,
+    "components": 11,
+    "added_by_includes": 1,
+    "full_suite": false,
+    "share": 0.3075
+   },
+   {
+    "sha": "34d30173c5",
+    "date": "2026-10-29",
+    "subject": "Make getEventOpcode a non-constexpr config hook and scrub WasmSequencer opcodes (#6287)",
+    "source_files": 4,
+    "unmapped": [],
+    "test_cases": 677,
+    "components": 4,
+    "added_by_includes": 2,
+    "full_suite": false,
+    "share": 0.2932
+   }
+  ]
+ },
  "modes": {
   "directory_bytes": 1128567,
   "single_file_bytes": 20635648

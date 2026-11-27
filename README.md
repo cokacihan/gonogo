@@ -6,10 +6,13 @@ GoNoGo turns an [F´ (F Prime)](https://github.com/nasa/fprime) flight-software 
 followed, and the CI run that produced the evidence. It says **GO** only when a requirement is backed by passing tests,
 and **INCOMPLETE**, with a reason, whenever it cannot know.
 
-[![CI](https://github.com/cokacihan/tracegraph/actions/workflows/ci.yml/badge.svg)](https://github.com/cokacihan/tracegraph/actions/workflows/ci.yml)
-[![F´ unit-test evidence](https://github.com/cokacihan/tracegraph/actions/workflows/fprime-unit-tests.yml/badge.svg)](https://github.com/cokacihan/tracegraph/actions/workflows/fprime-unit-tests.yml)
+[![CI](https://github.com/cokacihan/gonogo/actions/workflows/ci.yml/badge.svg)](https://github.com/cokacihan/gonogo/actions/workflows/ci.yml)
+[![F´ unit-test evidence](https://github.com/cokacihan/gonogo/actions/workflows/fprime-unit-tests.yml/badge.svg)](https://github.com/cokacihan/gonogo/actions/workflows/fprime-unit-tests.yml)
 ![Relate](https://img.shields.io/badge/Relate-embedded%20graph-1f6feb)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
+
+**Live demo, nothing to install:** <https://cokacihan.github.io/gonogo/> (the explorer, running Relate as WebAssembly in
+your browser; [straight to the HTH-001 example](https://cokacihan.github.io/gonogo/?c=Svc/Health&r=HTH-001)).
 
 <!-- gonogo:pitch -->
 - **The finding.** F´'s own unit tests pass in CI (2649 passed, 0 failed), yet only **140 of 561** requirements are GO: named by tests that all passed, with nothing else missing; 400 are cited by no test at all. Missing links, not missing tests, and GoNoGo shows each one with its reason.
@@ -20,15 +23,15 @@ and **INCOMPLETE**, with a reason, whenever it cannot know.
 [![The explorer: F´ components as annunciator lamps; Svc/Health opened on HTH-001, which a test cites under the near-miss ID ISF-HTH-001](docs/img/why-hth-001.png)](#in-the-browser)
 <sub>The explorer runs Relate as WebAssembly in the browser: each lamp is an F´ component, green only when every citing
 test passed in CI. Here `HTH-001` is INCOMPLETE because the test cites `ISF-HTH-001`; the call path shows where.
-Open the same view at `http://localhost:8000/?c=Svc/Health&r=HTH-001` after the two commands under
-[In the browser](#in-the-browser).</sub>
+Open the same view [live](https://cokacihan.github.io/gonogo/?c=Svc/Health&r=HTH-001), or locally at
+`http://localhost:8000/?c=Svc/Health&r=HTH-001` after the two commands under [In the browser](#in-the-browser).</sub>
 
 ### In numbers
 
 <!-- gonogo:headline -->
 - **561** requirements, **2309** unit-test cases, **124** components, **72** port types and the **49**-instance Ref deployment of [NASA F´](https://github.com/nasa/fprime) (commit [`6fff089e8e`](https://github.com/nasa/fprime/tree/6fff089e8e2035307105cad4b28631eea1552ff6)) in one Relate graph (13803 relationships).
 - Test code as a call graph: 2230 helper functions and 5318 `CALLS` edges. Evidence is a graph path from a test case to the `REQUIREMENT()` it relies on, up to 4 calls deep in F´.
-- F´'s own unit tests, **run in our CI** ([run 45468869538](https://github.com/cokacihan/tracegraph/actions/runs/45468869538)): 2665 test cases, 2649 passed, 16 skipped, 0 failed. All 393 of the 393 test cases that cite a requirement ran.
+- F´'s own unit tests, **run in our CI** ([run 45468869538](https://github.com/cokacihan/gonogo/actions/runs/45468869538)): 2665 test cases, 2649 passed, 16 skipped, 0 failed. All 393 of the 393 test cases that cite a requirement ran.
 - Ref deployment poll: **57 GO**, **0 NO-GO**, **170 INCOMPLETE** of 227 requirements in 34 components. Fully GO: `Svc/BufferManager`, `Svc/CmdSequencer`, `Svc/DpManager`.
 - 10 test citations of undefined IDs, 6 duplicated requirement IDs and 12 cross-component citations, found from repository text (see [Findings](#findings)).
 <!-- /gonogo:headline -->
@@ -52,7 +55,7 @@ in the repository, runs in CI without a server, and can be queried by people, sc
 Python 3.12 or newer; no server, no API key.
 
 ```bash
-git clone https://github.com/cokacihan/tracegraph gonogo && cd gonogo
+git clone https://github.com/cokacihan/gonogo && cd gonogo
 python -m venv .venv && . .venv/bin/activate                # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
 python -m gonogo poll                                   # GO / NO-GO / INCOMPLETE per component (Ref deployment)
@@ -166,7 +169,7 @@ executable, and converts them with [`gonogo/testresults.py`](gonogo/testresults.
 [`data/fprime_test_results.json`](data/fprime_test_results.json).
 
 <!-- gonogo:ci -->
-Run [45468869538](https://github.com/cokacihan/tracegraph/actions/runs/45468869538) built F´ `6fff089e8e` with the official `nasa/fprime-actions` steps and ran 136 unit-test executables: 2665 test cases, 2649 passed, 16 skipped, 0 failed. 2066 results map to test cases in the graph; 599 belong to library directories without a component (e.g. `CFDP/Checksum`) or to parameterised cases GoNoGo does not model. All 393 of 393 requirement-citing test cases ran.
+Run [45468869538](https://github.com/cokacihan/gonogo/actions/runs/45468869538) built F´ `6fff089e8e` with the official `nasa/fprime-actions` steps and ran 136 unit-test executables: 2665 test cases, 2649 passed, 16 skipped, 0 failed. 2066 results map to test cases in the graph; 599 belong to library directories without a component (e.g. `CFDP/Checksum`) or to parameterised cases GoNoGo does not model. All 393 of 393 requirement-citing test cases ran.
 <!-- /gonogo:ci -->
 
 ## Closing the gap: where would the `REQUIREMENT()` line go?
@@ -533,7 +536,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-      - uses: cokacihan/tracegraph@main
+      - uses: cokacihan/gonogo@main
         with:
           base: ${{ github.event.pull_request.base.sha }}
 ```
